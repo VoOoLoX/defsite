@@ -1,0 +1,35 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Client",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build_client",
+            "program": "${workspaceFolder}/Client/bin/Debug/netcoreapp2.1/Client.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Client/bin/Debug/netcoreapp2.1/",
+            "console": "internalConsole",
+            "logging": {
+                "moduleLoad": false
+            },
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "name": "Debug Server",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build_server",
+            "program": "${workspaceFolder}/Server/bin/Debug/netcoreapp2.1/Server.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Server/bin/Debug/netcoreapp2.1/",
+            "console": "integratedTerminal",
+            "logging": {
+                "moduleLoad": false
+            },
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+    ]
+}
