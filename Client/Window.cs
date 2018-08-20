@@ -43,7 +43,7 @@ namespace Client {
 			ClientWidth = Width;
 			ClientHeight = Height;
 
-			renderer = new Renderer(new Color(0, 0, 0, 255));
+			renderer = new Renderer(new Color(20, 20, 20, 255));
 			camera = new Camera();
 			input_manager = new InputManager();
 
