@@ -38,7 +38,7 @@ namespace Client {
 			shader = new Shader("Assets/Shaders/Object.shader");
 			va = new VertextArray();
 			ib = new IndexBuffer(IndexBufferData);
-			texture = new Texture("Assets/Textures/pot.png");
+			texture = new Texture(VIF.Load("Assets/Textures/pot.vif"));
 
 			VA.Enable();
 

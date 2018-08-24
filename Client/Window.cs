@@ -28,12 +28,12 @@ namespace Client {
 
 		protected override void OnLoad(EventArgs e) {
 			base.OnLoad(e);
-			if (float.Parse(GL.GetString(StringName.ShadingLanguageVersion)) < 1.3) {
+			if (float.Parse(GL.GetString(StringName.ShadingLanguageVersion)) < 1.30) {
 				Close();
 				Console.BackgroundColor = ConsoleColor.Red;
 				Console.ForegroundColor = ConsoleColor.White;
 				Console.WriteLine("Error: OpenGL Version");
-				Console.WriteLine("> Minimum required OpenGL version: 3.0");
+				Console.WriteLine("> Minimum required OpenGL version: 1.30");
 				Console.WriteLine($"> Detected OpenGL version: {GL.GetString(StringName.ShadingLanguageVersion)}");
 				Console.ResetColor();
 				Environment.Exit(1);

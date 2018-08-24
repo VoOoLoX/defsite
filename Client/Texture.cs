@@ -15,6 +15,20 @@ namespace Client {
 
 		public Texture(string path) : this(new FileInfo(path)) { }
 
+
+		public Texture(VIFImage img) {
+			ID = GL.GenTexture();
+			Enable();
+
+			var w = img.Width;
+			var h = img.Height;
+			var data = img.Bytes();
+
+			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, w, h, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
+			GL.TextureParameter(ID, TextureParameterName.TextureMinFilter, (float)TextureMinFilter.Nearest);
+			GL.TextureParameter(ID, TextureParameterName.TextureMagFilter, (float)TextureMagFilter.Nearest);
+		}
+
 		public Texture(FileInfo file) {
 			ID = GL.GenTexture();
 			Enable();
