@@ -42,11 +42,6 @@ namespace Client {
 				var src = shdr[1];
 				var t = default(ShaderType);
 
-				//Console.WriteLine(type);
-				//Console.WriteLine("###");
-				//Console.WriteLine(src);
-				//Console.WriteLine("###############################");
-
 				switch (type.ToLower().Trim()) {
 					case "vertex":
 						t = ShaderType.VertexShader;
@@ -60,12 +55,9 @@ namespace Client {
 				GL.ShaderSource(id, src.Trim());
 				GL.CompileShader(id);
 
-				GL.GetShader(id, ShaderParameter.CompileStatus, out int error_code);
-
-				if ((ErrorCode)error_code != ErrorCode.NoError) {
-					var info = GL.GetShaderInfoLog(id);
-					Console.WriteLine(info);
-				}
+				var shader_info = GL.GetShaderInfoLog(id);
+				if (!string.IsNullOrEmpty(shader_info))
+					Console.WriteLine($"Shader compile error: {shader_info}");
 
 				Shaders.Add((id, t, src.Trim()));
 
@@ -73,6 +65,9 @@ namespace Client {
 			}
 
 			GL.LinkProgram(ID);
+			var program_info = GL.GetProgramInfoLog(ID);
+			if (!string.IsNullOrEmpty(program_info))
+				Console.WriteLine($"Shader program error: {program_info}");
 		}
 
 		public void Enable() => GL.UseProgram(ID);
@@ -82,10 +77,10 @@ namespace Client {
 		public int GetAttribute(string attr) => GL.GetAttribLocation(ID, attr);
 
 		public int GetUniform(string unif) => GL.GetUniformLocation(ID, unif);
-				
+
 		public void SetUniform<T>(string unif, T data) {
 			Enable();
-			switch(data) {
+			switch (data) {
 				case Matrix2 m2:
 					GL.UniformMatrix2(GetUniform(unif), false, ref m2);
 					break;

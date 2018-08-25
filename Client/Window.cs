@@ -27,8 +27,9 @@ namespace Client {
 		RectangleModel gui;
 
 		protected override void OnLoad(EventArgs e) {
-			base.OnLoad(e);
-			if (float.Parse(GL.GetString(StringName.ShadingLanguageVersion)) < 1.30) {
+			Context.ErrorChecking = true;
+
+			if (double.Parse(GL.GetString(StringName.ShadingLanguageVersion)) < 1.30) {
 				Close();
 				Console.BackgroundColor = ConsoleColor.Red;
 				Console.ForegroundColor = ConsoleColor.White;
@@ -38,6 +39,12 @@ namespace Client {
 				Console.ResetColor();
 				Environment.Exit(1);
 			}
+
+			if (!Context.IsCurrent) {
+				Console.WriteLine("Invalid context");
+				Environment.Exit(1);
+			}
+
 			CursorVisible = true;
 
 			ClientWidth = Width;
@@ -49,50 +56,30 @@ namespace Client {
 
 			tile = new TileModel();
 			text = new TextModel("VoOoLoX", scale: .2f, color: Color.SteelBlue);
-			fps = new TextModel("", scale: .2f, color: new Color(180, 20, 40, 255));
+			fps = new TextModel("", scale: .2f, color: Color.DarkViolet);
 			mouse_info = new TextModel("", scale: .2f, color: Color.Cyan);
-			gui = new RectangleModel(new Texture("Assets/Textures/gui.png"), new Rectangle(ClientWidth / 2 - 50, ClientHeight - 20 - 50, 100, 50));
-
+			gui = new RectangleModel(new Texture("Assets/Textures/gui.vif"), new Rectangle(ClientWidth / 2 - 50, ClientHeight - 20 - 50, 100, 50));
 		}
 
-		protected override void OnKeyDown(KeyboardKeyEventArgs e) {
-			base.OnKeyDown(e);
-			input_manager.SetKey(e.Key, true);
-		}
+		protected override void OnKeyDown(KeyboardKeyEventArgs e) => input_manager.SetKey(e.Key, true);
 
-		protected override void OnKeyUp(KeyboardKeyEventArgs e) {
-			base.OnKeyUp(e);
-			input_manager.SetKey(e.Key, false);
-		}
+		protected override void OnKeyUp(KeyboardKeyEventArgs e) => input_manager.SetKey(e.Key, false);
 
-		protected override void OnMouseMove(MouseMoveEventArgs e) {
-			base.OnMouseMove(e);
-			input_manager.SetMousePos(new Vector2(e.X, e.Y));
-		}
+		protected override void OnMouseMove(MouseMoveEventArgs e) => input_manager.SetMousePos(new Vector2(e.X, e.Y));
+
+		protected override void OnMouseWheel(MouseWheelEventArgs e) => input_manager.SetScrollWeel(e.Delta);
+
+		protected override void OnMouseDown(MouseButtonEventArgs e) => input_manager.SetMouseButton(e.Button, true);
+
+		protected override void OnMouseUp(MouseButtonEventArgs e) => input_manager.SetMouseButton(e.Button, false);
 
 		protected override void OnResize(EventArgs e) {
-			base.OnResize(e);
 			ClientWidth = Width;
 			ClientHeight = Height;
-		}
-
-		protected override void OnMouseWheel(MouseWheelEventArgs e) {
-			base.OnMouseWheel(e);
-			input_manager.SetScrollWeel(e.Delta);
-		}
-
-		protected override void OnMouseDown(MouseButtonEventArgs e) {
-			base.OnMouseDown(e);
-			input_manager.SetMouseButton(e.Button, true);
-		}
-
-		protected override void OnMouseUp(MouseButtonEventArgs e) {
-			base.OnMouseUp(e);
-			input_manager.SetMouseButton(e.Button, false);
+			SwapBuffers();
 		}
 
 		protected override void OnUpdateFrame(FrameEventArgs e) {
-			base.OnUpdateFrame(e);
 			camera.Update(e.Time);
 			tile.Update(e.Time);
 			text.MoveText(ClientWidth - text.Width, 0);
@@ -102,19 +89,18 @@ namespace Client {
 		}
 
 		protected override void OnRenderFrame(FrameEventArgs e) {
-			base.OnRenderFrame(e);
-			fps.SetText($"{1 / e.Time:.0}");
+			if (Focused && (WindowState == WindowState.Normal || WindowState == WindowState.Maximized || WindowState == WindowState.Fullscreen)) {
+				fps.SetText($"{1 / e.Time:.0}");
+				renderer.Clear();
 
-			renderer.Clear();
+				renderer.Draw(camera, tile);
+				renderer.Draw(camera, text, true);
+				renderer.Draw(camera, gui, true);
+				renderer.Draw(camera, fps, true);
+				renderer.Draw(camera, mouse_info, true);
 
-			renderer.Draw(camera, tile);
-			renderer.Draw(camera, text, true);
-			renderer.Draw(camera, gui, true);
-			renderer.Draw(camera, fps, true);
-			renderer.Draw(camera, mouse_info, true);
-
-
-			SwapBuffers();
+				SwapBuffers();
+			}
 		}
 	}
 }

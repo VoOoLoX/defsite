@@ -1,57 +1,31 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RuntimeIdentifiers>win-x64;win-x86;</RuntimeIdentifiers>
+    <NoVBRuntimeReference>True</NoVBRuntimeReference>
+    <AssemblyVersion>$([System.DateTime]::Now.ToString(`y\.d\.H\.m`))</AssemblyVersion>
+    <FileVersion>$([System.DateTime]::Now.ToString(`y\.d\.H\.m`))</FileVersion>
+    <LangVersion>Latest</LangVersion>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DefineConstants>RELEASE;NETCOREAPP;NETCOREAPP2_1</DefineConstants>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DefineConstants>RELEASE;</DefineConstants>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <Optimization>True</Optimization>
+    <Obfuscate>True</Obfuscate>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <LangVersion>latest</LangVersion>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <LangVersion>latest</LangVersion>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DebugType>Full</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\Fonts\Tiny.png" />
-    <None Remove="Assets\Shaders\Object.shader" />
-    <None Remove="Assets\Shaders\SimpleTexture.shader" />
-    <None Remove="Assets\Shaders\Text.shader" />
-    <None Remove="Assets\Textures\pot.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Assets\Fonts\Tiny.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Shaders\Object.shader">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Shaders\Text.shader">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Textures\pot.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Textures\pot.vif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Textures\gui.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Shaders\SimpleTexture.shader">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
+    <Content Include="Assets/*/*.*" CopyToOutputDirectory="PreserveNewest"></Content>
     <PackageReference Include="OpenTK.NETCore" Version="1.1.2749.6433" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0004" />
   </ItemGroup>
-
 </Project>

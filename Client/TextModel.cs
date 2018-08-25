@@ -11,7 +11,7 @@ namespace Client {
 		VertexBuffer<Vector2> vbo_uv;
 		IndexBuffer ib = default;
 		Shader shader = new Shader("Assets/Shaders/Text.shader");
-		static Texture texture = new Texture("Assets/Fonts/Tiny.png");
+		static Texture texture = new Texture("Assets/Fonts/Tiny.vif");
 
 		static readonly string chars = " ABCDEFGHIJKLMNOPRSTQUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=[]{}<>,.;:'\"/?\\|";
 		static readonly float uv_char_width = 1f / chars.Length;

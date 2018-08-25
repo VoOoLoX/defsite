@@ -33,12 +33,11 @@ namespace Client {
 		IndexBuffer ib;
 		Texture texture;
 
-
 		public TileModel() {
 			shader = new Shader("Assets/Shaders/Object.shader");
 			va = new VertextArray();
 			ib = new IndexBuffer(IndexBufferData);
-			texture = new Texture(VIF.Load("Assets/Textures/pot.vif"));
+			texture = new Texture("Assets/Textures/pot.vif");
 
 			VA.Enable();
 
@@ -84,22 +83,11 @@ namespace Client {
 			if (InputManager.IsKeyActive(Key.Tilde))
 				direction_vector = Vector3.Zero - position;
 
-			//Feature(@vooolox): make option to choose input device
-
-			// if (GamePad.GetState(0).IsConnected) {
-			// 	GamePad.SetVibration(0, 1, 0);
-			// 	direction_vector = new Vector3(MathF.Round(GamePad.GetState(0).ThumbSticks.Left.X, 2), -MathF.Round(GamePad.GetState(0).ThumbSticks.Left.Y, 2), 0);
-			// }
-
-
-
 			direction_vector.NormalizeFast();
 			direction_vector *= (float)delta_time * 2;
 			Move(direction_vector);
 
 			position += direction_vector;
-
-			var r = new Random();
 
 			Shader.SetUniform("sprite_size", 64);
 			Shader.SetUniform("outline_color", new Vector4(1, 1, 0, 1.0f));

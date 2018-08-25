@@ -33,6 +33,18 @@ namespace Client {
 			Components = comps;
 		}
 
+		public void Rotate180() => Data.Reverse();
+
+		public void FlipHorizontal() {
+			var new_data = new List<Pixel[]>();
+			for (var i = 0; i < Data.Count; i += Width)
+				new_data.Add(Data.Skip(i).Take(Width).ToArray());
+
+			for (var i = 0; i < new_data.Count; i++)
+				new_data[i] = new_data[i].Reverse().ToArray();
+			Data = new_data.SelectMany(x => x).ToList();
+		}
+
 		public byte[] Bytes() {
 			var ret = new List<byte>();
 			foreach (var p in Data) {
