@@ -21,12 +21,12 @@ namespace Client {
 			model.Texture.Enable();
 			model.IB.Enable();
 
-
-			if (gui) {
+			if (gui)
 				model.Shader.SetUniform("mvp", camera.ProjectionMatrix * model.ModelMatrix);
-			} else
+			else
 				model.Shader.SetUniform("mvp", camera.ProjectionMatrix * camera.ViewMatrix * model.ModelMatrix);
 
+			model.PreDraw();
 			GL.DrawElements(PrimitiveType.Triangles, model.IB.Count, DrawElementsType.UnsignedInt, 0);
 
 			model.IB.Disable();

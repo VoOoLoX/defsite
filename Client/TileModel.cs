@@ -6,42 +6,19 @@ using System.Text;
 
 namespace Client {
 	public class TileModel : Model {
-		Vector2[] VertexData =
-			new Vector2[] {
-				new Vector2(-1f, -1f),
-				new Vector2( 1f, -1f),
-				new Vector2( 1f,  1f),
-				new Vector2(-1f,  1f),
-			};
+		VertextArray va = new VertextArray();
+		IndexBuffer ib = new IndexBuffer(IndexBufferData);
 
-		Vector2[] UVData =
-			new Vector2[] {
-				new Vector2(0f, 0f),
-				new Vector2(1f, 0f),
-				new Vector2(1f, 1f),
-				new Vector2(0f, 1f),
-			};
+		static Shader shader = AssetManager.Get<Shader>("ObjectShader");
+		static Texture texture = AssetManager.Get<Texture>("Pot");
 
-		uint[] IndexBufferData =
-			new uint[] {
-				0, 1, 2,
-				2, 3, 0
-			};
-
-		Shader shader;
-		VertextArray va;
-		IndexBuffer ib;
-		Texture texture;
+		Vector3 direction_vector = new Vector3();
+		Vector3 position = new Vector3();
 
 		public TileModel() {
-			shader = new Shader("Assets/Shaders/Object.shader");
-			va = new VertextArray();
-			ib = new IndexBuffer(IndexBufferData);
-			texture = new Texture("Assets/Textures/pot.vif");
-
 			VA.Enable();
 
-			var vbo_pos = new VertexBuffer<Vector2>(VertexData);
+			var vbo_pos = new VertexBuffer<Vector2>(PositionData);
 			var vbo_uv = new VertexBuffer<Vector2>(UVData);
 
 			var pos = Shader.GetAttribute("position");
@@ -52,20 +29,8 @@ namespace Client {
 
 			VA.Disable();
 		}
-		public override Shader Shader => shader;
-
-		public override VertextArray VA => va;
-
-		public override IndexBuffer IB => ib;
-
-		public override Texture Texture => texture;
-
-		Vector3 direction_vector = new Vector3();
-
-		Vector3 position = new Vector3();
 
 		public override void Update(double delta_time) {
-
 			direction_vector = Vector3.Zero;
 
 			if (InputManager.IsKeyActive(Key.D))
@@ -85,12 +50,45 @@ namespace Client {
 
 			direction_vector.NormalizeFast();
 			direction_vector *= (float)delta_time * 2;
+
 			Move(direction_vector);
 
 			position += direction_vector;
+		}
 
+		public override void PreDraw() {
 			Shader.SetUniform("sprite_size", 64);
 			Shader.SetUniform("outline_color", new Vector4(1, 1, 0, 1.0f));
 		}
+
+		static Vector2[] PositionData =
+			new Vector2[] {
+				new Vector2(-1, -1),
+				new Vector2( 1, -1),
+				new Vector2( 1,  1),
+				new Vector2(-1,  1),
+			};
+
+		static Vector2[] UVData =
+			new Vector2[] {
+				new Vector2(0, 0),
+				new Vector2(1, 0),
+				new Vector2(1, 1),
+				new Vector2(0, 1),
+			};
+
+		static uint[] IndexBufferData =
+			new uint[] {
+				0, 1, 2,
+				2, 3, 0
+			};
+
+		public override Shader Shader => shader;
+
+		public override VertextArray VA => va;
+
+		public override IndexBuffer IB => ib;
+
+		public override Texture Texture => texture;
 	}
 }

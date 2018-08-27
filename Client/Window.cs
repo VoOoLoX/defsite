@@ -4,10 +4,8 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Client {
@@ -45,6 +43,15 @@ namespace Client {
 				Environment.Exit(1);
 			}
 
+			AssetManager.Load(AssetType.Texture, "Pot", "pot.vif");
+			AssetManager.Load(AssetType.Texture, "GUI", "gui.vif");
+			AssetManager.Load(AssetType.Font, "TinyFont", "Tiny.vif");
+
+			AssetManager.Load(AssetType.Shader, "ObjectShader", "Object.shader");
+			AssetManager.Load(AssetType.Shader, "SimpleTextureShader", "SimpleTexture.shader");
+			AssetManager.Load(AssetType.Shader, "TextShader", "Text.shader");
+
+			VSync = VSyncMode.Off;
 			CursorVisible = true;
 
 			ClientWidth = Width;
@@ -55,10 +62,12 @@ namespace Client {
 			input_manager = new InputManager();
 
 			tile = new TileModel();
+
 			text = new TextModel("VoOoLoX", scale: .2f, color: Color.SteelBlue);
 			fps = new TextModel("", scale: .2f, color: Color.DarkViolet);
 			mouse_info = new TextModel("", scale: .2f, color: Color.Cyan);
-			gui = new RectangleModel(new Texture("Assets/Textures/gui.vif"), new Rectangle(ClientWidth / 2 - 50, ClientHeight - 20 - 50, 100, 50));
+
+			gui = new RectangleModel(AssetManager.Get<Texture>("GUI"), new Rectangle(ClientWidth / 2 - 50, ClientHeight - 20 - 50, 100, 50));
 		}
 
 		protected override void OnKeyDown(KeyboardKeyEventArgs e) => input_manager.SetKey(e.Key, true);
@@ -86,6 +95,7 @@ namespace Client {
 			gui.MoveRect(new Vector2(ClientWidth / 2 - Utils.WorldUnitToScreen(1), ClientHeight - Utils.WorldUnitToScreen(1.2f)));
 			mouse_info.SetText($"{InputManager.MousePos().X}:{InputManager.MousePos().Y}:{InputManager.IsButtonActive(MouseButton.Left)}:{InputManager.IsButtonActive(MouseButton.Right)}");
 			mouse_info.MoveText(0, fps.Height);
+
 		}
 
 		protected override void OnRenderFrame(FrameEventArgs e) {

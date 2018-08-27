@@ -7,10 +7,11 @@ using System.Text;
 namespace Client {
 	class RectangleModel : Model {
 		VertextArray va = new VertextArray();
-		VertexBuffer<Vector2> vbo_pos;
-		VertexBuffer<Vector2> vbo_uv;
-		IndexBuffer ib = default;
-		Shader shader = new Shader("Assets/Shaders/Object.shader");
+		VertexBuffer<Vector2> vbo_pos = new VertexBuffer<Vector2>(PositionData);
+		VertexBuffer<Vector2> vbo_uv = new VertexBuffer<Vector2>(UVData);
+		IndexBuffer ib = new IndexBuffer(IndexBufferData);
+
+		static Shader shader = AssetManager.Get<Shader>("ObjectShader");
 
 		Texture RectTexture = default;
 		Vector2 RectWorldPosition = default;
@@ -26,44 +27,23 @@ namespace Client {
 			RectPosition = new Vector2(rect.X, rect.Y);
 			RectScale = scale;
 
-			vbo_pos = new VertexBuffer<Vector2>(GeneratePositions());
-			vbo_uv = new VertexBuffer<Vector2>(GenerateUVs());
-			ib = new IndexBuffer(GenerateIndexBuffers());
-
 			var pos = Shader.GetAttribute("position");
 			VA.AddBuffer(vbo_pos, pos, 2, 0);
 
 			var uv = Shader.GetAttribute("uv_coords");
 			VA.AddBuffer(vbo_uv, uv, 2, 0);
 
-			//250px width - 50px unit object = 200px
 			var scale_x = rect.Width / Utils.WorldUnitToScreen(scale);
 			var scale_y = rect.Height / Utils.WorldUnitToScreen(scale);
+
 			Scale(scale_x, scale_y);
 			MoveRect(RectPosition);
 
 			if (color != default)
 				Color = color;
 
-			//Shader.SetUniform("text_color", Color);
-			Shader.SetUniform("sprite_size", 64);
-			Shader.SetUniform("outline_color", new Vector4(1, 0, 0, 1.0f));
-
 			VA.Disable();
 		}
-
-		// public float Width => Utils.TextWidth(Text, RectScale);
-		// public float Height => Utils.TextHeight(RectScale);
-
-		// public void SetColor(Color color) {
-		// 	//Shader.SetUniform("text_color", color);
-		// }
-
-		// public void SetText(string text) {
-		// 	vbo_pos.Update(GenerateCharPositions(text));
-		// 	vbo_uv.Update(GenerateCharUVs(text));
-		// 	ib = new IndexBuffer(GenerateIndexBuffers(text.Length));
-		// }
 
 		public void MoveRect(Vector2 position) {
 			RectPosition = position;
@@ -72,35 +52,39 @@ namespace Client {
 			RectWorldPosition = move_pos;
 		}
 
+		public override void PreDraw() {
+			Shader.SetUniform("sprite_size", 64);
+			Shader.SetUniform("outline_color", new Vector4(1, 0, 0, 1.0f));
+		}
 
-		Vector2[] GeneratePositions() {
-			var pos = new Vector2[] {
+		static Vector2[] PositionData =
+			new Vector2[] {
 					new Vector2(0, 0),
 					new Vector2(1, 0),
 					new Vector2(1, -1),
 					new Vector2(0, -1),
 				};
-			return pos;
-		}
-		Vector2[] GenerateUVs() {
-			var uv = new Vector2[] {
+
+		static Vector2[] UVData =
+			new Vector2[] {
 					new Vector2(0, 0),
 					new Vector2(1, 0),
 					new Vector2(1, 1),
 					new Vector2(0, 1),
 				};
-			return uv;
-		}
-		uint[] GenerateIndexBuffers() {
-			var ibs = new uint[] {
+
+		static uint[] IndexBufferData =
+			new uint[] {
 				0,1,2,
 				2,3,0
 			};
-			return ibs;
-		}
+
 		public override Shader Shader => shader;
+
 		public override VertextArray VA => va;
+
 		public override IndexBuffer IB => ib;
+
 		public override Texture Texture => RectTexture;
 	}
 }

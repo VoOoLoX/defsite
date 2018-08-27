@@ -9,7 +9,6 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Client {
 	public class Shader {
-		public List<(int, ShaderType, string)> Shaders { get; private set; }
 		public int ID { get; private set; }
 
 		public Shader(FileInfo file) :
@@ -17,7 +16,6 @@ namespace Client {
 		}
 
 		public Shader(string file) {
-			Shaders = new List<(int, ShaderType, string)>();
 			ID = GL.CreateProgram();
 			Enable();
 			Parse(File.Exists(file) ? File.ReadAllText(file) : "");
@@ -58,8 +56,6 @@ namespace Client {
 				var shader_info = GL.GetShaderInfoLog(id);
 				if (!string.IsNullOrEmpty(shader_info))
 					Console.WriteLine($"Shader compile error: {shader_info}");
-
-				Shaders.Add((id, t, src.Trim()));
 
 				GL.AttachShader(ID, id);
 			}

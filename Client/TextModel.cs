@@ -10,8 +10,9 @@ namespace Client {
 		VertexBuffer<Vector2> vbo_pos;
 		VertexBuffer<Vector2> vbo_uv;
 		IndexBuffer ib = default;
-		Shader shader = new Shader("Assets/Shaders/Text.shader");
-		static Texture texture = new Texture("Assets/Fonts/Tiny.vif");
+
+		static Shader shader = AssetManager.Get<Shader>("TextShader");
+		static Texture texture = AssetManager.Get<Texture>("TinyFont");
 
 		static readonly string chars = " ABCDEFGHIJKLMNOPRSTQUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=[]{}<>,.;:'\"/?\\|";
 		static readonly float uv_char_width = 1f / chars.Length;
@@ -46,7 +47,7 @@ namespace Client {
 			if (color != default)
 				Color = color;
 
-			Shader.SetUniform("text_color", Color);
+			SetColor(Color);
 
 			VA.Disable();
 		}
@@ -123,6 +124,10 @@ namespace Client {
 				});
 			}
 			return ibs.SelectMany(x => x).ToArray();
+		}
+
+		public override void PreDraw() {
+			SetColor(Color);
 		}
 
 		public override Shader Shader => shader;
