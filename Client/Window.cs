@@ -1,4 +1,6 @@
 ﻿using OpenTK;
+using OpenTK.Audio;
+using OpenTK.Audio.OpenAL;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
@@ -70,6 +72,7 @@ namespace Client {
 			gui = new RectangleModel(AssetManager.Get<Texture>("GUI"), new Rectangle(ClientWidth / 2 - 50, ClientHeight - 20 - 50, 100, 50));
 		}
 
+		#region Inputs
 		protected override void OnKeyDown(KeyboardKeyEventArgs e) => input_manager.SetKey(e.Key, true);
 
 		protected override void OnKeyUp(KeyboardKeyEventArgs e) => input_manager.SetKey(e.Key, false);
@@ -81,14 +84,17 @@ namespace Client {
 		protected override void OnMouseDown(MouseButtonEventArgs e) => input_manager.SetMouseButton(e.Button, true);
 
 		protected override void OnMouseUp(MouseButtonEventArgs e) => input_manager.SetMouseButton(e.Button, false);
+		#endregion
 
 		protected override void OnResize(EventArgs e) {
 			ClientWidth = Width;
 			ClientHeight = Height;
+			camera.UpdateProjectionMatrix();
 			SwapBuffers();
 		}
 
 		protected override void OnUpdateFrame(FrameEventArgs e) {
+			ProcessEvents();
 			camera.Update(e.Time);
 			tile.Update(e.Time);
 			text.MoveText(ClientWidth - text.Width, 0);
@@ -101,6 +107,7 @@ namespace Client {
 		protected override void OnRenderFrame(FrameEventArgs e) {
 			if (Focused && (WindowState == WindowState.Normal || WindowState == WindowState.Maximized || WindowState == WindowState.Fullscreen)) {
 				fps.SetText($"{1 / e.Time:.0}");
+				text.SetText("VoOoLoX");
 				renderer.Clear();
 
 				renderer.Draw(camera, tile);

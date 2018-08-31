@@ -28,6 +28,11 @@ namespace Client {
 			ViewMatrix *= Matrix4.CreateTranslation(move_vector.X, move_vector.Y, 0);
 		}
 
+		public void UpdateProjectionMatrix() {
+			ProjectionMatrix = Matrix4.CreateOrthographic(Window.ClientWidth, Window.ClientHeight, 1.0f, -1.0f);
+			Zoom(ZoomFactor);
+		}
+
 		public void Zoom(float zoom_factor) {
 			ProjectionMatrix *= Matrix4.CreateScale(zoom_factor, zoom_factor, 0);
 		}
