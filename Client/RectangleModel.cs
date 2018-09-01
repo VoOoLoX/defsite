@@ -11,11 +11,11 @@ namespace Client {
 		VertexBuffer<Vector2> vbo_uv = new VertexBuffer<Vector2>(UVData);
 		IndexBuffer ib = new IndexBuffer(IndexBufferData);
 
-		static Shader shader = AssetManager.Get<Shader>("ObjectShader");
+		static Shader shader = AssetManager.Get<Shader>("ColorShader");
 
 		Texture RectTexture = default;
 		Vector2 RectWorldPosition = default;
-		Vector2 RectPosition = default;
+		Rectangle RectPosition = default;
 		float RectScale = default;
 
 		Color Color = new Color(0, 0, 0, 255);
@@ -24,14 +24,14 @@ namespace Client {
 			VA.Enable();
 
 			RectTexture = texture;
-			RectPosition = new Vector2(rect.X, rect.Y);
+			RectPosition = rect;
 			RectScale = scale;
 
 			var pos = Shader.GetAttribute("position");
 			VA.AddBuffer(vbo_pos, pos, 2, 0);
 
-			var uv = Shader.GetAttribute("uv_coords");
-			VA.AddBuffer(vbo_uv, uv, 2, 0);
+			// var uv = Shader.GetAttribute("uv_coords");
+			// VA.AddBuffer(vbo_uv, uv, 2, 0);
 
 			var scale_x = rect.Width / Utils.WorldUnitToScreen(scale);
 			var scale_y = rect.Height / Utils.WorldUnitToScreen(scale);
@@ -42,19 +42,32 @@ namespace Client {
 			if (color != default)
 				Color = color;
 
+			SetColor(Color);
+
 			VA.Disable();
 		}
 
+		public void MoveRect(Rectangle rect) {
+			RectPosition = rect;
+			var move_pos = Utils.ScreenToWorld(rect.X, rect.Y);
+			Move(new Vector2(move_pos.X - RectWorldPosition.X, -move_pos.Y + RectWorldPosition.Y));
+			RectWorldPosition = move_pos;
+		}
+
 		public void MoveRect(Vector2 position) {
-			RectPosition = position;
+			RectPosition.X = (int)position.X;
+			RectPosition.Y = (int)position.Y;
 			var move_pos = Utils.ScreenToWorld(position.X, position.Y);
 			Move(new Vector2(move_pos.X - RectWorldPosition.X, -move_pos.Y + RectWorldPosition.Y));
 			RectWorldPosition = move_pos;
 		}
 
+		public void SetColor(Color color) {
+			Color = color;
+		}
 		public override void PreDraw() {
-			Shader.SetUniform("sprite_size", 64);
-			Shader.SetUniform("outline_color", new Vector4(1, 0, 0, 1.0f));
+			// Shader.SetUniform("sprite_size", 64);
+			Shader.SetUniform("color", Color);
 		}
 
 		static Vector2[] PositionData =
@@ -78,6 +91,8 @@ namespace Client {
 				0,1,2,
 				2,3,0
 			};
+
+		public Rectangle Position => RectPosition;
 
 		public override Shader Shader => shader;
 

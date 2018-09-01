@@ -23,19 +23,17 @@ namespace Client {
 		}
 
 		public void Parse(string source) {
-			var shaders = new List<string>();
-
-			if (!source.Contains("#type ")) {
-				Console.WriteLine("Please specify type of the shader by adding line '#type {vertex | fragment}' on top of shader source.");
+			if (!source.Contains('$')) {
+				Console.WriteLine("Please specify type of the shader by adding line '${vertex | fragment}' on top of shader source.");
 				return;
 			}
 
-			shaders = source.Split("#type ").ToList();
+			var shaders = source.Split('$').ToList();
 
 			foreach (var shader in shaders) {
-				if (string.IsNullOrEmpty(shader))
-					continue;
-				var shdr = shader.Split(Environment.NewLine, 2);
+				if (string.IsNullOrEmpty(shader)) continue;
+				shader.Replace('\r', '\n').Replace("\n\n", "\n");
+				var shdr = shader.Split('\n', 2);
 				var type = shdr[0];
 				var src = shdr[1];
 				var t = default(ShaderType);

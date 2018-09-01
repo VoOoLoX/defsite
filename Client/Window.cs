@@ -50,8 +50,9 @@ namespace Client {
 			AssetManager.Load(AssetType.Font, "TinyFont", "Tiny.vif");
 
 			AssetManager.Load(AssetType.Shader, "ObjectShader", "Object.shader");
-			AssetManager.Load(AssetType.Shader, "SimpleTextureShader", "SimpleTexture.shader");
+			AssetManager.Load(AssetType.Shader, "TextureShader", "Texture.shader");
 			AssetManager.Load(AssetType.Shader, "TextShader", "Text.shader");
+			AssetManager.Load(AssetType.Shader, "ColorShader", "Color.shader");
 
 			VSync = VSyncMode.Off;
 			CursorVisible = true;
@@ -102,12 +103,18 @@ namespace Client {
 			mouse_info.SetText($"{InputManager.MousePos().X}:{InputManager.MousePos().Y}:{InputManager.IsButtonActive(MouseButton.Left)}:{InputManager.IsButtonActive(MouseButton.Right)}");
 			mouse_info.MoveText(0, fps.Height);
 
+			var mouse_p = InputManager.MousePos();
+			gui.SetColor(Color.DarkGray);
+			if ((mouse_p.X > gui.Position.X && mouse_p.X < gui.Position.X + gui.Position.Width) &&
+				(mouse_p.Y > gui.Position.Y && mouse_p.Y < gui.Position.Y + gui.Position.Height) &&
+				InputManager.IsButtonActive(MouseButton.Left)) {
+				gui.SetColor(Color.Red);
+			}
 		}
 
 		protected override void OnRenderFrame(FrameEventArgs e) {
 			if (Focused && (WindowState == WindowState.Normal || WindowState == WindowState.Maximized || WindowState == WindowState.Fullscreen)) {
 				fps.SetText($"{1 / e.Time:.0}");
-				text.SetText("VoOoLoX");
 				renderer.Clear();
 
 				renderer.Draw(camera, tile);

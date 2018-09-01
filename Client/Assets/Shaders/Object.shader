@@ -1,4 +1,4 @@
-﻿#type vertex
+﻿$vertex
 #version 130
 
 in vec2 position;
@@ -15,7 +15,7 @@ void main() {
 	UV = uv_coords;
 }
 
-#type fragment
+$fragment
 #version 130
 
 in vec2 UV;

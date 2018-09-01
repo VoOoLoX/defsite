@@ -36,11 +36,6 @@ namespace Client {
 
 		}
 
-		public static void Add<T>(string name, T asset) {
-			if (!assets.ContainsKey(name))
-				assets.Add(name, asset);
-		}
-
 		public static T Get<T>(string name) {
 			if (assets.ContainsKey(name))
 				return (T)Convert.ChangeType(assets[name], typeof(T));
