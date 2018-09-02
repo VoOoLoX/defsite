@@ -1,4 +1,4 @@
-﻿$vertex
+$vertex
 #version 130
 
 in vec2 position;

@@ -1,4 +1,4 @@
-﻿using OpenTK;
+using OpenTK;
 using OpenTK.Audio;
 using OpenTK.Audio.OpenAL;
 using OpenTK.Graphics;
@@ -61,7 +61,7 @@ namespace Client {
 			ClientHeight = Height;
 
 			renderer = new Renderer(new Color(20, 20, 20, 255));
-			camera = new Camera();
+			camera = new Camera(80);
 			input_manager = new InputManager();
 
 			tile = new TileModel();
@@ -70,7 +70,8 @@ namespace Client {
 			fps = new TextModel("", scale: .2f, color: Color.DarkViolet);
 			mouse_info = new TextModel("", scale: .2f, color: Color.Cyan);
 
-			gui = new RectangleModel(AssetManager.Get<Texture>("GUI"), new Rectangle(ClientWidth / 2 - 50, ClientHeight - 20 - 50, 100, 50));
+			gui = new RectangleModel(new Rectangle(ClientWidth / 2 - 50, ClientHeight - 20 - 50, 100, 50));
+			gui.Width = 80;
 		}
 
 		#region Inputs
@@ -99,14 +100,14 @@ namespace Client {
 			camera.Update(e.Time);
 			tile.Update(e.Time);
 			text.MoveText(ClientWidth - text.Width, 0);
-			gui.MoveRect(new Vector2(ClientWidth / 2 - Utils.WorldUnitToScreen(1), ClientHeight - Utils.WorldUnitToScreen(1.2f)));
-			mouse_info.SetText($"{InputManager.MousePos().X}:{InputManager.MousePos().Y}:{InputManager.IsButtonActive(MouseButton.Left)}:{InputManager.IsButtonActive(MouseButton.Right)}");
+			gui.MoveRect(ClientWidth / 2 - gui.Width / 2, ClientHeight - (int)(gui.Height * 1.2));
+			mouse_info.Text = $"{InputManager.MousePos().X}:{InputManager.MousePos().Y}:{InputManager.IsButtonActive(MouseButton.Left)}:{InputManager.IsButtonActive(MouseButton.Right)}";
 			mouse_info.MoveText(0, fps.Height);
 
 			var mouse_p = InputManager.MousePos();
 			gui.SetColor(Color.DarkGray);
-			if ((mouse_p.X > gui.Position.X && mouse_p.X < gui.Position.X + gui.Position.Width) &&
-				(mouse_p.Y > gui.Position.Y && mouse_p.Y < gui.Position.Y + gui.Position.Height) &&
+			if ((mouse_p.X > gui.Rect.X && mouse_p.X < gui.Rect.X + gui.Rect.Width) &&
+				(mouse_p.Y > gui.Rect.Y && mouse_p.Y < gui.Rect.Y + gui.Rect.Height) &&
 				InputManager.IsButtonActive(MouseButton.Left)) {
 				gui.SetColor(Color.Red);
 			}
@@ -114,7 +115,7 @@ namespace Client {
 
 		protected override void OnRenderFrame(FrameEventArgs e) {
 			if (Focused && (WindowState == WindowState.Normal || WindowState == WindowState.Maximized || WindowState == WindowState.Fullscreen)) {
-				fps.SetText($"{1 / e.Time:.0}");
+				fps.Text = $"{1 / e.Time:.0}";
 				renderer.Clear();
 
 				renderer.Draw(camera, tile);

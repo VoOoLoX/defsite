@@ -1,4 +1,4 @@
-﻿using OpenTK;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,8 @@ namespace Client {
 			GL.Viewport(0, 0, Window.ClientWidth, Window.ClientHeight);
 			model.Shader.Enable();
 			model.VA.Enable();
-			model.Texture.Enable();
+			if (model.Texture != default(Texture))
+				model.Texture.Enable();
 			model.IB.Enable();
 
 			if (gui)
@@ -30,7 +31,8 @@ namespace Client {
 			GL.DrawElements(PrimitiveType.Triangles, model.IB.Count, DrawElementsType.UnsignedInt, 0);
 
 			model.IB.Disable();
-			model.Texture.Disable();
+			if (model.Texture != default(Texture))
+				model.Texture.Disable();
 			model.VA.Disable();
 			model.Shader.Disable();
 		}

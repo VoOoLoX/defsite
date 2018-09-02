@@ -1,4 +1,4 @@
-﻿using OpenTK;
+using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +10,7 @@ namespace Client {
 		public abstract Shader Shader { get; }
 		public abstract VertextArray VA { get; }
 		public abstract IndexBuffer IB { get; }
-		public abstract Texture Texture { get; }
+		public virtual Texture Texture { get => default; }
 
 		public virtual void PreDraw() { }
 		public virtual void Update(double delta_time) { }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -14,11 +14,11 @@ namespace Client {
 			Enable();
 			buffer.Enable();
 			EnableBuffer(id);
-			if (typeof(T) == typeof(Vector2)) 
+			if (typeof(T) == typeof(Vector2))
 				GL.VertexAttribPointer(id, 2, VertexAttribPointerType.Float, false, stride * sizeof(float), offset);
-			if (typeof(T) == typeof(Vector3)) 
+			if (typeof(T) == typeof(Vector3))
 				GL.VertexAttribPointer(id, 3, VertexAttribPointerType.Float, false, stride * sizeof(float), offset);
-			if (typeof(T) == typeof(Vector4)) 
+			if (typeof(T) == typeof(Vector4))
 				GL.VertexAttribPointer(id, 4, VertexAttribPointerType.Float, false, stride * sizeof(float), offset);
 			DisableBuffer();
 			buffer.Disable();

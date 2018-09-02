@@ -1,4 +1,4 @@
-﻿using OpenTK;
+using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace Client {
 
 		Vector2 TextWorldPosition = default;
 		Vector2 TextPosition = default;
-		string Text = default;
+		string TextValue = default;
 		float TextScale = default;
 
 		Color Color = new Color(0, 0, 0, 255);
@@ -27,7 +27,7 @@ namespace Client {
 		public TextModel(string text, Vector2 position = default, float scale = 1, Color color = default) {
 			VA.Enable();
 
-			Text = text;
+			TextValue = text;
 			TextPosition = position;
 			TextScale = scale;
 
@@ -52,12 +52,12 @@ namespace Client {
 			VA.Disable();
 		}
 
-		public float Width => Utils.TextWidth(Text, TextScale);
+		public float Width => Utils.TextWidth(TextValue, TextScale);
 		public float Height => Utils.TextHeight(TextScale);
 
-		public void SetColor(Color color) {
-			Shader.SetUniform("text_color", color);
-		}
+		public string Text { get => TextValue; set => SetText(value); }
+
+		public void SetColor(Color color) => Color = color;
 
 		public void SetText(string text) {
 			vbo_pos.Update(GenerateCharPositions(text));
@@ -126,9 +126,7 @@ namespace Client {
 			return ibs.SelectMany(x => x).ToArray();
 		}
 
-		public override void PreDraw() {
-			SetColor(Color);
-		}
+		public override void PreDraw() => Shader.SetUniform("text_color", Color);
 
 		public override Shader Shader => shader;
 

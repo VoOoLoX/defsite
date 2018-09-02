@@ -1,4 +1,4 @@
-﻿using OpenTK;
+using OpenTK;
 using OpenTK.Input;
 using System;
 using System.Collections.Generic;
@@ -13,8 +13,8 @@ namespace Client {
 		float zoom = 1;
 
 		const float zoom_constant = 1f / 20f;
-		public Camera() {
-			ZoomFactor = 50;
+		public Camera(float zoom = 50) {
+			ZoomFactor = zoom;
 			ViewMatrix = Matrix4.LookAt(
 					new Vector3(0, 0, 1),
 					new Vector3(0, 0, 0),
