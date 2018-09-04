@@ -7,7 +7,7 @@ using System.Text;
 namespace Client {
 	public class TileModel : Model {
 		VertextArray va = new VertextArray();
-		IndexBuffer ib = new IndexBuffer(IndexBufferData);
+		IndexBuffer ib = new IndexBuffer(Primitives.QuadCentered.IndexBufferData);
 
 		static Shader shader = AssetManager.Get<Shader>("ObjectShader");
 		static Texture texture = AssetManager.Get<Texture>("Pot");
@@ -18,8 +18,8 @@ namespace Client {
 		public TileModel() {
 			VA.Enable();
 
-			var vbo_pos = new VertexBuffer<Vector2>(PositionData);
-			var vbo_uv = new VertexBuffer<Vector2>(UVData);
+			var vbo_pos = new VertexBuffer<Vector2>(Primitives.QuadCentered.PositionData);
+			var vbo_uv = new VertexBuffer<Vector2>(Primitives.QuadCentered.UVData);
 
 			var pos = Shader.GetAttribute("position");
 			var uv = Shader.GetAttribute("uv_coords");
@@ -33,19 +33,19 @@ namespace Client {
 		public override void Update(double delta_time) {
 			direction_vector = Vector3.Zero;
 
-			if (InputManager.IsKeyActive(Key.D))
+			if (InputManager.IsActive(Key.D))
 				direction_vector.X = 1;
 
-			if (InputManager.IsKeyActive(Key.A))
+			if (InputManager.IsActive(Key.A))
 				direction_vector.X = -1;
 
-			if (InputManager.IsKeyActive(Key.W))
+			if (InputManager.IsActive(Key.W))
 				direction_vector.Y = 1;
 
-			if (InputManager.IsKeyActive(Key.S))
+			if (InputManager.IsActive(Key.S))
 				direction_vector.Y = -1;
 
-			if (InputManager.IsKeyActive(Key.Tilde))
+			if (InputManager.IsActive(Key.Tilde))
 				direction_vector = Vector3.Zero - position;
 
 			direction_vector.NormalizeFast();
@@ -60,28 +60,6 @@ namespace Client {
 			Shader.SetUniform("sprite_size", 64);
 			Shader.SetUniform("outline_color", new Vector4(1, 1, 0, 1.0f));
 		}
-
-		static Vector2[] PositionData =
-			new Vector2[] {
-				new Vector2(-1, -1),
-				new Vector2( 1, -1),
-				new Vector2( 1,  1),
-				new Vector2(-1,  1),
-			};
-
-		static Vector2[] UVData =
-			new Vector2[] {
-				new Vector2(0, 0),
-				new Vector2(1, 0),
-				new Vector2(1, 1),
-				new Vector2(0, 1),
-			};
-
-		static uint[] IndexBufferData =
-			new uint[] {
-				0, 1, 2,
-				2, 3, 0
-			};
 
 		public override Shader Shader => shader;
 

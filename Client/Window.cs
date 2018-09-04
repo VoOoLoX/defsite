@@ -18,6 +18,7 @@ namespace Client {
 
 		public static int ClientWidth { get; private set; }
 		public static int ClientHeight { get; private set; }
+		public static Point ClientCenter { get; private set; }
 
 		Renderer renderer;
 		Camera camera;
@@ -59,6 +60,7 @@ namespace Client {
 
 			ClientWidth = Width;
 			ClientHeight = Height;
+			ClientCenter = new Point(ClientWidth / 2, ClientHeight / 2);
 
 			renderer = new Renderer(new Color(20, 20, 20, 255));
 			camera = new Camera(80);
@@ -75,22 +77,23 @@ namespace Client {
 		}
 
 		#region Inputs
-		protected override void OnKeyDown(KeyboardKeyEventArgs e) => input_manager.SetKey(e.Key, true);
+		protected override void OnKeyDown(KeyboardKeyEventArgs e) => input_manager.Set(e.Key, true);
 
-		protected override void OnKeyUp(KeyboardKeyEventArgs e) => input_manager.SetKey(e.Key, false);
+		protected override void OnKeyUp(KeyboardKeyEventArgs e) => input_manager.Set(e.Key, false);
 
-		protected override void OnMouseMove(MouseMoveEventArgs e) => input_manager.SetMousePos(new Vector2(e.X, e.Y));
+		protected override void OnMouseMove(MouseMoveEventArgs e) => input_manager.Set(new Point(e.X, e.Y));
 
-		protected override void OnMouseWheel(MouseWheelEventArgs e) => input_manager.SetScrollWeel(e.Delta);
+		protected override void OnMouseWheel(MouseWheelEventArgs e) => input_manager.Set(e.Delta);
 
-		protected override void OnMouseDown(MouseButtonEventArgs e) => input_manager.SetMouseButton(e.Button, true);
+		protected override void OnMouseDown(MouseButtonEventArgs e) => input_manager.Set(e.Button, true);
 
-		protected override void OnMouseUp(MouseButtonEventArgs e) => input_manager.SetMouseButton(e.Button, false);
+		protected override void OnMouseUp(MouseButtonEventArgs e) => input_manager.Set(e.Button, false);
 		#endregion
 
 		protected override void OnResize(EventArgs e) {
 			ClientWidth = Width;
 			ClientHeight = Height;
+			ClientCenter = new Point(ClientWidth / 2, ClientHeight / 2);
 			camera.UpdateProjectionMatrix();
 			SwapBuffers();
 		}
@@ -100,15 +103,15 @@ namespace Client {
 			camera.Update(e.Time);
 			tile.Update(e.Time);
 			text.MoveText(ClientWidth - text.Width, 0);
-			gui.MoveRect(ClientWidth / 2 - gui.Width / 2, ClientHeight - (int)(gui.Height * 1.2));
-			mouse_info.Text = $"{InputManager.MousePos().X}:{InputManager.MousePos().Y}:{InputManager.IsButtonActive(MouseButton.Left)}:{InputManager.IsButtonActive(MouseButton.Right)}";
+			gui.MoveRect(ClientCenter.X - gui.Width / 2, ClientHeight - (int)(gui.Height * 1.2));
+			mouse_info.Text = $"{InputManager.MousePos().X}:{InputManager.MousePos().Y}:{InputManager.IsActive(MouseButton.Left)}:{InputManager.IsActive(MouseButton.Right)}";
 			mouse_info.MoveText(0, fps.Height);
 
 			var mouse_p = InputManager.MousePos();
 			gui.SetColor(Color.DarkGray);
 			if ((mouse_p.X > gui.Rect.X && mouse_p.X < gui.Rect.X + gui.Rect.Width) &&
 				(mouse_p.Y > gui.Rect.Y && mouse_p.Y < gui.Rect.Y + gui.Rect.Height) &&
-				InputManager.IsButtonActive(MouseButton.Left)) {
+				InputManager.IsActive(MouseButton.Left)) {
 				gui.SetColor(Color.Red);
 			}
 		}

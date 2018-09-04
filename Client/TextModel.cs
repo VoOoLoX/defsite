@@ -52,8 +52,8 @@ namespace Client {
 			VA.Disable();
 		}
 
-		public float Width => Utils.TextWidth(TextValue, TextScale);
-		public float Height => Utils.TextHeight(TextScale);
+		public int Width => (int)Utils.TextWidth(TextValue, TextScale);
+		public int Height => (int)Utils.TextHeight(TextScale);
 
 		public string Text { get => TextValue; set => SetText(value); }
 
@@ -66,7 +66,7 @@ namespace Client {
 		}
 
 		public void MoveText(int x, int y) => MoveText(new Vector2(x, y));
-		public void MoveText(float x, float y) => MoveText(new Vector2(x, y));
+
 		public void MoveText(Vector2 position) {
 			TextPosition = position;
 			var move_pos = Utils.ScreenToWorld(position.X, position.Y);
@@ -76,8 +76,7 @@ namespace Client {
 
 		public void ScaleText(float scale) {
 			var pos = TextPosition;
-			var screen_center = new Vector2(Window.ClientWidth / 2 - Width / 2, Window.ClientHeight / 2 - Height / 2);
-			MoveText(screen_center);
+			MoveText(Window.ClientCenter.X - Width / 2, Window.ClientCenter.Y - Height / 2);
 			Scale(scale);
 			MoveText(pos);
 		}

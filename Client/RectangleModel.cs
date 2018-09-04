@@ -7,9 +7,9 @@ using System.Text;
 namespace Client {
 	class RectangleModel : Model {
 		VertextArray va = new VertextArray();
-		VertexBuffer<Vector2> vbo_pos = new VertexBuffer<Vector2>(PositionData);
-		VertexBuffer<Vector2> vbo_uv = new VertexBuffer<Vector2>(UVData);
-		IndexBuffer ib = new IndexBuffer(IndexBufferData);
+		VertexBuffer<Vector2> vbo_pos = new VertexBuffer<Vector2>(Primitives.Quad.PositionData);
+		VertexBuffer<Vector2> vbo_uv = new VertexBuffer<Vector2>(Primitives.Quad.UVData);
+		IndexBuffer ib = new IndexBuffer(Primitives.Quad.IndexBufferData);
 
 		static Shader shader = AssetManager.Get<Shader>("ColorShader");
 
@@ -51,45 +51,23 @@ namespace Client {
 
 			RectScaleX *= sx;
 			RectScaleY *= sy;
-			var pos = new Vector2(RectScreen.X, RectScreen.Y);
 
-			MoveRect(Window.ClientWidth / 2, Window.ClientHeight / 2);
+			MoveRect(Window.ClientCenter.X, Window.ClientCenter.Y);
 			Scale(sx, sy);
-			MoveRect((int)pos.X, (int)pos.Y);
+			MoveRect(RectScreen.X, RectScreen.Y);
 		}
 
 		public void MoveRect(int x, int y) {
 			RectScreen.X = x;
 			RectScreen.Y = y;
+
 			var move_pos = Utils.ScreenToWorld(x, y);
-			Move(new Vector2(move_pos.X - RectWorldPosition.X, -move_pos.Y + RectWorldPosition.Y));
+
+			Move(move_pos.X - RectWorldPosition.X, -move_pos.Y + RectWorldPosition.Y);
 			RectWorldPosition = move_pos;
 		}
 
 		public void SetColor(Color color) => Color = color;
-
-
-		static Vector2[] PositionData =
-			new Vector2[] {
-					new Vector2(0, 0),
-					new Vector2(1, 0),
-					new Vector2(1, -1),
-					new Vector2(0, -1),
-				};
-
-		static Vector2[] UVData =
-			new Vector2[] {
-					new Vector2(0, 0),
-					new Vector2(1, 0),
-					new Vector2(1, 1),
-					new Vector2(0, 1),
-				};
-
-		static uint[] IndexBufferData =
-			new uint[] {
-				0,1,2,
-				2,3,0
-			};
 
 		public override void PreDraw() => Shader.SetUniform("color", Color);
 

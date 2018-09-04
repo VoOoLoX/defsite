@@ -39,16 +39,16 @@ namespace Client {
 
 		public void Update(double delta_time) {
 			direction_vector = Vector2.Zero;
-			if (InputManager.IsKeyActive(Key.Right))
+			if (InputManager.IsActive(Key.Right))
 				direction_vector.X = 1;
 
-			if (InputManager.IsKeyActive(Key.Left))
+			if (InputManager.IsActive(Key.Left))
 				direction_vector.X = -1;
 
-			if (InputManager.IsKeyActive(Key.Up))
+			if (InputManager.IsActive(Key.Up))
 				direction_vector.Y = 1;
 
-			if (InputManager.IsKeyActive(Key.Down))
+			if (InputManager.IsActive(Key.Down))
 				direction_vector.Y = -1;
 
 			var scroll_value = InputManager.ScrollWeel();

@@ -19,15 +19,13 @@ namespace Server {
 			}
 
 			public void AddPropery(string key, string value) {
-				if (!properties.ContainsKey(key)) {
+				if (!properties.ContainsKey(key))
 					properties[key] = value;
-				}
 			}
 
 			public void AddObject(string key, ConfigScope value) {
-				if (!objects.ContainsKey(key)) {
+				if (!objects.ContainsKey(key))
 					objects[key] = value;
-				}
 			}
 
 			string GetPropery(string key) => properties.ContainsKey(key) ? properties[key] : string.Empty;
@@ -67,9 +65,7 @@ namespace Server {
 
 		ConfigScope root = new ConfigScope("");
 
-		public Config(string filepath) {
-			Parse(filepath);
-		}
+		public Config(string filepath) => Parse(filepath);
 
 		void Parse(string filepath) {
 			var lines = new StreamReader(filepath).ReadToEnd();
@@ -108,42 +104,32 @@ namespace Server {
 			return scope;
 		}
 
-		public ConfigScope GetScope(string path) {
-			return GetScope(path, false);
+		public ConfigScope GetScope(string path) => GetScope(path, false);
+
+		(ConfigScope scope, string key) ParsePath(string path) {
+			var scope_path = path.Split('.')[0];
+			var key = path.Split('.')[1];
+			return (GetScope(scope_path), key);
 		}
 
 		public bool GetBool(string path) {
-			var scope_path = path.Split('.')[0];
-			var key = path.Split('.')[1];
-
-			var scope = GetScope(scope_path);
-			return scope.GetBool(key);
+			var x = ParsePath(path);
+			return x.scope.GetBool(x.key);
 		}
 
 		public int GetInt(string path) {
-			var scope_path = path.Split('.')[0];
-			var key = path.Split('.')[1];
-
-			var scope = GetScope(scope_path);
-			return scope.GetInt(key);
+			var x = ParsePath(path);
+			return x.scope.GetInt(x.key);
 		}
 
 		public decimal GetDecimal(string path) {
-			var scope_path = path.Split('.')[0];
-			var key = path.Split('.')[1];
-
-			var scope = GetScope(scope_path);
-
-			return scope.GetDecimal(key);
+			var x = ParsePath(path);
+			return x.scope.GetDecimal(x.key);
 		}
 
 		public string GetString(string path) {
-			var scope_path = path.Split('.')[0];
-			var key = path.Split('.')[1];
-
-			var scope = GetScope(scope_path);
-
-			return scope.GetString(key);
+			var x = ParsePath(path);
+			return x.scope.GetString(x.key);
 		}
 	}
 }

@@ -9,7 +9,8 @@ namespace Server {
 			var settings = new Config("Assets/Settings.cfg");
 
 			foreach (var obj in settings.GetScope("servers").Objects) {
-				foreach (var p in obj.Properties) Console.WriteLine($"Loaded property: {p}");
+				foreach (var p in obj.Properties)
+					Console.WriteLine($"Loaded property: {p}");
 				var server = new Server(obj.GetString("ip"), obj.GetInt("port"), obj.GetString("name"), obj.GetInt("max_players"), obj.GetInt("tps"));
 				servers.Add(server);
 			}
