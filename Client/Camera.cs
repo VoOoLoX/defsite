@@ -12,7 +12,7 @@ namespace Client {
 		Vector2 direction_vector = Vector2.Zero;
 		float zoom = 1;
 
-		const float zoom_constant = 1f / 20f;
+		const float zoom_constant = 1f / 15f;
 		public Camera(float zoom = 50) {
 			ZoomFactor = zoom;
 			ViewMatrix = Matrix4.LookAt(
@@ -51,7 +51,7 @@ namespace Client {
 			if (InputManager.IsActive(Key.Down))
 				direction_vector.Y = -1;
 
-			var scroll_value = InputManager.ScrollWeel();
+			var scroll_value = InputManager.ScrollWeel;
 
 			if (scroll_value > 0) {
 				ZoomFactor *= 1 + zoom_constant;

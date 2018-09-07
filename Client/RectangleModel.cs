@@ -13,12 +13,12 @@ namespace Client {
 
 		static Shader shader = AssetManager.Get<Shader>("ColorShader");
 
-		Vector2 RectWorldPosition = default;
-		Rectangle RectScreen = default;
+		Vector2 RectWorldPosition = Vector2.Zero;
+		Rectangle RectScreen = Rectangle.Zero;
 		float RectScaleX = 1;
 		float RectScaleY = 1;
 
-		Color Color = new Color(0, 0, 0, 255);
+		Color RectColor = new Color(0, 0, 0, 255);
 
 		public RectangleModel(Rectangle rect, Color color = default) {
 			VA.Enable();
@@ -32,15 +32,14 @@ namespace Client {
 			MoveRect(RectScreen.X, RectScreen.Y);
 
 			if (color != default)
-				Color = color;
+				RectColor = color;
 
-			SetColor(Color);
+			SetColor(RectColor);
 
 			VA.Disable();
 		}
 
-		public int Width { get => (int)Utils.WorldUnitToScreen(RectScaleX); set => ResizeRect(value, Height); }
-		public int Height { get => (int)Utils.WorldUnitToScreen(RectScaleY); set => ResizeRect(Width, value); }
+		public void SetColor(Color color) => RectColor = color;
 
 		public void ResizeRect(int width, int height) {
 			RectScreen.Width = width;
@@ -67,11 +66,19 @@ namespace Client {
 			RectWorldPosition = move_pos;
 		}
 
-		public void SetColor(Color color) => Color = color;
+		public override void PreDraw() => Shader.SetUniform("color", RectColor);
 
-		public override void PreDraw() => Shader.SetUniform("color", Color);
+		public int Width { get => (int)Utils.WorldUnitToScreen(RectScaleX); set => ResizeRect(value, Height); }
 
-		public Rectangle Rect => new Rectangle(RectScreen.X, RectScreen.Y, Width, Height);
+		public int Height { get => (int)Utils.WorldUnitToScreen(RectScaleY); set => ResizeRect(Width, value); }
+
+		public int X { get => RectScreen.X; set => MoveRect(value, RectScreen.Y); }
+
+		public int Y { get => RectScreen.Y; set => MoveRect(RectScreen.X, value); }
+
+		public Rectangle Rect { get => new Rectangle(RectScreen.X, RectScreen.Y, Width, Height); set { X = value.X; Y = value.Y; Width = value.Width; Height = value.Height; } }
+
+		public Color Color { get => RectColor; set => SetColor(value); }
 
 		public override Shader Shader => shader;
 

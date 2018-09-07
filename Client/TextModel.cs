@@ -17,12 +17,12 @@ namespace Client {
 		static readonly string chars = " ABCDEFGHIJKLMNOPRSTQUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=[]{}<>,.;:'\"/?\\|";
 		static readonly float uv_char_width = 1f / chars.Length;
 
-		Vector2 TextWorldPosition = default;
-		Vector2 TextPosition = default;
-		string TextValue = default;
-		float TextScale = default;
+		Vector2 TextWorldPosition = Vector2.Zero;
+		Vector2 TextPosition = Vector2.Zero;
+		string TextValue = string.Empty;
+		float TextScale = 1;
 
-		Color Color = new Color(0, 0, 0, 255);
+		Color TextColor = new Color(0, 0, 0, 255);
 
 		public TextModel(string text, Vector2 position = default, float scale = 1, Color color = default) {
 			VA.Enable();
@@ -45,19 +45,14 @@ namespace Client {
 			MoveText(TextPosition);
 
 			if (color != default)
-				Color = color;
+				TextColor = color;
 
-			SetColor(Color);
+			SetColor(TextColor);
 
 			VA.Disable();
 		}
 
-		public int Width => (int)Utils.TextWidth(TextValue, TextScale);
-		public int Height => (int)Utils.TextHeight(TextScale);
-
-		public string Text { get => TextValue; set => SetText(value); }
-
-		public void SetColor(Color color) => Color = color;
+		public void SetColor(Color color) => TextColor = color;
 
 		public void SetText(string text) {
 			vbo_pos.Update(GenerateCharPositions(text));
@@ -125,7 +120,15 @@ namespace Client {
 			return ibs.SelectMany(x => x).ToArray();
 		}
 
-		public override void PreDraw() => Shader.SetUniform("text_color", Color);
+		public override void PreDraw() => Shader.SetUniform("text_color", TextColor);
+
+		public int Width => (int)Utils.TextWidth(TextValue, TextScale);
+
+		public int Height => (int)Utils.TextHeight(TextScale);
+
+		public string Text { get => TextValue; set => SetText(value); }
+
+		public Color Color { get => TextColor; set => SetColor(value); }
 
 		public override Shader Shader => shader;
 

@@ -25,7 +25,8 @@ namespace Client {
 		InputManager input_manager;
 		TileModel tile;
 		TextModel text, fps, mouse_info;
-		RectangleModel gui;
+
+		Button button;
 
 		protected override void OnLoad(EventArgs e) {
 			Context.ErrorChecking = true;
@@ -46,8 +47,7 @@ namespace Client {
 				Environment.Exit(1);
 			}
 
-			AssetManager.Load(AssetType.Texture, "Pot", "pot.vif");
-			AssetManager.Load(AssetType.Texture, "GUI", "gui.vif");
+			AssetManager.Load(AssetType.Texture, "Pot", "Pot.vif");
 			AssetManager.Load(AssetType.Font, "TinyFont", "Tiny.vif");
 
 			AssetManager.Load(AssetType.Shader, "ObjectShader", "Object.shader");
@@ -63,7 +63,7 @@ namespace Client {
 			ClientCenter = new Point(ClientWidth / 2, ClientHeight / 2);
 
 			renderer = new Renderer(new Color(20, 20, 20, 255));
-			camera = new Camera(80);
+			camera = new Camera(60);
 			input_manager = new InputManager();
 
 			tile = new TileModel();
@@ -72,8 +72,7 @@ namespace Client {
 			fps = new TextModel("", scale: .2f, color: Color.DarkViolet);
 			mouse_info = new TextModel("", scale: .2f, color: Color.Cyan);
 
-			gui = new RectangleModel(new Rectangle(ClientWidth / 2 - 50, ClientHeight - 20 - 50, 100, 50));
-			gui.Width = 80;
+			button = new Button("Play", new Rectangle(ClientCenter.X - 40, ClientHeight - 60 - 40, 80, 40), Color.Tomato, Color.Wheat);
 		}
 
 		#region Inputs
@@ -102,30 +101,33 @@ namespace Client {
 			ProcessEvents();
 			camera.Update(e.Time);
 			tile.Update(e.Time);
+
 			text.MoveText(ClientWidth - text.Width, 0);
-			gui.MoveRect(ClientCenter.X - gui.Width / 2, ClientHeight - (int)(gui.Height * 1.2));
-			mouse_info.Text = $"{InputManager.MousePos().X}:{InputManager.MousePos().Y}:{InputManager.IsActive(MouseButton.Left)}:{InputManager.IsActive(MouseButton.Right)}";
+
+			button.Move(ClientCenter.X - button.Width / 2, ClientHeight - (int)(button.Height * 1.2));
+
+			mouse_info.Text = $"{InputManager.MousePos.X}:{InputManager.MousePos.Y}:{InputManager.IsActive(MouseButton.Left)}:{InputManager.IsActive(MouseButton.Right)}";
 			mouse_info.MoveText(0, fps.Height);
 
-			var mouse_p = InputManager.MousePos();
-			gui.SetColor(Color.DarkGray);
-			if ((mouse_p.X > gui.Rect.X && mouse_p.X < gui.Rect.X + gui.Rect.Width) &&
-				(mouse_p.Y > gui.Rect.Y && mouse_p.Y < gui.Rect.Y + gui.Rect.Height) &&
+			var mouse_p = InputManager.MousePos;
+			button.Color = Color.Goldenrod;
+			if ((mouse_p.X > button.X && mouse_p.X < button.X + button.Width) &&
+				(mouse_p.Y > button.Y && mouse_p.Y < button.Y + button.Height) &&
 				InputManager.IsActive(MouseButton.Left)) {
-				gui.SetColor(Color.Red);
+				button.Color = Color.DarkGoldenrod;
 			}
 		}
 
 		protected override void OnRenderFrame(FrameEventArgs e) {
-			if (Focused && (WindowState == WindowState.Normal || WindowState == WindowState.Maximized || WindowState == WindowState.Fullscreen)) {
+			if (WindowState != WindowState.Minimized) {
 				fps.Text = $"{1 / e.Time:.0}";
 				renderer.Clear();
 
 				renderer.Draw(camera, tile);
 				renderer.Draw(camera, text, true);
-				renderer.Draw(camera, gui, true);
 				renderer.Draw(camera, fps, true);
 				renderer.Draw(camera, mouse_info, true);
+				button.Draw(renderer, camera);
 
 				SwapBuffers();
 			}
