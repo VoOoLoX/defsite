@@ -1,8 +1,10 @@
+using System;
+using System.Linq;
 using OpenTK;
+using OpenTK.Input;
 
 namespace Client {
 	public class Button {
-
 		RectangleModel rect_model, shadow_rect_model;
 		TextModel text_model;
 
@@ -41,10 +43,45 @@ namespace Client {
 
 		public Color Color { get => rect_model.Color; set => SetColor(value); }
 
+		public event Action<Button> OnClick;
+
+		public event Action<Button> OnHover;
+
+		public event Action<Button> OnUpdate;
+
 		public void Draw(Renderer renderer, Camera camera) {
 			renderer.Draw(camera, rect_model, true);
 			renderer.Draw(camera, shadow_rect_model, true);
 			renderer.Draw(camera, text_model, true);
+		}
+
+		public void Update() {
+			var mouse_p = InputManager.MousePos;
+
+			if (OnUpdate != null) {
+				var on_update_actions = OnUpdate.GetInvocationList();
+				if (on_update_actions.Length > 0)
+					foreach (var action in on_update_actions)
+						action.DynamicInvoke(this);
+			}
+			if ((mouse_p.X > this.X && mouse_p.X < this.X + this.Width) &&
+				(mouse_p.Y > this.Y && mouse_p.Y < this.Y + this.Height)) {
+				if (OnHover != null) {
+					var on_hover_actions = OnHover.GetInvocationList();
+					if (on_hover_actions.Length > 0)
+						foreach (var action in on_hover_actions)
+							action.DynamicInvoke(this);
+				}
+				if (InputManager.IsActive(MouseButton.Left)) {
+					if (OnClick != null) {
+						var on_click_actions = OnClick.GetInvocationList();
+						if (on_click_actions.Length > 0)
+							foreach (var action in on_click_actions)
+								action.DynamicInvoke(this);
+					}
+				}
+			}
+
 		}
 	}
 }

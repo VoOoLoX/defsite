@@ -9,6 +9,7 @@ namespace Client {
 		public Matrix4 ViewMatrix { get; private set; }
 		public Matrix4 ProjectionMatrix { get; private set; }
 		public static float ZoomFactor { get; private set; }
+
 		Vector2 direction_vector = Vector2.Zero;
 		float zoom = 1;
 
@@ -20,8 +21,7 @@ namespace Client {
 					new Vector3(0, 0, 0),
 					new Vector3(0, 1, 0)
 				);
-			ProjectionMatrix = Matrix4.CreateOrthographic(Window.ClientWidth, Window.ClientHeight, 1.0f, -1.0f);
-			Zoom(ZoomFactor);
+			UpdateProjectionMatrix();
 		}
 
 		public void Move(Vector2 move_vector) {

@@ -27,6 +27,7 @@ namespace Client {
 		TextModel text, fps, mouse_info;
 
 		Button button;
+		// Panel panel;
 
 		protected override void OnLoad(EventArgs e) {
 			Context.ErrorChecking = true;
@@ -73,6 +74,19 @@ namespace Client {
 			mouse_info = new TextModel("", scale: .2f, color: Color.Cyan);
 
 			button = new Button("Play", new Rectangle(ClientCenter.X - 40, ClientHeight - 60 - 40, 80, 40), Color.Tomato, Color.Wheat);
+			// panel = new Panel(new Rectangle(100, 100, 200, 50), Color.SeaGreen);
+
+			button.OnClick += (b) => {
+				b.Color = Color.Tomato;
+			};
+
+			button.OnHover += (b) => {
+				b.Color = Color.Lime;
+			};
+
+			button.OnUpdate += (b) => {
+				button.Color = Color.Goldenrod;
+			};
 		}
 
 		#region Inputs
@@ -89,6 +103,10 @@ namespace Client {
 		protected override void OnMouseUp(MouseButtonEventArgs e) => input_manager.Set(e.Button, false);
 		#endregion
 
+		protected override void OnClosing(System.ComponentModel.CancelEventArgs e) {
+			DisplayDevice.Default.RestoreResolution();
+		}
+
 		protected override void OnResize(EventArgs e) {
 			ClientWidth = Width;
 			ClientHeight = Height;
@@ -97,25 +115,52 @@ namespace Client {
 			SwapBuffers();
 		}
 
+		// bool IsOnPanel = false;
+		// int dx;
+		// int dy;
+
+		// int mx;
+		// int my;
 		protected override void OnUpdateFrame(FrameEventArgs e) {
 			ProcessEvents();
+
+			if (InputManager.IsActive(Key.Escape))
+				Close();
+
 			camera.Update(e.Time);
 			tile.Update(e.Time);
 
-			text.MoveText(ClientWidth - text.Width, 0);
+			if (WindowState != WindowState.Minimized) {
+				text.MoveText(ClientWidth - text.Width, 0);
 
-			button.Move(ClientCenter.X - button.Width / 2, ClientHeight - (int)(button.Height * 1.2));
+				button.Move(ClientCenter.X - button.Width / 2, ClientHeight - (int)(button.Height * 1.2));
 
-			mouse_info.Text = $"{InputManager.MousePos.X}:{InputManager.MousePos.Y}:{InputManager.IsActive(MouseButton.Left)}:{InputManager.IsActive(MouseButton.Right)}";
-			mouse_info.MoveText(0, fps.Height);
+				mouse_info.Text = $"{InputManager.MousePos.X}:{InputManager.MousePos.Y}:{InputManager.IsActive(MouseButton.Left)}:{InputManager.IsActive(MouseButton.Right)}";
+				mouse_info.MoveText(0, fps.Height);
 
-			var mouse_p = InputManager.MousePos;
-			button.Color = Color.Goldenrod;
-			if ((mouse_p.X > button.X && mouse_p.X < button.X + button.Width) &&
-				(mouse_p.Y > button.Y && mouse_p.Y < button.Y + button.Height) &&
-				InputManager.IsActive(MouseButton.Left)) {
-				button.Color = Color.DarkGoldenrod;
+
+				button.Update();
 			}
+			// if ((mouse_p.X > panel.X && mouse_p.X < panel.X + panel.Width) &&
+			// 	(mouse_p.Y > panel.Y && mouse_p.Y < panel.Y + panel.Height) &&
+			// 	InputManager.IsActive(MouseButton.Left) && IsOnPanel == false) {
+			// 	IsOnPanel = true;
+			// }
+
+			// if (IsOnPanel) {
+			// 	if ((mouse_p.X > panel.X && mouse_p.X < panel.X + panel.Width) &&
+			// 		(mouse_p.Y > panel.Y && mouse_p.Y < panel.Y + panel.Height)) {
+			// 		dx = mouse_p.X - panel.X;
+			// 		dy = mouse_p.Y - panel.Y;
+			// 	}
+			// 	my = mouse_p.Y - dy;
+			// 	mx = mouse_p.X - dx;
+			// 	panel.Move(mx, my);
+			// }
+
+			// if (InputManager.IsActive(MouseButton.Left) == false && IsOnPanel) {
+			// 	IsOnPanel = false;
+			// }
 		}
 
 		protected override void OnRenderFrame(FrameEventArgs e) {
@@ -128,6 +173,7 @@ namespace Client {
 				renderer.Draw(camera, fps, true);
 				renderer.Draw(camera, mouse_info, true);
 				button.Draw(renderer, camera);
+				// panel.Draw(renderer, camera);
 
 				SwapBuffers();
 			}

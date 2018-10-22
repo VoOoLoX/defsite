@@ -57,8 +57,8 @@ namespace Client {
 		}
 
 		public override void PreDraw() {
-			Shader.SetUniform("sprite_size", 64);
-			Shader.SetUniform("outline_color", new Vector4(1, 1, 0, 1.0f));
+			Shader.SetUniform("glow_size", .3f);
+			Shader.SetUniform("glow_color", Color.Black);
 		}
 
 		public override Shader Shader => shader;
