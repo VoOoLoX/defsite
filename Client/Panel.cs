@@ -35,26 +35,20 @@ namespace Client {
 
 		public Color Color { get => rect_model.Color; set => SetColor(value); }
 
-		public event Action<Panel> OnLeftClick;
+		public event Action<Panel> OnLeftClick, OnRightClick, OnHover, OnUpdate;
 
-		public event Action<Panel> OnRightClick;
+		public event Action<Panel, Point> OnDrag;
 
-		public event Action<Panel> OnHover;
+		bool LeftButtonDown, RightButtonDown;
 
-		public event Action<Panel> OnUpdate;
-
-		bool LeftButtonDown;
-
-		bool RightButtonDown;
-
-		Point OldPosition, MousePosition = new Point();
+		Point LeftMousePos, RightMousePos, MousePos = new Point();
 
 		public void Draw(Renderer renderer, Camera camera) {
 			renderer.Draw(camera, rect_model, true);
 		}
 
 		public void Update() {
-			MousePosition = InputManager.MousePos;
+			MousePos = InputManager.MousePos;
 
 			if (OnUpdate != null) {
 				var on_update_actions = OnUpdate.GetInvocationList();
@@ -62,46 +56,55 @@ namespace Client {
 					foreach (var action in on_update_actions)
 						action.DynamicInvoke(this);
 			}
-			if ((MousePosition.X > this.X && MousePosition.X < this.X + this.Width) &&
-				(MousePosition.Y > this.Y && MousePosition.Y < this.Y + this.Height)) {
+
+			if ((MousePos.X > this.X && MousePos.X < this.X + this.Width) &&
+				(MousePos.Y > this.Y && MousePos.Y < this.Y + this.Height)) {
+
 				if (OnHover != null) {
 					var on_hover_actions = OnHover.GetInvocationList();
 					if (on_hover_actions.Length > 0)
 						foreach (var action in on_hover_actions)
 							action.DynamicInvoke(this);
 				}
+
 				if (InputManager.IsActive(MouseButton.Left) && !LeftButtonDown) {
 					LeftButtonDown = true;
+					LeftMousePos = MousePos;
+
 					if (OnLeftClick != null) {
-						OldPosition = MousePosition;
 						var on_click_actions = OnLeftClick.GetInvocationList();
 						if (on_click_actions.Length > 0)
 							foreach (var action in on_click_actions)
 								action.DynamicInvoke(this);
-
-						System.Console.WriteLine($"{OldPosition}-{MousePosition}");
 					}
 				}
 
 				if (InputManager.IsActive(MouseButton.Right) && !RightButtonDown) {
 					RightButtonDown = true;
+					RightMousePos = MousePos;
+
 					if (OnRightClick != null) {
-						OldPosition = MousePosition;
 						var on_click_actions = OnRightClick.GetInvocationList();
 						if (on_click_actions.Length > 0)
 							foreach (var action in on_click_actions)
 								action.DynamicInvoke(this);
-
-
 					}
 				}
 			}
-			System.Console.WriteLine($"{OldPosition}-{MousePosition}");
-			if (!InputManager.IsActive(MouseButton.Left))
-				LeftButtonDown = false;
 
-			if (!InputManager.IsActive(MouseButton.Right))
-				RightButtonDown = false;
+			if (LeftButtonDown) {
+				if (OnDrag != null) {
+					var on_drag_actions = OnDrag.GetInvocationList();
+					if (on_drag_actions.Length > 0)
+						foreach (var action in on_drag_actions)
+							action.DynamicInvoke(this, new Point(MousePos.X - LeftMousePos.X, MousePos.Y - LeftMousePos.Y));
+					LeftMousePos = MousePos;
+				}
+			}
+
+			if (!InputManager.IsActive(MouseButton.Left)) LeftButtonDown = false;
+
+			if (!InputManager.IsActive(MouseButton.Right)) RightButtonDown = false;
 		}
 	}
 }
