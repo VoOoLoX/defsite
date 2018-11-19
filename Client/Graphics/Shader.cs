@@ -84,6 +84,9 @@ namespace Client {
 				case Matrix4 m4:
 					GL.UniformMatrix4(GetUniform(unif), false, ref m4);
 					break;
+				case bool b:
+					GL.Uniform1(GetUniform(unif), b ? 1 : 0);
+					break;
 				case int i:
 					GL.Uniform1(GetUniform(unif), i);
 					break;

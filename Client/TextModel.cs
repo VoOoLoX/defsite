@@ -21,15 +21,17 @@ namespace Client {
 		Vector2 TextPosition = Vector2.Zero;
 		string TextValue = string.Empty;
 		float TextScale = 1;
+		bool TextGlow = false;
 
 		Color TextColor = new Color(0, 0, 0, 255);
 
-		public TextModel(string text, Vector2 position = default, float scale = 1, Color color = default) {
+		public TextModel(string text, Vector2 position = default, float scale = 1, Color color = default, bool glow = false) {
 			VA.Enable();
 
 			TextValue = text;
 			TextPosition = position;
 			TextScale = scale;
+			TextGlow = glow;
 
 			vbo_pos = new VertexBuffer<Vector2>(GenerateCharPositions(text));
 			vbo_uv = new VertexBuffer<Vector2>(GenerateCharUVs(text));
@@ -107,7 +109,6 @@ namespace Client {
 			return uvlist.SelectMany(x => x).ToArray();
 		}
 
-
 		uint[] GenerateIndexBuffers(int text_length) {
 			var ibs = new List<uint[]>();
 			for (uint i = 0; i < text_length; i++) {
@@ -120,7 +121,12 @@ namespace Client {
 			return ibs.SelectMany(x => x).ToArray();
 		}
 
-		public override void PreDraw() => Shader.SetUniform("text_color", TextColor);
+		public override void PreDraw() {
+			Shader.SetUniform("text_color", TextColor);
+			Shader.SetUniform("glow", TextGlow);
+		}
+
+		public bool Glow { get => TextGlow; set => TextGlow = value; }
 
 		public int Width => (int)Utils.TextWidth(TextValue, TextScale);
 

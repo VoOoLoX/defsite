@@ -27,8 +27,8 @@ namespace Client {
 		TextModel text, fps, mouse_info;
 
 		Button button;
-		// Panel panel;
-
+		Panel panel;
+		bool text_glow = false;
 		protected override void OnLoad(EventArgs e) {
 			Context.ErrorChecking = true;
 
@@ -74,7 +74,7 @@ namespace Client {
 			mouse_info = new TextModel("", scale: .2f, color: Color.Cyan);
 
 			button = new Button("Play", new Rectangle(ClientCenter.X - 40, ClientHeight - 60 - 40, 80, 40), Color.Tomato, Color.Wheat);
-			// panel = new Panel(new Rectangle(100, 100, 200, 50), Color.SeaGreen);
+			panel = new Panel(new Rectangle(100, 100, 200, 50), Color.SeaGreen);
 
 			button.OnClick += (b) => {
 				b.Color = Color.Tomato;
@@ -87,6 +87,12 @@ namespace Client {
 			button.OnUpdate += (b) => {
 				button.Color = Color.Goldenrod;
 			};
+
+			panel.OnLeftClick += (p) => {
+				text_glow = !text_glow;
+				mouse_info.Glow = text_glow;
+			};
+
 		}
 
 		#region Inputs
@@ -140,6 +146,7 @@ namespace Client {
 
 
 				button.Update();
+				panel.Update();
 			}
 			// if ((mouse_p.X > panel.X && mouse_p.X < panel.X + panel.Width) &&
 			// 	(mouse_p.Y > panel.Y && mouse_p.Y < panel.Y + panel.Height) &&
@@ -173,7 +180,7 @@ namespace Client {
 				renderer.Draw(camera, fps, true);
 				renderer.Draw(camera, mouse_info, true);
 				button.Draw(renderer, camera);
-				// panel.Draw(renderer, camera);
+				panel.Draw(renderer, camera);
 
 				SwapBuffers();
 			}

@@ -22,7 +22,7 @@ in vec2 UV;
 
 uniform bool glow = false;
 uniform vec4 text_color;
-uniform vec4 glow_color = vec4(0,0,0,1);
+uniform vec4 glow_color = vec4(1,0,0,1);
 uniform float glow_size = .5;
 uniform float glow_intensity = .35;
 
