@@ -50,11 +50,13 @@ namespace Client {
 
 			AssetManager.Load(AssetType.Texture, "Pot", "Pot.vif");
 			AssetManager.Load(AssetType.Font, "TinyFont", "Tiny.vif");
+			//Add credits for both fonts & fix scaling of scientifica
+			AssetManager.Load(AssetType.Font, "ScientificaFont", "Scientifica.vif");
 
-			AssetManager.Load(AssetType.Shader, "ObjectShader", "Object.shader");
-			AssetManager.Load(AssetType.Shader, "TextureShader", "Texture.shader");
-			AssetManager.Load(AssetType.Shader, "TextShader", "Text.shader");
-			AssetManager.Load(AssetType.Shader, "ColorShader", "Color.shader");
+			AssetManager.Load(AssetType.Shader, "ObjectShader", "Object.shdr");
+			AssetManager.Load(AssetType.Shader, "TextureShader", "Texture.shdr");
+			AssetManager.Load(AssetType.Shader, "TextShader", "Text.shdr");
+			AssetManager.Load(AssetType.Shader, "ColorShader", "Color.shdr");
 
 			VSync = VSyncMode.Off;
 			CursorVisible = true;
@@ -69,7 +71,8 @@ namespace Client {
 
 			tile = new TileModel();
 
-			text = new TextModel("VoOoLoX", scale: .2f, color: Color.SteelBlue);
+			text = new TextModel("VoOoLoX", scale: .16f, color: Color.SteelBlue);
+
 			fps = new TextModel("", scale: .2f, color: Color.DarkViolet);
 			mouse_info = new TextModel("", scale: .2f, color: Color.Cyan);
 
@@ -145,6 +148,7 @@ namespace Client {
 		}
 
 		void Update() {
+			text.ScaleText(.2f);
 			text.MoveText(ClientWidth - text.Width, 0);
 
 			panel.Move(panel.X, panel.Y);
@@ -158,6 +162,7 @@ namespace Client {
 			button.Update();
 			panel.Update();
 			panel2.Update();
+
 		}
 
 		protected override void OnRenderFrame(FrameEventArgs e) {

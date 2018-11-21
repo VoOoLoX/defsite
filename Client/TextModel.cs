@@ -74,8 +74,14 @@ namespace Client {
 		public void ScaleText(float scale) {
 			var pos = TextPosition;
 			MoveText(Window.ClientCenter.X - Width / 2, Window.ClientCenter.Y - Height / 2);
+			Scale(1.0f / TextScale);
 			Scale(scale);
+			TextScale = scale;
 			MoveText(pos);
+		}
+
+		public void Size(int pixels) {
+			ScaleText((float)pixels / Camera.ZoomFactor);
 		}
 
 		Vector2[] GenerateCharPositions(string text) {
