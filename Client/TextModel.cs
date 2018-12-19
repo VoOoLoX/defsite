@@ -80,6 +80,7 @@ namespace Client {
 			MoveText(pos);
 		}
 
+		//fix this
 		public void Size(int pixels) {
 			ScaleText((float)pixels / Camera.ZoomFactor);
 		}

@@ -48,10 +48,12 @@ namespace Client {
 				Environment.Exit(1);
 			}
 
-			AssetManager.Load(AssetType.Texture, "Pot", "Pot.vif");
-			AssetManager.Load(AssetType.Font, "TinyFont", "Tiny.vif");
+			AssetManager.Load(AssetType.Texture, "Pot", "Ghost.png");
+			AssetManager.Load(AssetType.Font, "TinyFont", "Tiny.png");
+
 			//Add credits for both fonts & fix scaling of scientifica
 			AssetManager.Load(AssetType.Font, "ScientificaFont", "Scientifica.vif");
+			AssetManager.Load(AssetType.Font, "LexipaFont", "Lexipa.vif");
 
 			AssetManager.Load(AssetType.Shader, "ObjectShader", "Object.shdr");
 			AssetManager.Load(AssetType.Shader, "TextureShader", "Texture.shdr");
