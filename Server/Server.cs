@@ -1,4 +1,4 @@
-﻿using Defsite;
+using Defsite;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -62,11 +62,11 @@ namespace Server {
 				if (server.Pending()) {
 					var client_socket = server.AcceptTcpClient();
 					clients.Add(new Client(client_socket));
-					Console.WriteLine($"Added client: {client_socket.Client.RemoteEndPoint}");
+					Log.Info($"Added client: {client_socket.Client.RemoteEndPoint}");
 				}
 			}
 
-			Console.WriteLine($"Stopping server: {name}");
+			Log.Info($"Stopping server: {name}");
 			Running = false;
 			server.Stop();
 		}

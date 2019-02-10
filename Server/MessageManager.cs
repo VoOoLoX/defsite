@@ -1,4 +1,4 @@
-﻿using Defsite;
+using Defsite;
 using System;
 using System.Linq;
 using System.Text;
@@ -30,7 +30,7 @@ namespace Server {
 			switch (type) {
 				case MessageType.Login:
 					msg = new MessageLogin(data);
-					Console.WriteLine((msg as MessageLogin).Username + " - " + (msg as MessageLogin).Password);
+					Log.Info((msg as MessageLogin).Username + " - " + (msg as MessageLogin).Password);
 					break;
 			}
 		}

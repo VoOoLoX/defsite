@@ -6,10 +6,10 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build_client",
-            "program": "${workspaceFolder}/Client/bin/Debug/netcoreapp2.1/Client.dll",
+            "program": "${workspaceFolder}/Client/bin/Debug/netcoreapp2.2/Client.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/Client/bin/Debug/netcoreapp2.1/",
-            "console": "internalConsole",
+            "cwd": "${workspaceFolder}/Client/bin/Debug/netcoreapp2.2/",
+            "console": "integratedTerminal",
             "logging": {
                 "moduleLoad": false
             },
@@ -21,9 +21,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build_server",
-            "program": "${workspaceFolder}/Server/bin/Debug/netcoreapp2.1/Server.dll",
+            "program": "${workspaceFolder}/Server/bin/Debug/netcoreapp2.2/Server.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/Server/bin/Debug/netcoreapp2.1/",
+            "cwd": "${workspaceFolder}/Server/bin/Debug/netcoreapp2.2/",
             "console": "integratedTerminal",
             "logging": {
                 "moduleLoad": false

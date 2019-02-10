@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading;
+using Defsite;
 
 namespace Server {
 	class Program {
@@ -10,13 +11,13 @@ namespace Server {
 
 			foreach (var obj in settings.GetScope("servers").Objects) {
 				foreach (var p in obj.Properties)
-					Console.WriteLine($"Loaded property: {p}");
+					Log.Info($"Loaded property: {p}");
 				var server = new Server(obj.GetString("ip"), obj.GetInt("port"), obj.GetString("name"), obj.GetInt("max_players"), obj.GetInt("tps"));
 				servers.Add(server);
 			}
 
 			foreach (var server in servers) {
-				Console.WriteLine($"Server: [{server.Name}] [{server.IP}] [{server.Port}]");
+				Log.Info($"Server: [{server.Name}] [{server.IP}] [{server.Port}]");
 				new Thread(() => {
 					server.Run();
 				}) { Name = "Server" }.Start();

@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Server {
+namespace Defsite {
 	public class Config {
 		public class ConfigScope {
 			string name = string.Empty;

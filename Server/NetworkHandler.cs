@@ -1,4 +1,4 @@
-﻿using Defsite;
+using Defsite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,7 +57,7 @@ namespace Server {
 					Disconnect(client);
 					Server.RemoveClient(client);
 					Clients.Remove(client);
-					Console.WriteLine($"Client disconnected: {client.RemoteEndPoint}");
+					Log.Info($"Client disconnected: {client.RemoteEndPoint}");
 				}
 			}
 		}

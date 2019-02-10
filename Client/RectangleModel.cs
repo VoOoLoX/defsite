@@ -45,8 +45,8 @@ namespace Client {
 			RectScreen.Width = width;
 			RectScreen.Height = height;
 
-			var sx = RectScreen.Width / Utils.WorldUnitToScreen(RectScaleX);
-			var sy = RectScreen.Height / Utils.WorldUnitToScreen(RectScaleY);
+			var sx = RectScreen.Width / ClientUtils.WorldUnitToScreen(RectScaleX);
+			var sy = RectScreen.Height / ClientUtils.WorldUnitToScreen(RectScaleY);
 
 			RectScaleX *= sx;
 			RectScaleY *= sy;
@@ -60,7 +60,7 @@ namespace Client {
 			RectScreen.X = x;
 			RectScreen.Y = y;
 
-			var move_pos = Utils.ScreenToWorld(x, y);
+			var move_pos = ClientUtils.ScreenToWorld(x, y);
 
 			Move(move_pos.X - RectWorldPosition.X, -move_pos.Y + RectWorldPosition.Y);
 			RectWorldPosition = move_pos;
@@ -68,9 +68,9 @@ namespace Client {
 
 		public override void PreDraw() => Shader.SetUniform("color", RectColor);
 
-		public int Width { get => (int)Utils.WorldUnitToScreen(RectScaleX); set => ResizeRect(value, Height); }
+		public int Width { get => (int)ClientUtils.WorldUnitToScreen(RectScaleX); set => ResizeRect(value, Height); }
 
-		public int Height { get => (int)Utils.WorldUnitToScreen(RectScaleY); set => ResizeRect(Width, value); }
+		public int Height { get => (int)ClientUtils.WorldUnitToScreen(RectScaleY); set => ResizeRect(Width, value); }
 
 		public int X { get => RectScreen.X; set => MoveRect(value, RectScreen.Y); }
 

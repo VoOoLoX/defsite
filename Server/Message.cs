@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -81,6 +81,7 @@ namespace Server {
 				var r = new BinaryReader(new MemoryStream(data.Skip(reader_index).ToArray()));
 				var s_value = r.ReadString();
 				//String length + string + null char
+				//echo -e 'B\x07VoOoLoX\0\x06CooLpW\0' | nc localhost 7331
 				reader_index += s_value.Length + 2;
 				return (T)Convert.ChangeType(s_value, typeof(T));
 			} else {

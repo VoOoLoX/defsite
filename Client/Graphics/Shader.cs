@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Defsite;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -24,7 +25,7 @@ namespace Client {
 
 		public void Parse(string source) {
 			if (!source.Contains('$')) {
-				Console.WriteLine("Please specify type of the shader by adding line '${vertex | fragment}' on top of shader source.");
+				Log.Error("Please specify type of the shader by adding line '${vertex | fragment}' on top of shader source.");
 				return;
 			}
 
@@ -52,16 +53,20 @@ namespace Client {
 				GL.CompileShader(id);
 
 				var shader_info = GL.GetShaderInfoLog(id);
-				if (!string.IsNullOrEmpty(shader_info))
-					Console.WriteLine($"Shader compile error: {shader_info}");
+				if (!string.IsNullOrEmpty(shader_info)) {
+					Log.Error($"Shader compile error: {shader_info}");
+					Environment.Exit(1);
+				}
 
 				GL.AttachShader(ID, id);
 			}
 
 			GL.LinkProgram(ID);
 			var program_info = GL.GetProgramInfoLog(ID);
-			if (!string.IsNullOrEmpty(program_info))
-				Console.WriteLine($"Shader program error: {program_info}");
+			if (!string.IsNullOrEmpty(program_info)) {
+				Log.Error($"Shader program error: {program_info}");
+				Environment.Exit(1);
+			}
 		}
 
 		public void Enable() => GL.UseProgram(ID);

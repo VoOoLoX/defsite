@@ -66,7 +66,7 @@ namespace Client {
 
 		public void MoveText(Vector2 position) {
 			TextPosition = position;
-			var move_pos = Utils.ScreenToWorld(position.X, position.Y);
+			var move_pos = ClientUtils.ScreenToWorld(position.X, position.Y);
 			Move(new Vector2(move_pos.X - TextWorldPosition.X, -move_pos.Y + TextWorldPosition.Y));
 			TextWorldPosition = move_pos;
 		}
@@ -135,9 +135,9 @@ namespace Client {
 
 		public bool Glow { get => TextGlow; set => TextGlow = value; }
 
-		public int Width => (int)Utils.TextWidth(TextValue, TextScale);
+		public int Width => (int)ClientUtils.TextWidth(TextValue, TextScale);
 
-		public int Height => (int)Utils.TextHeight(TextScale);
+		public int Height => (int)ClientUtils.TextHeight(TextScale);
 
 		public string Text { get => TextValue; set => SetText(value); }
 

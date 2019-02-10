@@ -9,11 +9,40 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Defsite;
 
 namespace Client {
 	public partial class Window : GameWindow {
 		public Window(int width, int height, GraphicsMode mode, string title, GameWindowFlags window_flags, DisplayDevice device, int major, int minor, GraphicsContextFlags context_flags)
 			: base(width, height, mode, title, window_flags, device, major, minor, context_flags) {
+			Context.ErrorChecking = true;
+			Log.Info(GL.GetString(StringName.Vendor));
+			Log.Info(GL.GetString(StringName.Renderer));
+			Log.Info(GL.GetString(StringName.Version));
+			Log.Info(GL.GetString(StringName.ShadingLanguageVersion));
+
+			if (double.Parse(GL.GetString(StringName.ShadingLanguageVersion)) < 1.30) {
+				Close();
+				Log.Error("Error: OpenGL Version");
+				Log.Error("> Minimum required GLSL version: 1.30");
+				Log.Error($"> Detected OpenGL version: {GL.GetString(StringName.Version)}");
+				Log.Error($"> Detected GLSL version: {GL.GetString(StringName.ShadingLanguageVersion)}");
+				Environment.Exit(1);
+			}
+
+			if (!Context.IsCurrent) {
+				Console.WriteLine("Invalid context");
+				Environment.Exit(1);
+			}
+
+			VSync = VSyncMode.Off;
+			CursorVisible = true;
+
+			ClientWidth = Width;
+			ClientHeight = Height;
+			ClientCenter = new Point(ClientWidth / 2, ClientHeight / 2);
+
+			// Log.Notify("Defsite", "Hello", 1000, Log.NotificationType.Info);
 		}
 
 		public static int ClientWidth { get; private set; }
@@ -30,24 +59,6 @@ namespace Client {
 		Panel panel, panel2;
 		bool text_glow = false;
 		protected override void OnLoad(EventArgs e) {
-			Context.ErrorChecking = true;
-
-			if (double.Parse(GL.GetString(StringName.ShadingLanguageVersion)) < 1.30) {
-				Close();
-				Console.BackgroundColor = ConsoleColor.Red;
-				Console.ForegroundColor = ConsoleColor.White;
-				Console.WriteLine("Error: OpenGL Version");
-				Console.WriteLine("> Minimum required OpenGL version: 1.30");
-				Console.WriteLine($"> Detected OpenGL version: {GL.GetString(StringName.ShadingLanguageVersion)}");
-				Console.ResetColor();
-				Environment.Exit(1);
-			}
-
-			if (!Context.IsCurrent) {
-				Console.WriteLine("Invalid context");
-				Environment.Exit(1);
-			}
-
 			AssetManager.Load(AssetType.Texture, "Pot", "Ghost.png");
 			AssetManager.Load(AssetType.Font, "TinyFont", "Tiny.png");
 
@@ -60,20 +71,16 @@ namespace Client {
 			AssetManager.Load(AssetType.Shader, "TextShader", "Text.shdr");
 			AssetManager.Load(AssetType.Shader, "ColorShader", "Color.shdr");
 
-			VSync = VSyncMode.Off;
-			CursorVisible = true;
-
-			ClientWidth = Width;
-			ClientHeight = Height;
-			ClientCenter = new Point(ClientWidth / 2, ClientHeight / 2);
-
 			renderer = new Renderer(new Color(20, 20, 20, 255));
 			camera = new Camera(60);
 			input_manager = new InputManager();
 
 			tile = new TileModel();
 
-			text = new TextModel("VoOoLoX", scale: .16f, color: Color.SteelBlue);
+			var settings = new Config("Assets/Settings.cfg");
+
+
+			text = new TextModel(settings.GetScope("client:debug").GetString("player_name"), scale: .16f, color: Color.SteelBlue);
 
 			fps = new TextModel("", scale: .2f, color: Color.DarkViolet);
 			mouse_info = new TextModel("", scale: .2f, color: Color.Cyan);
@@ -110,7 +117,6 @@ namespace Client {
 
 		}
 
-		#region Inputs
 		protected override void OnKeyDown(KeyboardKeyEventArgs e) => input_manager.Set(e.Key, true);
 
 		protected override void OnKeyUp(KeyboardKeyEventArgs e) => input_manager.Set(e.Key, false);
@@ -122,7 +128,6 @@ namespace Client {
 		protected override void OnMouseDown(MouseButtonEventArgs e) => input_manager.Set(e.Button, true);
 
 		protected override void OnMouseUp(MouseButtonEventArgs e) => input_manager.Set(e.Button, false);
-		#endregion
 
 		protected override void OnClosing(System.ComponentModel.CancelEventArgs e) {
 			DisplayDevice.Default.RestoreResolution();

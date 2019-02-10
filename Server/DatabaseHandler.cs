@@ -1,9 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Server
-{
+namespace Server {
 	public class DatabaseHandler : Handler {
 		public override int TPS => 1000;
 		public DatabaseHandler() {
