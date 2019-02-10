@@ -1,0 +1,21 @@
+Defsite:
+    ✔ Logging @done(19-02-09 21:00)
+Client:
+    ☐ Basic OpenAL classes
+    ☐ Entity Component System
+    ☐ Hot swapping
+    ☐ Structural changes
+    ☐ Virtual file system
+Server:
+
+
+Gameplay ideas:
+    ☐ Enchanting
+    ☐ Random map generation with biomes based on height
+    ☐ Underground with resources needed for enchanting
+    ☐ Randomly placed runes used for teleporting across the map
+    ☐ Weapon customization
+    ☐ Character customization
+    ☐ Terrain customization
+    ☐ XP system
+    ☐ Crafting
