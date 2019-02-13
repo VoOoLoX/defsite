@@ -16,6 +16,7 @@ namespace Client {
 		public Window(int width, int height, GraphicsMode mode, string title, GameWindowFlags window_flags, DisplayDevice device, int major, int minor, GraphicsContextFlags context_flags)
 			: base(width, height, mode, title, window_flags, device, major, minor, context_flags) {
 			Context.ErrorChecking = true;
+
 			Log.Info(GL.GetString(StringName.Vendor));
 			Log.Info(GL.GetString(StringName.Renderer));
 			Log.Info(GL.GetString(StringName.Version));
@@ -27,13 +28,11 @@ namespace Client {
 				Log.Error("> Minimum required GLSL version: 1.30");
 				Log.Error($"> Detected OpenGL version: {GL.GetString(StringName.Version)}");
 				Log.Error($"> Detected GLSL version: {GL.GetString(StringName.ShadingLanguageVersion)}");
-				Environment.Exit(1);
+				Log.Panic("Exiting");
 			}
 
-			if (!Context.IsCurrent) {
-				Console.WriteLine("Invalid context");
-				Environment.Exit(1);
-			}
+			if (!Context.IsCurrent)
+				Log.Panic("Invalid context");
 
 			VSync = VSyncMode.Off;
 			CursorVisible = true;
@@ -58,7 +57,14 @@ namespace Client {
 		Button button;
 		Panel panel, panel2;
 		bool text_glow = false;
+
+		WAVFile sound;
+		SoundBuffer sb;
+		SoundSource ss;
+
 		protected override void OnLoad(EventArgs e) {
+			AudioContext ac = new AudioContext();
+
 			AssetManager.Load(AssetType.Texture, "Pot", "Ghost.png");
 			AssetManager.Load(AssetType.Font, "TinyFont", "Tiny.png");
 
@@ -79,6 +85,13 @@ namespace Client {
 
 			var settings = new Config("Assets/Settings.cfg");
 
+			AL.Listener(ALListener3f.Position, 0, 0, 0);
+			AL.Listener(ALListener3f.Velocity, 0, 0, 0);
+
+			sound = new WAVFile("Assets/Sounds/Coins.wav");
+			Log.Info($"{sound.SampleRate} --- {sound.Data.Length}");
+			sb = new SoundBuffer(sound.Format, sound.Data, sound.SampleRate);
+			ss = new SoundSource();
 
 			text = new TextModel(settings.GetScope("client:debug").GetString("player_name"), scale: .16f, color: Color.SteelBlue);
 
@@ -91,6 +104,7 @@ namespace Client {
 
 			button.OnClick += (b) => {
 				b.Color = Color.Tomato;
+				ss.Play(sb);
 			};
 
 			button.OnHover += (b) => {

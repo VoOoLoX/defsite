@@ -1,11 +1,15 @@
 Defsite:
     ✔ Logging @done(19-02-09 21:00)
 Client:
-    ☐ Basic OpenAL classes
+    ✔ Basic OpenAL classes @done(19-02-13 00:30)
+    ✔ Basic WAV file reader @done(19-02-13 00:30)
+    ☐ Better audio abstraction (audio manager, etc.)
+    ☐ General files classes for images, sounds, fonts, etc.
+    ☐ File manager / file abstraction system for different types of files so it's easier to parse files
+    ☐ Virtual file system with compression and it should be asynchronous
     ☐ Entity Component System
     ☐ Hot swapping
-    ☐ Structural changes
-    ☐ Virtual file system
+    ☐ Structural changes / split engine and the game into different components
 Server:
 
 

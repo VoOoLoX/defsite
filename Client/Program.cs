@@ -6,7 +6,6 @@ using Defsite;
 namespace Client {
 	class Program {
 
-		[STAThread]
 		static void Main(string[] args) {
 			Window win = default;
 

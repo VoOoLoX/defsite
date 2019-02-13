@@ -19,6 +19,14 @@ namespace Defsite {
 			Console.ResetColor();
 		}
 
+		public static void Panic(string panic) {
+			Console.BackgroundColor = ConsoleColor.Red;
+			Console.ForegroundColor = ConsoleColor.Black;
+			Console.WriteLine(format + panic);
+			Console.ResetColor();
+			Environment.Exit(1);
+		}
+
 		public enum NotificationType {
 			Info,
 			Error
