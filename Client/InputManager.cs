@@ -9,7 +9,7 @@ namespace Client {
 		static bool[] active_keys = new bool[(int)Key.LastKey];
 		static bool[] active_buttons = new bool[(int)MouseButton.LastButton];
 		static Point mouse_pos = Point.Zero;
-		static int scroll_weel = 0;
+		static int scroll_wheel = 0;
 
 		public void Set(Key key, bool value) => active_keys[(int)key] = value;
 
@@ -17,7 +17,7 @@ namespace Client {
 
 		public void Set(Point pos) => mouse_pos = pos;
 
-		public void Set(int value) => scroll_weel = value;
+		public void Set(int value) => scroll_wheel = value;
 
 		public static bool IsActive(Key key) => active_keys[(int)key];
 
@@ -25,12 +25,12 @@ namespace Client {
 
 		public static Point MousePos => mouse_pos;
 
-		public static int ScrollWeel {
+		public static int ScrollWheel {
 			get {
 				try {
-					return scroll_weel;
+					return scroll_wheel;
 				} finally {
-					scroll_weel = 0;
+					scroll_wheel = 0;
 				}
 			}
 		}

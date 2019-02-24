@@ -51,7 +51,7 @@ namespace Client {
 			if (InputManager.IsActive(Key.Down))
 				direction_vector.Y = -1;
 
-			var scroll_value = InputManager.ScrollWeel;
+			var scroll_value = InputManager.ScrollWheel;
 
 			if (scroll_value > 0) {
 				ZoomFactor *= 1 + zoom_constant;

@@ -13,25 +13,39 @@ using Defsite;
 
 namespace Client {
 	public partial class Window : GameWindow {
+
+		AudioContext AudioContext;
+
 		public Window(int width, int height, GraphicsMode mode, string title, GameWindowFlags window_flags, DisplayDevice device, int major, int minor, GraphicsContextFlags context_flags)
 			: base(width, height, mode, title, window_flags, device, major, minor, context_flags) {
 			Context.ErrorChecking = true;
 
+			Log.Info("OpenGL Info:");
+			Log.Indent();
 			Log.Info(GL.GetString(StringName.Vendor));
 			Log.Info(GL.GetString(StringName.Renderer));
 			Log.Info(GL.GetString(StringName.Version));
 			Log.Info(GL.GetString(StringName.ShadingLanguageVersion));
+			Log.Unindent();
+
+			Log.Info("Display Info:");
+			Log.Indent();
+			Log.Info($"Display: {device.Bounds}");
+			Log.Info($"Refresh rate: {device.RefreshRate}");
+			Log.Info($"IsPrimary: {device.IsPrimary}");
+			Log.Unindent();
 
 			if (double.Parse(GL.GetString(StringName.ShadingLanguageVersion)) < 1.30) {
 				Close();
-				Log.Error("Error: OpenGL Version");
-				Log.Error("> Minimum required GLSL version: 1.30");
-				Log.Error($"> Detected OpenGL version: {GL.GetString(StringName.Version)}");
-				Log.Error($"> Detected GLSL version: {GL.GetString(StringName.ShadingLanguageVersion)}");
+				Log.Error("Minimum required GLSL version: 1.30");
+				Log.Indent();
+				Log.Error($"Detected OpenGL version: {GL.GetString(StringName.Version)}");
+				Log.Error($"Detected GLSL version: {GL.GetString(StringName.ShadingLanguageVersion)}");
+				Log.Unindent();
 				Log.Panic("Exiting");
 			}
 
-			if (!Context.IsCurrent)
+			if (Context == null)
 				Log.Panic("Invalid context");
 
 			VSync = VSyncMode.Off;
@@ -41,7 +55,7 @@ namespace Client {
 			ClientHeight = Height;
 			ClientCenter = new Point(ClientWidth / 2, ClientHeight / 2);
 
-			// Log.Notify("Defsite", "Hello", 1000, Log.NotificationType.Info);
+			AudioContext = new AudioContext();
 		}
 
 		public static int ClientWidth { get; private set; }
@@ -63,12 +77,11 @@ namespace Client {
 		SoundSource ss;
 
 		protected override void OnLoad(EventArgs e) {
-			AudioContext ac = new AudioContext();
 
-			AssetManager.Load(AssetType.Texture, "Pot", "Ghost.png");
-			AssetManager.Load(AssetType.Font, "TinyFont", "Tiny.png");
+			AssetManager.Load(AssetType.Texture, "Pot", "Ghost.vif");
 
 			//Add credits for both fonts & fix scaling of scientifica
+			AssetManager.Load(AssetType.Font, "TinyFont", "Tiny.png");
 			AssetManager.Load(AssetType.Font, "ScientificaFont", "Scientifica.vif");
 			AssetManager.Load(AssetType.Font, "LexipaFont", "Lexipa.vif");
 
@@ -83,17 +96,24 @@ namespace Client {
 
 			tile = new TileModel();
 
-			var settings = new Config("Assets/Settings.cfg");
+			var f = new FileLoader();
+
+			Config settings = new Config("Assets/Settings.cfg");
 
 			AL.Listener(ALListener3f.Position, 0, 0, 0);
 			AL.Listener(ALListener3f.Velocity, 0, 0, 0);
 
 			sound = new WAVFile("Assets/Sounds/Coins.wav");
-			Log.Info($"{sound.SampleRate} --- {sound.Data.Length}");
 			sb = new SoundBuffer(sound.Format, sound.Data, sound.SampleRate);
 			ss = new SoundSource();
 
 			text = new TextModel(settings.GetScope("client:debug").GetString("player_name"), scale: .16f, color: Color.SteelBlue);
+
+			// Action<object, FileSystemEventHandler> rel = (o, ev) => {
+			// 	settings = new Config("Assets/Settings.cfg");
+			// 	text.Text = settings.GetScope("client:debug").GetString("player_name");
+			// };
+			// f.Watch("Assets/", new List<Action<object, FileSystemEventHandler>> { rel });
 
 			fps = new TextModel("", scale: .2f, color: Color.DarkViolet);
 			mouse_info = new TextModel("", scale: .2f, color: Color.Cyan);
@@ -104,7 +124,6 @@ namespace Client {
 
 			button.OnClick += (b) => {
 				b.Color = Color.Tomato;
-				ss.Play(sb);
 			};
 
 			button.OnHover += (b) => {
@@ -118,6 +137,7 @@ namespace Client {
 			panel.OnLeftClick += (p) => {
 				text_glow = !text_glow;
 				mouse_info.Glow = text_glow;
+				ss.Play(sb);
 			};
 
 			panel2.OnDrag += (p, delta) => {
@@ -201,6 +221,14 @@ namespace Client {
 
 				SwapBuffers();
 			}
+		}
+
+		protected override void OnUnload(EventArgs e) {
+			AudioContext.Suspend();
+		}
+
+		protected override void OnClosed(EventArgs e) {
+			AudioContext.Dispose();
 		}
 	}
 }

@@ -61,7 +61,7 @@ namespace Client {
 
 			DataChunkSize = bin.ReadInt32();
 
-			Data = bin.ReadBytes((int)bin.BaseStream.Length);
+			Data = bin.ReadBytes(DataChunkSize);
 
 			switch (Channels) {
 				case 1:

@@ -7,17 +7,25 @@ namespace Client {
 	class Program {
 
 		static void Main(string[] args) {
-			Window win = default;
+			GameWindow window = default;
 
-			DisplayDevice device = DisplayDevice.Default;
+			var device = DisplayDevice.GetDisplay(DisplayIndex.Primary);
 
-			if (Utils.IsDebug)
-				win = new Window(device.Width / 2, device.Height / 2, GraphicsMode.Default, "Defsite - Debug", GameWindowFlags.Default, device, 2, 1, GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug);
-			else
-				win = new Window(device.Width, device.Height, GraphicsMode.Default, "Defsite", GameWindowFlags.Fullscreen, device, 2, 1, GraphicsContextFlags.ForwardCompatible);
+			if (Utils.IsDebug) {
+				try {
+					window = new Window(device.Width / 2, device.Height / 2, GraphicsMode.Default, "Defsite - Debug", GameWindowFlags.Default, device, 1, 0, GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug);
+				} catch (Exception e) {
+					Log.Panic(e);
+				}
+			} else {
+				try {
+					window = new Window(device.Width, device.Height, GraphicsMode.Default, "Defsite", GameWindowFlags.Fullscreen, device, 1, 0, GraphicsContextFlags.ForwardCompatible);
+				} catch (Exception e) {
+					Log.Panic(e);
+				}
+			}
 
-			//win.Run(200, 60);
-			win.Run();
+			window.Run();
 		}
 	}
 }
