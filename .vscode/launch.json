@@ -9,7 +9,7 @@
             "program": "${workspaceFolder}/Client/bin/Debug/netcoreapp2.2/Client.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Client/bin/Debug/netcoreapp2.2/",
-            "console": "integratedTerminal",
+            "console": "internalConsole",
             "logging": {
                 "moduleLoad": false
             },

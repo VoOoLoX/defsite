@@ -2,6 +2,23 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "run_client",
+            "command": "dotnet",
+            "type": "process",
+            "options": {
+                "cwd": "${workspaceFolder}/Client/bin/Debug/netcoreapp2.2/"
+            },
+            "args": [
+                "run",
+                "--project",
+                "${workspaceFolder}/Client/Client.csproj"
+            ],
+            "problemMatcher": "$msCompile",
+            "dependsOn": [
+                "buiild_client"
+            ]
+        },
+        {
             "label": "build_client",
             "command": "dotnet",
             "type": "process",

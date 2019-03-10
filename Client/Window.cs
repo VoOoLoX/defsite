@@ -78,7 +78,7 @@ namespace Client {
 
 		protected override void OnLoad(EventArgs e) {
 
-			AssetManager.Load(AssetType.Texture, "Pot", "Ghost.vif");
+			AssetManager.Load(AssetType.Texture, "Pot", "Pot.vif");
 
 			//Add credits for both fonts & fix scaling of scientifica
 			AssetManager.Load(AssetType.Font, "TinyFont", "Tiny.png");

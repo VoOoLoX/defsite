@@ -107,4 +107,24 @@ namespace Server {
 			Password = ReadBytes<string>(data);
 		}
 	}
+
+	public class MessageBroadcast : Message {
+		public override MessageType Type => MessageType.Broadcast;
+
+		public string Message { get; private set; }
+
+		public MessageBroadcast(byte[] data) {
+			ResetIndex();
+			Message = ReadBytes<string>(data);
+		}
+	}
+
+	public class MessageText : Message {
+		public override MessageType Type => MessageType.Text;
+
+		public MessageText(string text) {
+			ResetIndex();
+			WriteBytes(text);
+		}
+	}
 }

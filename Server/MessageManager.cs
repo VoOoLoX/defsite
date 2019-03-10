@@ -17,12 +17,12 @@ namespace Server {
 
 			Parse(message_type, message_data);
 
-			//Console.WriteLine($"[{message_id.ToString()}] {Encoding.ASCII.GetString(message_data, 0, length - 1)}");
-			//NetworkHandler.Send(client, data);
+			// Console.WriteLine($"[{message_id.ToString()}] {Encoding.ASCII.GetString(message_data, 0, length - 1)}");
+			// NetworkHandler.Send(client, data);
 		}
 
 		void Send(Client client, Message msg) {
-
+			NetworkHandler.Send(client, msg.Data.ToArray());
 		}
 
 		void Parse(MessageType type, byte[] data) {
@@ -30,7 +30,15 @@ namespace Server {
 			switch (type) {
 				case MessageType.Login:
 					msg = new MessageLogin(data);
-					Log.Info((msg as MessageLogin).Username + " - " + (msg as MessageLogin).Password);
+					// Log.Info((msg as MessageLogin).Username + " - " + (msg as MessageLogin).Password);
+					break;
+				case MessageType.Broadcast:
+					msg = new MessageBroadcast(data);
+					// Log.Info((msg as MessageBroadcast).Message);
+					var text = new MessageText((msg as MessageBroadcast).Message);
+					foreach (var c in Server.GetClients()) {
+						Send(c, text);
+					}
 					break;
 			}
 		}
