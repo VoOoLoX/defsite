@@ -39,19 +39,19 @@ namespace Client {
 
 		public void Update(double delta_time) {
 			direction_vector = Vector2.Zero;
-			if (InputManager.IsActive(Key.Right))
+			if (Input.IsActive(Key.Right))
 				direction_vector.X = 1;
 
-			if (InputManager.IsActive(Key.Left))
+			if (Input.IsActive(Key.Left))
 				direction_vector.X = -1;
 
-			if (InputManager.IsActive(Key.Up))
+			if (Input.IsActive(Key.Up))
 				direction_vector.Y = 1;
 
-			if (InputManager.IsActive(Key.Down))
+			if (Input.IsActive(Key.Down))
 				direction_vector.Y = -1;
 
-			var scroll_value = InputManager.ScrollWheel;
+			var scroll_value = Input.ScrollWheel;
 
 			if (scroll_value > 0) {
 				ZoomFactor *= 1 + zoom_constant;

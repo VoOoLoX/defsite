@@ -117,5 +117,9 @@ namespace Client {
 					throw (new InvalidCastException());
 			}
 		}
+
+		~Shader() {
+			GL.DeleteProgram(ID);
+		}
 	}
 }

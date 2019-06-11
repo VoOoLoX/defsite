@@ -1,21 +1,24 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Defsite;
 
 namespace Client {
 	public enum AssetType {
 		Texture,
 		Shader,
 		Font,
-		Audio,
+		Sound,
 		Map
 	}
 
 	public static class AssetManager {
-		const string AssetsRoot = "Assets";
-		const string TexturesPath = "Textures";
-		const string ShadersPath = "Shaders";
-		const string FontsPath = "Fonts";
+		static Config settings = new Config("Assets/Settings.cfg");
+		static string AssetsRoot = settings["client"].GetString("assets_root") ?? "Assets";
+		static string TexturesPath = settings["client"].GetString("assets_textures") ?? "Textures";
+		static string ShadersPath = settings["client"].GetString("assets_shaders") ?? "Shadres";
+		static string FontsPath = settings["client"].GetString("assets_fonts") ?? "Fonts";
+		static string SoundsPath = settings["client"].GetString("assets_sounds") ?? "Sounds";
 
 		static Dictionary<string, object> assets = new Dictionary<string, object>();
 
@@ -30,6 +33,9 @@ namespace Client {
 						break;
 					case AssetType.Font:
 						assets.Add(name, new Texture(Path.Join(AssetsRoot, FontsPath, asset_name)));
+						break;
+					case AssetType.Sound:
+						assets.Add(name, new WAVFile(Path.Join(AssetsRoot, SoundsPath, asset_name)));
 						break;
 				}
 			}

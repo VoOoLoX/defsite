@@ -7,14 +7,10 @@ namespace Client {
 		public int ID { get; private set; }
 
 		public VertexBuffer(T[] data) {
-			ID = GL.GenBuffer();
+			GL.CreateBuffers(1, out int buffer);
+			ID = buffer;
 			Enable();
-			if (typeof(T) == typeof(Vector2))
-				GL.BufferData(BufferTarget.ArrayBuffer, data.Length * Vector2.SizeInBytes, (Vector2[])Convert.ChangeType(data, typeof(Vector2[])), BufferUsageHint.DynamicDraw);
-			if (typeof(T) == typeof(Vector3))
-				GL.BufferData(BufferTarget.ArrayBuffer, data.Length * Vector3.SizeInBytes, (Vector3[])Convert.ChangeType(data, typeof(Vector3[])), BufferUsageHint.DynamicDraw);
-			if (typeof(T) == typeof(Vector4))
-				GL.BufferData(BufferTarget.ArrayBuffer, data.Length * Vector4.SizeInBytes, (Vector4[])Convert.ChangeType(data, typeof(Vector3[])), BufferUsageHint.DynamicDraw);
+			Update(data);
 			Disable();
 		}
 
@@ -24,13 +20,34 @@ namespace Client {
 		public void Update(T[] data) {
 			Enable();
 			GL.InvalidateBufferData(ID);
-			if (typeof(T) == typeof(Vector2))
-				GL.BufferData(BufferTarget.ArrayBuffer, data.Length * Vector2.SizeInBytes, (Vector2[])Convert.ChangeType(data, typeof(Vector2[])), BufferUsageHint.DynamicDraw);
-			if (typeof(T) == typeof(Vector3))
-				GL.BufferData(BufferTarget.ArrayBuffer, data.Length * Vector3.SizeInBytes, (Vector3[])Convert.ChangeType(data, typeof(Vector3[])), BufferUsageHint.DynamicDraw);
-			if (typeof(T) == typeof(Vector4))
-				GL.BufferData(BufferTarget.ArrayBuffer, data.Length * Vector4.SizeInBytes, (Vector4[])Convert.ChangeType(data, typeof(Vector3[])), BufferUsageHint.DynamicDraw);
+			switch (data) {
+				case Vector2[] v2:
+					GL.BufferData(BufferTarget.ArrayBuffer, data.Length * Vector2.SizeInBytes, v2, BufferUsageHint.StaticDraw);
+					break;
+				case Vector3[] v3:
+					GL.BufferData(BufferTarget.ArrayBuffer, data.Length * Vector2.SizeInBytes, v3, BufferUsageHint.StaticDraw);
+					break;
+				case Vector4[] v4:
+					GL.BufferData(BufferTarget.ArrayBuffer, data.Length * Vector2.SizeInBytes, v4, BufferUsageHint.StaticDraw);
+					break;
+			}
 			Disable();
+		}
+
+		public int Dimensions() {
+			switch (this) {
+				case VertexBuffer<Vector2> _:
+					return 2;
+				case VertexBuffer<Vector3> _:
+					return 3;
+				case VertexBuffer<Vector4> _:
+					return 4;
+				default: return 0;
+			}
+		}
+
+		~VertexBuffer() {
+			GL.DeleteBuffer(ID);
 		}
 	}
 }

@@ -14,8 +14,6 @@ using Defsite;
 namespace Client {
 	public partial class Window : GameWindow {
 
-		AudioContext AudioContext;
-
 		public Window(int width, int height, GraphicsMode mode, string title, GameWindowFlags window_flags, DisplayDevice device, int major, int minor, GraphicsContextFlags context_flags)
 			: base(width, height, mode, title, window_flags, device, major, minor, context_flags) {
 			Context.ErrorChecking = true;
@@ -63,8 +61,8 @@ namespace Client {
 		public static Point ClientCenter { get; private set; }
 
 		Renderer renderer;
+		AudioContext AudioContext;
 		Camera camera;
-		InputManager input_manager;
 		TileModel tile;
 		TextModel text, fps, mouse_info;
 
@@ -76,44 +74,43 @@ namespace Client {
 		SoundBuffer sb;
 		SoundSource ss;
 
+		CubeModel test;
+
 		protected override void OnLoad(EventArgs e) {
 
-			AssetManager.Load(AssetType.Texture, "Pot", "Pot.vif");
+			AssetManager.Load(AssetType.Texture, "Ghost", "Ghost.vif");
 
 			//Add credits for both fonts & fix scaling of scientifica
-			AssetManager.Load(AssetType.Font, "TinyFont", "Tiny.png");
+			AssetManager.Load(AssetType.Font, "TinyFont", "Tiny.vif");
 			AssetManager.Load(AssetType.Font, "ScientificaFont", "Scientifica.vif");
-			AssetManager.Load(AssetType.Font, "LexipaFont", "Lexipa.vif");
 
 			AssetManager.Load(AssetType.Shader, "ObjectShader", "Object.shdr");
 			AssetManager.Load(AssetType.Shader, "TextureShader", "Texture.shdr");
 			AssetManager.Load(AssetType.Shader, "TextShader", "Text.shdr");
 			AssetManager.Load(AssetType.Shader, "ColorShader", "Color.shdr");
 
+			AssetManager.Load(AssetType.Sound, "Chching", "Coins.wav");
+
 			renderer = new Renderer(new Color(20, 20, 20, 255));
 			camera = new Camera(60);
-			input_manager = new InputManager();
+			camera.UpdateProjectionMatrix();
 
 			tile = new TileModel();
 
+			test = new CubeModel(Color.Red);
+
 			var f = new FileLoader();
 
-			Config settings = new Config("Assets/Settings.cfg");
+			var settings = new Config("Assets/Settings.cfg");
 
 			AL.Listener(ALListener3f.Position, 0, 0, 0);
 			AL.Listener(ALListener3f.Velocity, 0, 0, 0);
 
-			sound = new WAVFile("Assets/Sounds/Coins.wav");
+			sound = AssetManager.Get<WAVFile>("Chching");
 			sb = new SoundBuffer(sound.Format, sound.Data, sound.SampleRate);
 			ss = new SoundSource();
 
-			text = new TextModel(settings.GetScope("client:debug").GetString("player_name"), scale: .16f, color: Color.SteelBlue);
-
-			// Action<object, FileSystemEventHandler> rel = (o, ev) => {
-			// 	settings = new Config("Assets/Settings.cfg");
-			// 	text.Text = settings.GetScope("client:debug").GetString("player_name");
-			// };
-			// f.Watch("Assets/", new List<Action<object, FileSystemEventHandler>> { rel });
+			text = new TextModel(settings["client"].GetString("player_name"), scale: .16f, color: Color.SteelBlue);
 
 			fps = new TextModel("", scale: .2f, color: Color.DarkViolet);
 			mouse_info = new TextModel("", scale: .2f, color: Color.Cyan);
@@ -151,17 +148,17 @@ namespace Client {
 
 		}
 
-		protected override void OnKeyDown(KeyboardKeyEventArgs e) => input_manager.Set(e.Key, true);
+		protected override void OnKeyDown(KeyboardKeyEventArgs e) => Input.Set(e.Key, true);
 
-		protected override void OnKeyUp(KeyboardKeyEventArgs e) => input_manager.Set(e.Key, false);
+		protected override void OnKeyUp(KeyboardKeyEventArgs e) => Input.Set(e.Key, false);
 
-		protected override void OnMouseMove(MouseMoveEventArgs e) => input_manager.Set(new Point(e.X, e.Y));
+		protected override void OnMouseMove(MouseMoveEventArgs e) => Input.Set(new Point(e.X, e.Y));
 
-		protected override void OnMouseWheel(MouseWheelEventArgs e) => input_manager.Set(e.Delta);
+		protected override void OnMouseWheel(MouseWheelEventArgs e) => Input.Set(e.Delta);
 
-		protected override void OnMouseDown(MouseButtonEventArgs e) => input_manager.Set(e.Button, true);
+		protected override void OnMouseDown(MouseButtonEventArgs e) => Input.Set(e.Button, true);
 
-		protected override void OnMouseUp(MouseButtonEventArgs e) => input_manager.Set(e.Button, false);
+		protected override void OnMouseUp(MouseButtonEventArgs e) => Input.Set(e.Button, false);
 
 		protected override void OnClosing(System.ComponentModel.CancelEventArgs e) {
 			DisplayDevice.Default.RestoreResolution();
@@ -178,11 +175,12 @@ namespace Client {
 		protected override void OnUpdateFrame(FrameEventArgs e) {
 			ProcessEvents();
 
-			if (InputManager.IsActive(Key.Escape))
+			if (Input.IsActive(Key.Escape))
 				Close();
 
 			camera.Update(e.Time);
 			tile.Update(e.Time);
+			test.Update(e.Time);
 
 			if (WindowState != WindowState.Minimized)
 				Update();
@@ -197,7 +195,7 @@ namespace Client {
 			button.X = panel.X + panel.Width - button.Width;
 			button.Y = panel.Y;
 
-			mouse_info.Text = $"{InputManager.MousePos.X}:{InputManager.MousePos.Y}:{InputManager.IsActive(MouseButton.Left)}:{InputManager.IsActive(MouseButton.Right)}";
+			mouse_info.Text = $"{Input.MousePos.X}:{Input.MousePos.Y}:{Input.IsActive(MouseButton.Left)}:{Input.IsActive(MouseButton.Right)}";
 			mouse_info.MoveText(0, fps.Height);
 
 			button.Update();
@@ -212,6 +210,7 @@ namespace Client {
 				renderer.Clear();
 
 				renderer.Draw(camera, tile);
+				renderer.Draw(camera, test);
 				renderer.Draw(camera, text, true);
 				renderer.Draw(camera, fps, true);
 				renderer.Draw(camera, mouse_info, true);

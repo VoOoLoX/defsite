@@ -10,7 +10,7 @@ namespace Client {
 		IndexBuffer ib = new IndexBuffer(Primitives.QuadCentered.IndexBufferData);
 
 		static Shader shader = AssetManager.Get<Shader>("ObjectShader");
-		static Texture texture = AssetManager.Get<Texture>("Pot");
+		static Texture texture = AssetManager.Get<Texture>("Ghost");
 
 		Vector3 direction_vector = new Vector3();
 		Vector3 position = new Vector3();
@@ -33,19 +33,19 @@ namespace Client {
 		public override void Update(double delta_time) {
 			direction_vector = Vector3.Zero;
 
-			if (InputManager.IsActive(Key.D))
+			if (Input.IsActive(Key.D))
 				direction_vector.X = 1;
 
-			if (InputManager.IsActive(Key.A))
+			if (Input.IsActive(Key.A))
 				direction_vector.X = -1;
 
-			if (InputManager.IsActive(Key.W))
+			if (Input.IsActive(Key.W))
 				direction_vector.Y = 1;
 
-			if (InputManager.IsActive(Key.S))
+			if (Input.IsActive(Key.S))
 				direction_vector.Y = -1;
 
-			if (InputManager.IsActive(Key.Tilde))
+			if (Input.IsActive(Key.Tilde))
 				direction_vector = Vector3.Zero - position;
 
 			direction_vector.NormalizeFast();

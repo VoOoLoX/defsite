@@ -8,7 +8,6 @@ namespace Client {
 	class RectangleModel : Model {
 		VertextArray va = new VertextArray();
 		VertexBuffer<Vector2> vbo_pos = new VertexBuffer<Vector2>(Primitives.Quad.PositionData);
-		VertexBuffer<Vector2> vbo_uv = new VertexBuffer<Vector2>(Primitives.Quad.UVData);
 		IndexBuffer ib = new IndexBuffer(Primitives.Quad.IndexBufferData);
 
 		static Shader shader = AssetManager.Get<Shader>("ColorShader");

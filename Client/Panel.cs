@@ -48,7 +48,7 @@ namespace Client {
 		}
 
 		public void Update() {
-			MousePos = InputManager.MousePos;
+			MousePos = Input.MousePos;
 
 			if (OnUpdate != null) {
 				var on_update_actions = OnUpdate.GetInvocationList();
@@ -67,7 +67,7 @@ namespace Client {
 							action.DynamicInvoke(this);
 				}
 
-				if (InputManager.IsActive(MouseButton.Left) && !LeftButtonDown) {
+				if (Input.IsActive(MouseButton.Left) && !LeftButtonDown) {
 					LeftButtonDown = true;
 					LeftMousePos = MousePos;
 
@@ -79,7 +79,7 @@ namespace Client {
 					}
 				}
 
-				if (InputManager.IsActive(MouseButton.Right) && !RightButtonDown) {
+				if (Input.IsActive(MouseButton.Right) && !RightButtonDown) {
 					RightButtonDown = true;
 					RightMousePos = MousePos;
 
@@ -102,9 +102,9 @@ namespace Client {
 				}
 			}
 
-			if (!InputManager.IsActive(MouseButton.Left)) LeftButtonDown = false;
+			if (!Input.IsActive(MouseButton.Left)) LeftButtonDown = false;
 
-			if (!InputManager.IsActive(MouseButton.Right)) RightButtonDown = false;
+			if (!Input.IsActive(MouseButton.Right)) RightButtonDown = false;
 		}
 	}
 }

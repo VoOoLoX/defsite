@@ -17,6 +17,9 @@ namespace Client {
 		public static Vector2 ScreenToWorld(float x, float y) =>
 			new Vector2(Map(x, 0, Window.ClientWidth, -1, 1), Map(y, 0, Window.ClientHeight, -1, 1));
 
+		public static Vector3 ScreenToWorld(float x, float y, float z) =>
+			new Vector3(Map(x, 0, Window.ClientWidth, -1, 1), Map(y, 0, Window.ClientHeight, -1, 1), Map(z, 0, Window.ClientHeight, -1, 1));
+
 		public static float Lerp(this float start, float end, float amount) => start + end - start * amount;
 
 		public static Color Lerp(this Color colour, Color to, float amount) {

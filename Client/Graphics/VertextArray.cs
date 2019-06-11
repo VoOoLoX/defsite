@@ -1,4 +1,5 @@
 using System;
+using Defsite;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -7,28 +8,28 @@ namespace Client {
 		public int ID { get; private set; }
 
 		public VertextArray() {
-			ID = GL.GenVertexArray();
+			GL.CreateVertexArrays(1, out int buffer);
+			ID = buffer;
 		}
 
-		public void AddBuffer<T>(VertexBuffer<T> buffer, int id, int stride, int offset) {
+		public void AddBuffer<T>(VertexBuffer<T> buffer, int id, int stride, int offset = 0) {
 			Enable();
 			buffer.Enable();
-			EnableBuffer(id);
-			if (typeof(T) == typeof(Vector2))
-				GL.VertexAttribPointer(id, 2, VertexAttribPointerType.Float, false, stride * sizeof(float), offset);
-			if (typeof(T) == typeof(Vector3))
-				GL.VertexAttribPointer(id, 3, VertexAttribPointerType.Float, false, stride * sizeof(float), offset);
-			if (typeof(T) == typeof(Vector4))
-				GL.VertexAttribPointer(id, 4, VertexAttribPointerType.Float, false, stride * sizeof(float), offset);
-			DisableBuffer();
+			EnableAttribArray(id);
+			GL.VertexAttribPointer(id, buffer.Dimensions(), VertexAttribPointerType.Float, false, stride * sizeof(float), offset);
+			DisableAttribArray();
 			buffer.Disable();
 			Disable();
 		}
 
-		public void EnableBuffer(int id = 0) => GL.EnableVertexAttribArray(id);
-		public void DisableBuffer() => GL.EnableVertexAttribArray(0);
+		public void EnableAttribArray(int id = 0) => GL.EnableVertexAttribArray(id);
+		public void DisableAttribArray() => GL.EnableVertexAttribArray(0);
 
 		public void Enable() => GL.BindVertexArray(ID);
 		public void Disable() => GL.BindVertexArray(0);
+
+		~VertextArray() {
+			GL.DeleteVertexArray(ID);
+		}
 	}
 }

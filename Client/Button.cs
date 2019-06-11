@@ -56,7 +56,7 @@ namespace Client {
 		}
 
 		public void Update() {
-			var mouse_p = InputManager.MousePos;
+			var mouse_p = Input.MousePos;
 
 			if (OnUpdate != null) {
 				var on_update_actions = OnUpdate.GetInvocationList();
@@ -72,7 +72,7 @@ namespace Client {
 						foreach (var action in on_hover_actions)
 							action.DynamicInvoke(this);
 				}
-				if (InputManager.IsActive(MouseButton.Left)) {
+				if (Input.IsActive(MouseButton.Left)) {
 					if (OnClick != null) {
 						var on_click_actions = OnClick.GetInvocationList();
 						if (on_click_actions.Length > 0)

@@ -19,7 +19,9 @@ namespace Client {
 		public void Move(Vector2 move_vector) => ModelMatrix *= Matrix4.CreateTranslation(move_vector.X, move_vector.Y, 0);
 		public void Move(float x, float y, float z) => ModelMatrix *= Matrix4.CreateTranslation(x, y, z);
 		public void Move(float x, float y) => ModelMatrix *= Matrix4.CreateTranslation(x, y, 0);
+
 		public void Scale(float scale_factor) => ModelMatrix *= Matrix4.CreateScale(scale_factor, scale_factor, 0);
 		public void Scale(float scale_factor_x, float scale_factor_y) => ModelMatrix *= Matrix4.CreateScale(scale_factor_x, scale_factor_y, 0);
+		public void Scale(float scale_factor_x, float scale_factor_y, float scale_factor_z) => ModelMatrix *= Matrix4.CreateScale(scale_factor_x, scale_factor_y, scale_factor_z);
 	}
 }

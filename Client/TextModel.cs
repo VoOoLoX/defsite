@@ -81,9 +81,9 @@ namespace Client {
 		}
 
 		//fix this
-		public void Size(int pixels) {
-			ScaleText((float)pixels / Camera.ZoomFactor);
-		}
+		// public void Size(int pixels) {
+		// 	ScaleText((float)pixels / Camera.ZoomFactor);
+		// }
 
 		Vector2[] GenerateCharPositions(string text) {
 			var poslist = new List<Vector2[]>();

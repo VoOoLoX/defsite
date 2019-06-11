@@ -106,6 +106,12 @@ namespace Defsite {
 
 		public ConfigScope GetScope(string path) => GetScope(path, false);
 
+		public ConfigScope this[string scope] {
+			get {
+				return GetScope(scope);
+			}
+		}
+
 		(ConfigScope scope, string key) ParsePath(string path) {
 			var scope_path = path.Split('.')[0];
 			var key = path.Split('.')[1];
