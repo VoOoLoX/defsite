@@ -22,8 +22,8 @@ namespace Client {
 
 		public static float Lerp(this float start, float end, float amount) => start + end - start * amount;
 
-		public static Color Lerp(this Color colour, Color to, float amount) {
-			float sr = colour.R, sg = colour.G, sb = colour.B;
+		public static Color Lerp(this Color color, Color to, float amount) {
+			float sr = color.R, sg = color.G, sb = color.B;
 
 			float er = to.R, eg = to.G, eb = to.B;
 

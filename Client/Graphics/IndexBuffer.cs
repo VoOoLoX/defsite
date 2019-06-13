@@ -18,7 +18,7 @@ namespace Client {
 		public void Disable() => GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
 
 		~IndexBuffer() {
-			GL.DeleteBuffer(ID);
+			// GL.DeleteBuffer(ID);
 		}
 	}
 }

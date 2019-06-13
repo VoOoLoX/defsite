@@ -9,29 +9,29 @@ namespace Client {
 		VertextArray va = new VertextArray();
 		VertexBuffer<Vector2> vbo_pos;
 		VertexBuffer<Vector2> vbo_uv;
-		IndexBuffer ib = default;
+		IndexBuffer ib;
 
 		static Shader shader = AssetManager.Get<Shader>("TextShader");
 		static Texture texture = AssetManager.Get<Texture>("TinyFont");
 
-		static readonly string chars = " ABCDEFGHIJKLMNOPRSTQUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=[]{}<>,.;:'\"/?\\|";
+		const string chars = " ABCDEFGHIJKLMNOPRSTQUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=[]{}<>,.;:'\"/?\\|";
 		static readonly float uv_char_width = 1f / chars.Length;
 
-		Vector2 TextWorldPosition = Vector2.Zero;
-		Vector2 TextPosition = Vector2.Zero;
-		string TextValue = string.Empty;
-		float TextScale = 1;
-		bool TextGlow = false;
+		Vector2 text_world_position = Vector2.Zero;
+		Vector2 text_position;
+		string text_value;
+		float text_scale = 1;
+		bool text_glow;
 
-		Color TextColor = new Color(0, 0, 0, 255);
+		Color text_color = Color.Black;
 
 		public TextModel(string text, Vector2 position = default, float scale = 1, Color color = default, bool glow = false) {
 			VA.Enable();
 
-			TextValue = text;
-			TextPosition = position;
-			TextScale = scale;
-			TextGlow = glow;
+			text_value = text;
+			text_position = position;
+			text_scale = scale;
+			text_glow = glow;
 
 			vbo_pos = new VertexBuffer<Vector2>(GenerateCharPositions(text));
 			vbo_uv = new VertexBuffer<Vector2>(GenerateCharUVs(text));
@@ -43,20 +43,20 @@ namespace Client {
 			var uv = Shader.GetAttribute("uv_coords");
 			VA.AddBuffer(vbo_uv, uv, 2, 0);
 
-			Scale(TextScale);
-			MoveText(TextPosition);
+			Scale(text_scale);
+			MoveText(text_position);
 
 			if (color != default)
-				TextColor = color;
+				text_color = color;
 
-			SetColor(TextColor);
+			SetColor(text_color);
 
 			VA.Disable();
 		}
 
-		public void SetColor(Color color) => TextColor = color;
+		void SetColor(Color color) => text_color = color;
 
-		public void SetText(string text) {
+		void SetText(string text) {
 			vbo_pos.Update(GenerateCharPositions(text));
 			vbo_uv.Update(GenerateCharUVs(text));
 			ib = new IndexBuffer(GenerateIndexBuffers(text.Length));
@@ -65,18 +65,18 @@ namespace Client {
 		public void MoveText(int x, int y) => MoveText(new Vector2(x, y));
 
 		public void MoveText(Vector2 position) {
-			TextPosition = position;
+			text_position = position;
 			var move_pos = ClientUtils.ScreenToWorld(position.X, position.Y);
-			Move(new Vector2(move_pos.X - TextWorldPosition.X, -move_pos.Y + TextWorldPosition.Y));
-			TextWorldPosition = move_pos;
+			Move(new Vector2(move_pos.X - text_world_position.X, -move_pos.Y + text_world_position.Y));
+			text_world_position = move_pos;
 		}
 
 		public void ScaleText(float scale) {
-			var pos = TextPosition;
+			var pos = text_position;
 			MoveText(Window.ClientCenter.X - Width / 2, Window.ClientCenter.Y - Height / 2);
-			Scale(1.0f / TextScale);
+			Scale(1.0f / text_scale);
 			Scale(scale);
-			TextScale = scale;
+			text_scale = scale;
 			MoveText(pos);
 		}
 
@@ -129,19 +129,19 @@ namespace Client {
 		}
 
 		public override void PreDraw() {
-			Shader.SetUniform("text_color", TextColor);
-			Shader.SetUniform("glow", TextGlow);
+			Shader.SetUniform("text_color", text_color);
+			Shader.SetUniform("glow", text_glow);
 		}
 
-		public bool Glow { get => TextGlow; set => TextGlow = value; }
+		public bool Glow { get => text_glow; set => text_glow = value; }
 
-		public int Width => (int)ClientUtils.TextWidth(TextValue, TextScale);
+		public int Width => (int)ClientUtils.TextWidth(text_value, text_scale);
 
-		public int Height => (int)ClientUtils.TextHeight(TextScale);
+		public int Height => (int)ClientUtils.TextHeight(text_scale);
 
-		public string Text { get => TextValue; set => SetText(value); }
+		public string Text { get => text_value; set => SetText(value); }
 
-		public Color Color { get => TextColor; set => SetColor(value); }
+		public Color Color { get => text_color; set => SetColor(value); }
 
 		public override Shader Shader => shader;
 

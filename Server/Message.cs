@@ -7,10 +7,10 @@ using System.Text;
 namespace Server {
 	public abstract class Message {
 		public abstract MessageType Type { get; }
-		public virtual List<byte> Data => new List<byte>() { (byte)Type };
+		public virtual List<byte> Data => new List<byte> { (byte)Type };
 		protected void ResetIndex() => reader_index = 0;
 
-		int reader_index = 0;
+		int reader_index;
 
 		public void WriteBytes<T>(T data) {
 			switch (data) {
@@ -52,41 +52,54 @@ namespace Server {
 			}
 		}
 
-		public T ReadBytes<T>(byte[] data) {
+		public T ReadBytes<T>(byte[] data)
+		{
 			if (typeof(T) == typeof(bool)) {
 				var b_value = BitConverter.ToBoolean(data.Skip(reader_index).ToArray());
 				reader_index += sizeof(bool);
 				return (T)Convert.ChangeType(b_value, typeof(T));
-			} else if (typeof(T) == typeof(char)) {
+			}
+
+			if (typeof(T) == typeof(char)) {
 				var c_value = BitConverter.ToChar(data.Skip(reader_index).ToArray());
 				reader_index += sizeof(char);
 				return (T)Convert.ChangeType(c_value, typeof(T));
-			} else if (typeof(T) == typeof(int)) {
+			}
+
+			if (typeof(T) == typeof(int)) {
 				var i_value = BitConverter.ToInt32(data.Skip(reader_index).ToArray());
 				reader_index += sizeof(int);
 				return (T)Convert.ChangeType(i_value, typeof(T));
-			} else if (typeof(T) == typeof(short)) {
+			}
+
+			if (typeof(T) == typeof(short)) {
 				var sh_value = BitConverter.ToInt16(data.Skip(reader_index).ToArray());
 				reader_index += sizeof(short);
 				return (T)Convert.ChangeType(sh_value, typeof(T));
-			} else if (typeof(T) == typeof(long)) {
+			}
+
+			if (typeof(T) == typeof(long)) {
 				var ln_value = BitConverter.ToInt64(data.Skip(reader_index).ToArray());
 				reader_index += sizeof(long);
 				return (T)Convert.ChangeType(ln_value, typeof(T));
-			} else if (typeof(T) == typeof(double)) {
+			}
+
+			if (typeof(T) == typeof(double)) {
 				var d_value = BitConverter.ToDouble(data.Skip(reader_index).ToArray());
 				reader_index += sizeof(double);
 				return (T)Convert.ChangeType(d_value, typeof(T));
-			} else if (typeof(T) == typeof(string)) {
+			}
+
+			if (typeof(T) == typeof(string)) {
 				var r = new BinaryReader(new MemoryStream(data.Skip(reader_index).ToArray()));
 				var s_value = r.ReadString();
 				//String length + string + null char
 				//echo -e 'B\x07VoOoLoX\0\x06CooLpW\0' | nc localhost 7331
 				reader_index += s_value.Length + 2;
 				return (T)Convert.ChangeType(s_value, typeof(T));
-			} else {
-				throw new Exception($"Cannon't interpret given bytes as a type: {typeof(T).Name}");
 			}
+
+			throw new Exception($"Cannon't interpret given bytes as a type: {typeof(T).Name}");
 		}
 	}
 

@@ -47,7 +47,7 @@ namespace Client {
 		}
 
 		~VertexBuffer() {
-			GL.DeleteBuffer(ID);
+			// GL.DeleteBuffer(ID);
 		}
 	}
 }

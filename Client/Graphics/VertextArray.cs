@@ -29,7 +29,7 @@ namespace Client {
 		public void Disable() => GL.BindVertexArray(0);
 
 		~VertextArray() {
-			GL.DeleteVertexArray(ID);
+			// GL.DeleteVertexArray(ID);
 		}
 	}
 }

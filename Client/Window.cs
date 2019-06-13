@@ -173,6 +173,8 @@ namespace Client {
 		}
 
 		protected override void OnUpdateFrame(FrameEventArgs e) {
+			if (WindowState == WindowState.Minimized || !Focused) return;
+
 			ProcessEvents();
 
 			if (Input.IsActive(Key.Escape))
@@ -182,16 +184,18 @@ namespace Client {
 			tile.Update(e.Time);
 			test.Update(e.Time);
 
-			if (WindowState != WindowState.Minimized)
-				Update();
+			Update();
 		}
 
 		void Update() {
 			text.ScaleText(.2f);
 			text.MoveText(ClientWidth - text.Width, 0);
 
-			panel.Move(panel.X, panel.Y);
-			panel2.Move(panel2.X, panel2.Y);
+			panel.X = panel.X;
+			panel.Y = panel.Y;
+
+			panel2.X = panel2.X;
+			panel2.Y = panel2.Y;
 			button.X = panel.X + panel.Width - button.Width;
 			button.Y = panel.Y;
 
@@ -205,21 +209,21 @@ namespace Client {
 		}
 
 		protected override void OnRenderFrame(FrameEventArgs e) {
-			if (WindowState != WindowState.Minimized) {
-				fps.Text = $"{1 / e.Time:.0}";
-				renderer.Clear();
+			if (WindowState == WindowState.Minimized || !Focused) return;
 
-				renderer.Draw(camera, tile);
-				renderer.Draw(camera, test);
-				renderer.Draw(camera, text, true);
-				renderer.Draw(camera, fps, true);
-				renderer.Draw(camera, mouse_info, true);
-				panel.Draw(renderer, camera);
-				panel2.Draw(renderer, camera);
-				button.Draw(renderer, camera);
+			fps.Text = $"{1 / e.Time:.0}";
+			renderer.Clear();
 
-				SwapBuffers();
-			}
+			renderer.Draw(camera, tile);
+			renderer.Draw(camera, test);
+			renderer.Draw(camera, text, true);
+			renderer.Draw(camera, fps, true);
+			renderer.Draw(camera, mouse_info, true);
+			panel.Draw(renderer, camera);
+			panel2.Draw(renderer, camera);
+			button.Draw(renderer, camera);
+
+			SwapBuffers();
 		}
 
 		protected override void OnUnload(EventArgs e) {

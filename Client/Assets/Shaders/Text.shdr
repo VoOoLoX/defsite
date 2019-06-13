@@ -36,27 +36,27 @@ void main() {
 		Output = text_color;
 
 	if (Output.a <= .5 && glow) {
-        ivec2 size = textureSize(texture_sampler, 0);
+		ivec2 size = textureSize(texture_sampler, 0);
 
-        float uv_x = UV.x * size.x;
-        float uv_y = UV.y * size.y;
+		float uv_x = UV.x * size.x;
+		float uv_y = UV.y * size.y;
 
-        float sum = 0.0;
-        for (int n = 0; n < 9; ++n) {
-            uv_y = (UV.y * size.y) + (glow_size * float(n - 4.5));
-            float h_sum = 0.0;
-            h_sum += texelFetch(texture_sampler, ivec2(uv_x - (4.0 * glow_size), uv_y), 0).a;
-            h_sum += texelFetch(texture_sampler, ivec2(uv_x - (3.0 * glow_size), uv_y), 0).a;
-            h_sum += texelFetch(texture_sampler, ivec2(uv_x - (2.0 * glow_size), uv_y), 0).a;
-            h_sum += texelFetch(texture_sampler, ivec2(uv_x - glow_size, uv_y), 0).a;
-            h_sum += texelFetch(texture_sampler, ivec2(uv_x, uv_y), 0).a;
-            h_sum += texelFetch(texture_sampler, ivec2(uv_x + glow_size, uv_y), 0).a;
-            h_sum += texelFetch(texture_sampler, ivec2(uv_x + (2.0 * glow_size), uv_y), 0).a;
-            h_sum += texelFetch(texture_sampler, ivec2(uv_x + (3.0 * glow_size), uv_y), 0).a;
-            h_sum += texelFetch(texture_sampler, ivec2(uv_x + (4.0 * glow_size), uv_y), 0).a;
-            sum += h_sum / 9.0;
-        }
+		float sum = 0.0;
+		for (int n = 0; n < 9; ++n) {
+			uv_y = (UV.y * size.y) + (glow_size * float(n - 4.5));
+			float h_sum = 0.0;
+			h_sum += texelFetch(texture_sampler, ivec2(uv_x - (4.0 * glow_size), uv_y), 0).a;
+			h_sum += texelFetch(texture_sampler, ivec2(uv_x - (3.0 * glow_size), uv_y), 0).a;
+			h_sum += texelFetch(texture_sampler, ivec2(uv_x - (2.0 * glow_size), uv_y), 0).a;
+			h_sum += texelFetch(texture_sampler, ivec2(uv_x - glow_size, uv_y), 0).a;
+			h_sum += texelFetch(texture_sampler, ivec2(uv_x, uv_y), 0).a;
+			h_sum += texelFetch(texture_sampler, ivec2(uv_x + glow_size, uv_y), 0).a;
+			h_sum += texelFetch(texture_sampler, ivec2(uv_x + (2.0 * glow_size), uv_y), 0).a;
+			h_sum += texelFetch(texture_sampler, ivec2(uv_x + (3.0 * glow_size), uv_y), 0).a;
+			h_sum += texelFetch(texture_sampler, ivec2(uv_x + (4.0 * glow_size), uv_y), 0).a;
+			sum += h_sum / 9.0;
+		}
 
-        Output = vec4(glow_color.rgb, (sum / 9.0) * glow_intensity);
-    }
+		Output = vec4(glow_color.rgb, (sum / 9.0) * glow_intensity);
+	}
 }

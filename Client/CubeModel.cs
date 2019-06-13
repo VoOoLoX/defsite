@@ -33,14 +33,14 @@ namespace Client {
 
 		static Shader shader = AssetManager.Get<Shader>("ColorShader");
 
-		Vector3 CubeWorldPosition = Vector3.Zero;
-		Cube CubeScreen = Cube.Zero;
+		Vector3 cube_world_position = Vector3.Zero;
+		Cube cube_screen = Cube.Zero;
 
-		float CubeScaleX = 1;
-		float CubeScaleY = 1;
-		float CubeScaleZ = 1;
+		float cube_scale_x = 1;
+		float cube_scale_y = 1;
+		float cube_scale_z = 1;
 
-		Color CubeColor = new Color(0, 0, 0, 255);
+		Color cube_color = new Color(0, 0, 0, 255);
 
 		public CubeModel(Color color = default) {
 			VA.Enable();
@@ -48,63 +48,63 @@ namespace Client {
 			var pos = Shader.GetAttribute("position");
 			VA.AddBuffer(vbo_pos, pos, 3);
 
-			ResizeCube(CubeScreen.Width, CubeScreen.Height, CubeScreen.Depth);
-			MoveCube(CubeScreen.X, CubeScreen.Y, CubeScreen.Z);
+			ResizeCube(cube_screen.Width, cube_screen.Height, cube_screen.Depth);
+			MoveCube(cube_screen.X, cube_screen.Y, cube_screen.Z);
 
 			if (color != default)
-				CubeColor = color;
+				cube_color = color;
 
-			SetColor(CubeColor);
+			SetColor(cube_color);
 
 			VA.Disable();
 		}
 
-		public void SetColor(Color color) => CubeColor = color;
+		void SetColor(Color color) => cube_color = color;
 
-		public void ResizeCube(int width, int height, int depth) {
-			CubeScreen.Width = width;
-			CubeScreen.Height = height;
-			CubeScreen.Depth = depth;
+		void ResizeCube(int width, int height, int depth) {
+			cube_screen.Width = width;
+			cube_screen.Height = height;
+			cube_screen.Depth = depth;
 
-			var sx = CubeScreen.Width / ClientUtils.WorldUnitToScreen(CubeScaleX);
-			var sy = CubeScreen.Height / ClientUtils.WorldUnitToScreen(CubeScaleY);
-			var sz = CubeScaleZ;
+			var sx = cube_screen.Width / ClientUtils.WorldUnitToScreen(cube_scale_x);
+			var sy = cube_screen.Height / ClientUtils.WorldUnitToScreen(cube_scale_y);
+			var sz = cube_scale_z;
 
-			CubeScaleX *= sx;
-			CubeScaleY *= sy;
+			cube_scale_x *= sx;
+			cube_scale_y *= sy;
 
 			MoveCube(Window.ClientCenter.X, Window.ClientCenter.Y, 0);
 			Scale(sx, sy, sz);
-			MoveCube(CubeScreen.X, CubeScreen.Y, CubeScreen.Z);
+			MoveCube(cube_screen.X, cube_screen.Y, cube_screen.Z);
 		}
 
-		public void MoveCube(int x, int y, int z) {
-			CubeScreen.X = x;
-			CubeScreen.Y = y;
+		void MoveCube(int x, int y, int z) {
+			cube_screen.X = x;
+			cube_screen.Y = y;
 
 			var move_pos = ClientUtils.ScreenToWorld(x, y, z);
 
-			Move(move_pos.X - CubeWorldPosition.X, -move_pos.Y + CubeWorldPosition.Y);
-			CubeWorldPosition = move_pos;
+			Move(move_pos.X - cube_world_position.X, -move_pos.Y + cube_world_position.Y);
+			cube_world_position = move_pos;
 		}
 
 		public override void PreDraw() => Shader.SetUniform("color", Color.WhiteSmoke);
 
-		public int Width { get => (int)ClientUtils.WorldUnitToScreen(CubeScaleX); set => ResizeCube(value, Height, Depth); }
+		public int Width { get => (int)ClientUtils.WorldUnitToScreen(cube_scale_x); set => ResizeCube(value, Height, Depth); }
 
-		public int Height { get => (int)ClientUtils.WorldUnitToScreen(CubeScaleY); set => ResizeCube(Width, value, Depth); }
+		public int Height { get => (int)ClientUtils.WorldUnitToScreen(cube_scale_y); set => ResizeCube(Width, value, Depth); }
 
-		public int Depth { get => (int)ClientUtils.WorldUnitToScreen(CubeScaleZ); set => ResizeCube(Width, Height, value); }
+		public int Depth { get => (int)ClientUtils.WorldUnitToScreen(cube_scale_z); set => ResizeCube(Width, Height, value); }
 
-		public int X { get => CubeScreen.X; set => MoveCube(value, CubeScreen.Y, CubeScreen.Z); }
+		public int X { get => cube_screen.X; set => MoveCube(value, cube_screen.Y, cube_screen.Z); }
 
-		public int Y { get => CubeScreen.Y; set => MoveCube(CubeScreen.X, value, CubeScreen.Z); }
+		public int Y { get => cube_screen.Y; set => MoveCube(cube_screen.X, value, cube_screen.Z); }
 
-		public int Z { get => CubeScreen.Z; set => MoveCube(CubeScreen.X, CubeScreen.Y, value); }
+		public int Z { get => cube_screen.Z; set => MoveCube(cube_screen.X, cube_screen.Y, value); }
 
-		public Cube Rect { get => new Cube(CubeScreen.X, CubeScreen.Y, CubeScreen.Z, Width, Height, Depth); set { X = value.X; Y = value.Y; Width = value.Width; Height = value.Height; } }
+		public Cube Cube { get => new Cube(cube_screen.X, cube_screen.Y, cube_screen.Z, Width, Height, Depth); set { X = value.X; Y = value.Y; Width = value.Width; Height = value.Height; } }
 
-		public Color Color { get => CubeColor; set => SetColor(value); }
+		public Color Color { get => cube_color; set => SetColor(value); }
 
 		public override Shader Shader => shader;
 

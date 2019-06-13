@@ -11,17 +11,17 @@ namespace Client {
 			Move(rect.X, rect.Y);
 		}
 
-		public void Move(int x, int y) {
+		void Move(int x, int y) {
 			rect_model.MoveRect(x, y);
 		}
 
-		public void Resize(int width, int height) {
+		void Resize(int width, int height) {
 			var old = rect_model.Rect;
 			rect_model.ResizeRect(width, height);
 			Move(old.X, old.Y);
 		}
 
-		public void SetColor(Color color) {
+		void SetColor(Color color) {
 			rect_model.SetColor(color);
 		}
 

@@ -12,72 +12,72 @@ namespace Client {
 
 		static Shader shader = AssetManager.Get<Shader>("ColorShader");
 
-		Vector2 RectWorldPosition = Vector2.Zero;
-		Rectangle RectScreen = Rectangle.Zero;
-		float RectScaleX = 1;
-		float RectScaleY = 1;
+		Vector2 rect_world_position = Vector2.Zero;
+		Rectangle rect_screen;
+		float rect_scale_x = 1;
+		float rect_scale_y = 1;
 
-		Color RectColor = new Color(0, 0, 0, 255);
+		Color rect_color = new Color(0, 0, 0, 255);
 
 		public RectangleModel(Rectangle rect, Color color = default) {
 			VA.Enable();
 
-			RectScreen = rect;
+			rect_screen = rect;
 
 			var pos = Shader.GetAttribute("position");
 			VA.AddBuffer(vbo_pos, pos, 2, 0);
 
-			ResizeRect(RectScreen.Width, RectScreen.Height);
-			MoveRect(RectScreen.X, RectScreen.Y);
+			ResizeRect(rect_screen.Width, rect_screen.Height);
+			MoveRect(rect_screen.X, rect_screen.Y);
 
 			if (color != default)
-				RectColor = color;
+				rect_color = color;
 
-			SetColor(RectColor);
+			SetColor(rect_color);
 
 			VA.Disable();
 		}
 
-		public void SetColor(Color color) => RectColor = color;
+		public void SetColor(Color color) => rect_color = color;
 
 		public void ResizeRect(int width, int height) {
-			RectScreen.Width = width;
-			RectScreen.Height = height;
+			rect_screen.Width = width;
+			rect_screen.Height = height;
 
-			var sx = RectScreen.Width / ClientUtils.WorldUnitToScreen(RectScaleX);
-			var sy = RectScreen.Height / ClientUtils.WorldUnitToScreen(RectScaleY);
+			var sx = rect_screen.Width / ClientUtils.WorldUnitToScreen(rect_scale_x);
+			var sy = rect_screen.Height / ClientUtils.WorldUnitToScreen(rect_scale_y);
 
-			RectScaleX *= sx;
-			RectScaleY *= sy;
+			rect_scale_x *= sx;
+			rect_scale_y *= sy;
 
 			MoveRect(Window.ClientCenter.X, Window.ClientCenter.Y);
 			Scale(sx, sy);
-			MoveRect(RectScreen.X, RectScreen.Y);
+			MoveRect(rect_screen.X, rect_screen.Y);
 		}
 
 		public void MoveRect(int x, int y) {
-			RectScreen.X = x;
-			RectScreen.Y = y;
+			rect_screen.X = x;
+			rect_screen.Y = y;
 
 			var move_pos = ClientUtils.ScreenToWorld(x, y);
 
-			Move(move_pos.X - RectWorldPosition.X, -move_pos.Y + RectWorldPosition.Y);
-			RectWorldPosition = move_pos;
+			Move(move_pos.X - rect_world_position.X, -move_pos.Y + rect_world_position.Y);
+			rect_world_position = move_pos;
 		}
 
-		public override void PreDraw() => Shader.SetUniform("color", RectColor);
+		public override void PreDraw() => Shader.SetUniform("color", rect_color);
 
-		public int Width { get => (int)ClientUtils.WorldUnitToScreen(RectScaleX); set => ResizeRect(value, Height); }
+		public int Width { get => (int)ClientUtils.WorldUnitToScreen(rect_scale_x); set => ResizeRect(value, Height); }
 
-		public int Height { get => (int)ClientUtils.WorldUnitToScreen(RectScaleY); set => ResizeRect(Width, value); }
+		public int Height { get => (int)ClientUtils.WorldUnitToScreen(rect_scale_y); set => ResizeRect(Width, value); }
 
-		public int X { get => RectScreen.X; set => MoveRect(value, RectScreen.Y); }
+		public int X { get => rect_screen.X; set => MoveRect(value, rect_screen.Y); }
 
-		public int Y { get => RectScreen.Y; set => MoveRect(RectScreen.X, value); }
+		public int Y { get => rect_screen.Y; set => MoveRect(rect_screen.X, value); }
 
-		public Rectangle Rect { get => new Rectangle(RectScreen.X, RectScreen.Y, Width, Height); set { X = value.X; Y = value.Y; Width = value.Width; Height = value.Height; } }
+		public Rectangle Rect { get => new Rectangle(rect_screen.X, rect_screen.Y, Width, Height); set { X = value.X; Y = value.Y; Width = value.Width; Height = value.Height; } }
 
-		public Color Color { get => RectColor; set => SetColor(value); }
+		public Color Color { get => rect_color; set => SetColor(value); }
 
 		public override Shader Shader => shader;
 

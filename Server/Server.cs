@@ -12,6 +12,7 @@ namespace Server {
 		static object remove_client_lock = new object();
 		static object update_clients_lock = new object();
 		static object get_clients_lock = new object();
+		static object add_clients_lock = new object();
 
 		static List<Client> clients = new List<Client>();
 		IPAddress ip = default(IPAddress);
@@ -61,7 +62,10 @@ namespace Server {
 			while ((!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape))) {
 				if (server.Pending()) {
 					var client_socket = server.AcceptTcpClient();
-					clients.Add(new Client(client_socket));
+					lock (add_clients_lock)
+					{
+						clients.Add(new Client(client_socket));
+					}
 					Log.Info($"Added client: {client_socket.Client.RemoteEndPoint}");
 				}
 			}

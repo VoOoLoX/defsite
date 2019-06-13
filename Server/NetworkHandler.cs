@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Server {
 	public class NetworkHandler : Handler {
-		const int MaxMessageSize = 4096;
+		const int max_message_size = 4096;
 
 		MessageManager message_manager = new MessageManager();
 
@@ -29,9 +29,9 @@ namespace Server {
 
 		async void Recieve(Client client) {
 			if (IsConnected(client)) {
-				var data = Enumerable.Repeat((byte)0xff, MaxMessageSize).ToArray();
+				var data = Enumerable.Repeat((byte)0xff, max_message_size).ToArray();
 				var stream = client.Socket.GetStream();
-				if (stream != null && stream.DataAvailable) {
+				if (stream.DataAvailable) {
 					var message_length = 0;
 					while ((message_length = await stream.ReadAsync(data, 0, data.Length)) != 0) {
 						message_manager.Recieve(client, data, message_length);
@@ -43,7 +43,7 @@ namespace Server {
 		public static async void Send(Client client, byte[] data) {
 			if (IsConnected(client)) {
 				var stream = client.Socket.GetStream();
-				if (stream != null && stream.DataAvailable) {
+				if (stream.DataAvailable) {
 					await stream.WriteAsync(data, 0, data.Length);
 				}
 			}

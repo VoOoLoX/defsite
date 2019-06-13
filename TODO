@@ -1,26 +1,30 @@
 Defsite:
-    ✔ Logging @done
+	✔ Logging @done
 Client:
-    ✔ Basic OpenAL classes @done
-    ✔ Basic WAV file reader @done
-    ☐ Better audio abstraction (audio manager, etc.)
-    ☐ General files classes for images, sounds, fonts, etc.
-    ☐ File manager / file abstraction system for different types of files so it's easier to parse files
-    ☐ Virtual file system with compression and it should be asynchronous
-    ☐ Entity Component System
-    ☐ Hot swapping
-    ☐ Structural changes / split engine and the game into different components
-    ☐ Make paths relative to the executable to avoid missing files caused by cwd
+	✔ Basic OpenAL classes @done
+	✔ Basic WAV file reader @done
+	☐ Better audio abstraction (audio manager, etc.)
+	☐ General files classes for images, sounds, fonts, etc.
+	☐ File manager / file abstraction system for different types of files so it's easier to parse files
+	☐ Virtual file system with compression and it should be asynchronous
+	☐ Entity Component System
+	☐ Hot swapping
+	☐ Structural changes / split engine and the game into different components
+	☐ Make paths relative to the executable to avoid missing files caused by cwd
+	☐ Fix memory leak @critical
+	☐ Don't redraw everything every single frame @critical
+	☐ OpenAL needs to be redistributed with Windows build
+	☐ Better fonts support and fonts descriptors
 Server:
 
 
 Gameplay ideas:
-    ☐ Enchanting
-    ☐ Random map generation with biomes based on height
-    ☐ Underground with resources needed for enchanting
-    ☐ Randomly placed runes used for teleporting across the map
-    ☐ Weapon customization
-    ☐ Character customization
-    ☐ Terrain customization
-    ☐ XP system
-    ☐ Crafting
+	☐ Enchanting
+	☐ Random map generation with biomes based on height
+	☐ Underground with resources needed for enchanting
+	☐ Randomly placed runes used for teleporting across the map
+	☐ Weapon customization
+	☐ Character customization
+	☐ Terrain customization
+	☐ XP system
+	☐ Crafting

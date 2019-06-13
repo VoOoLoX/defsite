@@ -6,13 +6,13 @@ using System.Linq;
 namespace Defsite {
 	public class Config {
 		public class ConfigScope {
-			string name = string.Empty;
+			string name;
 			Dictionary<string, string> properties = new Dictionary<string, string>();
 			Dictionary<string, ConfigScope> objects = new Dictionary<string, ConfigScope>();
 
 			public string Name => name;
 			public IReadOnlyDictionary<string, string> Properties => properties;
-			public IReadOnlyList<ConfigScope> Objects => objects.Values.ToList();
+			public IEnumerable<ConfigScope> Objects => objects.Values.ToList();
 
 			public ConfigScope(string name) {
 				this.name = name;
@@ -106,11 +106,7 @@ namespace Defsite {
 
 		public ConfigScope GetScope(string path) => GetScope(path, false);
 
-		public ConfigScope this[string scope] {
-			get {
-				return GetScope(scope);
-			}
-		}
+		public ConfigScope this[string scope] => GetScope(scope);
 
 		(ConfigScope scope, string key) ParsePath(string path) {
 			var scope_path = path.Split('.')[0];
@@ -118,24 +114,28 @@ namespace Defsite {
 			return (GetScope(scope_path), key);
 		}
 
-		public bool GetBool(string path) {
-			var x = ParsePath(path);
-			return x.scope.GetBool(x.key);
+		public bool GetBool(string path)
+		{
+			var (scope, key) = ParsePath(path);
+			return scope.GetBool(key);
 		}
 
-		public int GetInt(string path) {
-			var x = ParsePath(path);
-			return x.scope.GetInt(x.key);
+		public int GetInt(string path)
+		{
+			var (scope, key) = ParsePath(path);
+			return scope.GetInt(key);
 		}
 
-		public decimal GetDecimal(string path) {
-			var x = ParsePath(path);
-			return x.scope.GetDecimal(x.key);
+		public decimal GetDecimal(string path)
+		{
+			var (scope, key) = ParsePath(path);
+			return scope.GetDecimal(key);
 		}
 
-		public string GetString(string path) {
-			var x = ParsePath(path);
-			return x.scope.GetString(x.key);
+		public string GetString(string path)
+		{
+			var (scope, key) = ParsePath(path);
+			return scope.GetString(key);
 		}
 	}
 }
