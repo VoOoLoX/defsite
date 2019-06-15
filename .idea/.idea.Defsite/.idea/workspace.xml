@@ -1,0 +1,1631 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="461ce260-f2fe-4f1e-8c90-e932d8b9ccdf" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Client/Assets/Settings.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Assets/Settings.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/Assets/Shaders/Color.shdr" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Assets/Shaders/Color.shdr" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/Assets/Shaders/Object.shdr" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Assets/Shaders/Object.shdr" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/Assets/Shaders/Text.shdr" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Assets/Shaders/Text.shdr" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/Assets/Shaders/Texture.shdr" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Assets/Shaders/Texture.shdr" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/Button.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Button.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/Client.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Client.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/ClientUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/ClientUtils.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/CubeModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/CubeModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/Graphics/IndexBuffer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Graphics/IndexBuffer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/Graphics/Renderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Graphics/Renderer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/Graphics/VertexBuffer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Graphics/VertexBuffer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/Graphics/VertextArray.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Graphics/VertextArray.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/Panel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Panel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/RectangleModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/RectangleModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/TextModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/TextModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/Window.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Window.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Defsite/Config.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Defsite/Config.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Defsite/Log.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Defsite/Log.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/Message.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Message.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/NetworkHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/NetworkHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/Server.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TODO" beforeDir="false" afterPath="$PROJECT_DIR$/TODO" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="Defsite">
+      <favorite_root url="file://$PROJECT_DIR$/Defsite.sln" type="psiFile" klass="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+    </favorites_list>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Client/Window.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="256">
+              <caret line="69" column="46" lean-forward="true" selection-start-line="69" selection-start-column="46" selection-end-line="69" selection-end-column="46" />
+              <folding>
+                <marker date="1560628185756" expanded="true" signature="6:215" ph="..." />
+                <marker date="1560628185756" expanded="true" signature="234:6657" ph="{...}" />
+                <marker date="1560628185756" expanded="true" signature="270:6655" ph="{...}" />
+                <marker date="1560628185756" expanded="true" signature="806:1973" ph="{...}" />
+                <marker date="1560628185756" expanded="true" signature="1396:1704" ph="{...}" />
+                <marker date="1560628185756" expanded="true" signature="2188:4307" ph="{...}" />
+                <marker date="1560628185756" expanded="true" signature="4020:4104" ph="{...}" />
+                <marker date="1560628185756" expanded="true" signature="4141:4302" ph="{...}" />
+                <marker date="1560628185756" expanded="true" signature="4369:4401" ph="{...}" />
+                <marker date="1560628185756" expanded="true" signature="4461:4494" ph="{...}" />
+                <marker date="1560628185756" expanded="true" signature="4556:4596" ph="{...}" />
+                <marker date="1560628185756" expanded="true" signature="4660:4688" ph="{...}" />
+                <marker date="1560628185756" expanded="true" signature="4752:4787" ph="{...}" />
+                <marker date="1560628185756" expanded="true" signature="4849:4885" ph="{...}" />
+                <marker date="1560628185756" expanded="true" signature="4942:4993" ph="{...}" />
+                <marker date="1560628185756" expanded="true" signature="5043:5216" ph="{...}" />
+                <marker date="1560628185756" expanded="true" signature="5276:5495" ph="{...}" />
+                <marker date="1560628185756" expanded="true" signature="5513:5995" ph="{...}" />
+                <marker date="1560628185756" expanded="true" signature="6055:6488" ph="{...}" />
+                <marker date="1560628185756" expanded="true" signature="6538:6570" ph="{...}" />
+                <marker date="1560628185756" expanded="true" signature="6620:6652" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CF36860C-A68E-4293-B5F6-DFEF9FAC8BD2/2e/de58a419/NativeWindow.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/52E1BC19-7E88-43CA-A939-9443C0498C93/34/93fe2f57/Thread.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Client/IO/SoundFile.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Client/IO/FileLoader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Server/Handler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Client/IO/ImageFile.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Server/MessageManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1E12AA92-1E57-4067-A322-8F82407CE9DD/1e/cac951b3/RuntimeThread.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Defsite/Client.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Server/NetworkHandler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Defsite/Config.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Server/DatabaseHandler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Defsite/Log.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Server/Server.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Defsite/Utils.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Server/MessageTypes.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CF36860C-A68E-4293-B5F6-DFEF9FAC8BD2/1c/ae4b1111/NativeWindowBase.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Server/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Server/GameHandler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Server/Message.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CF36860C-A68E-4293-B5F6-DFEF9FAC8BD2/2c/380b6d33/KeyboardState.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CF36860C-A68E-4293-B5F6-DFEF9FAC8BD2/91/220a2d8e/Color.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Client/Graphics/Renderer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/IL/C40849E6-310D-4399-8C24-C9A91C46C30E/a4/23c4536f/02000020pdb.il" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1E12AA92-1E57-4067-A322-8F82407CE9DD/25/a6edcb4d/Monitor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Client/Graphics/VertextArray.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Client/Graphics/Shader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Client/Graphics/Texture.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Client/Graphics/Primitives.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1E12AA92-1E57-4067-A322-8F82407CE9DD/f3/8ec7d8e0/Array.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Client/Model.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Client/Panel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Client/TextModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Client/Window.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1E12AA92-1E57-4067-A322-8F82407CE9DD/18/bcfd9a1e/List`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Client/Button.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Client/AssetManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CF36860C-A68E-4293-B5F6-DFEF9FAC8BD2/1b/a204c3b0/GameWindow.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Client/Camera.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Client/RectangleModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CF36860C-A68E-4293-B5F6-DFEF9FAC8BD2/c7/2271701c/SDL.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Client/Input.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Client/ClientUtils.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Client/CubeModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CF36860C-A68E-4293-B5F6-DFEF9FAC8BD2/5e/8799dfff/Sdl2NativeWindow.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Client/RectangleModel.cs" />
+        <option value="$PROJECT_DIR$/Client/Panel.cs" />
+        <option value="$PROJECT_DIR$/Client/Button.cs" />
+        <option value="$PROJECT_DIR$/Client/TextModel.cs" />
+        <option value="$PROJECT_DIR$/Client/CubeModel.cs" />
+        <option value="$PROJECT_DIR$/Client/Camera.cs" />
+        <option value="$PROJECT_DIR$/Defsite/Log.cs" />
+        <option value="$PROJECT_DIR$/Defsite/Config.cs" />
+        <option value="$PROJECT_DIR$/Server/Server.cs" />
+        <option value="$PROJECT_DIR$/Server/NetworkHandler.cs" />
+        <option value="$PROJECT_DIR$/Server/Message.cs" />
+        <option value="$PROJECT_DIR$/Client/IO/ImageFile.cs" />
+        <option value="$PROJECT_DIR$/Client/Graphics/Renderer.cs" />
+        <option value="$PROJECT_DIR$/Client/Model.cs" />
+        <option value="$PROJECT_DIR$/Client/AssetManager.cs" />
+        <option value="$PROJECT_DIR$/Client/Window.cs" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="10" />
+    <option name="y" value="45" />
+    <option name="width" value="1580" />
+    <option name="height" value="845" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="SolutionExplorer" proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="FileSystemExplorer">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Project" type="161ac34:FileSystemExplorerRootNode" />
+              <item name="Defsite" type="34e6ba20:FileSystemExplorerNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="AssemblyExplorer" />
+      <pane id="Scratches" />
+      <pane id="SolutionExplorer">
+        <option name="show-all-files" value="false" />
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Rider.DefaultBreakpoints.AreToggled" value="true" />
+    <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
+    <property name="ToolWindowProject.ShowToolbar" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Server/Server.csproj" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Language Defaults" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Client" type="DotNetProject" factoryName=".NET Project">
+      <option name="EXE_PATH" value="$PROJECT_DIR$/Client/bin/Debug/netcoreapp2.2/Client.dll" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Client" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/Client/Client.csproj" />
+      <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
+      <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
+      <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
+      <option name="PROJECT_KIND" value="DotNetCore" />
+      <option name="PROJECT_TFM" value=".NETCoreApp,Version=v2.2" />
+      <method v="2">
+        <option name="Build" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="461ce260-f2fe-4f1e-8c90-e932d8b9ccdf" name="Default Changelist" comment="" />
+      <created>1560421449644</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1560421449644</updated>
+      <workItem from="1560421450945" duration="7058000" />
+      <workItem from="1560625264019" duration="489000" />
+      <workItem from="1560626167218" duration="3307000" />
+      <workItem from="1560629644601" duration="791000" />
+      <workItem from="1560630469968" duration="100000" />
+      <workItem from="1560630884645" duration="1268000" />
+      <workItem from="1560638465182" duration="405000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="13418000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="10" y="45" width="1580" height="845" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49733335" visible="true" weight="0.1546855" />
+      <window_info id="Structure" order="1" show_stripe_button="false" sideWeight="0.50111854" side_tool="true" weight="0.15384616" />
+      <window_info id="Favorites" order="2" show_stripe_button="false" sideWeight="0.50111854" side_tool="true" weight="0.15384616" />
+      <window_info content_ui="combo" id="TODO" order="3" sideWeight="0.50266665" side_tool="true" weight="0.15532735" />
+      <window_info anchor="bottom" id="Errors In Solution" order="0" weight="0.316" />
+      <window_info anchor="bottom" id="Debug" order="1" weight="0.33066666" />
+      <window_info anchor="bottom" id="Performance Profiler" order="2" weight="0.22070312" />
+      <window_info anchor="bottom" id="Inspection Results" order="3" weight="0.448" />
+      <window_info anchor="bottom" id="Message" order="4" />
+      <window_info anchor="bottom" id="Find" order="5" />
+      <window_info anchor="bottom" id="Run" order="6" />
+      <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="8" weight="0.4" />
+      <window_info anchor="bottom" id="NuGet" order="9" weight="0.32933334" />
+      <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="11" />
+      <window_info anchor="bottom" id="Unit Tests" order="12" weight="0.32933334" />
+      <window_info anchor="bottom" id="Event Log" order="13" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="14" weight="0.568" />
+      <window_info anchor="bottom" id="Terminal" order="15" weight="0.32933334" />
+      <window_info anchor="bottom" id="Build" order="16" weight="0.328" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info active="true" anchor="right" id="IL Viewer" order="3" visible="true" weight="0.32985657" />
+      <window_info anchor="right" id="Database" order="4" show_stripe_button="false" />
+      <window_info anchor="right" id="Unit Tests Coverage" order="5" show_stripe_button="false" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" suspend="NONE" type="DotNet Exception Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1E12AA92-1E57-4067-A322-8F82407CE9DD/f3/8ec7d8e0/Array.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="679">
+          <caret line="194" column="6" selection-start-line="194" selection-start-column="6" selection-end-line="194" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1E12AA92-1E57-4067-A322-8F82407CE9DD/18/bcfd9a1e/List`1.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="199" column="8" selection-start-line="199" selection-start-column="8" selection-end-line="199" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/52E1BC19-7E88-43CA-A939-9443C0498C93/34/93fe2f57/Thread.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="176" column="8" selection-start-line="176" selection-start-column="8" selection-end-line="176" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1E12AA92-1E57-4067-A322-8F82407CE9DD/1e/cac951b3/RuntimeThread.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="85" column="8" selection-start-line="85" selection-start-column="8" selection-end-line="85" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CF36860C-A68E-4293-B5F6-DFEF9FAC8BD2/2e/de58a419/NativeWindow.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="815" column="6" selection-start-line="815" selection-start-column="6" selection-end-line="815" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CF36860C-A68E-4293-B5F6-DFEF9FAC8BD2/2c/380b6d33/KeyboardState.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CF36860C-A68E-4293-B5F6-DFEF9FAC8BD2/1c/ae4b1111/NativeWindowBase.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-512">
+          <caret line="287" column="34" selection-start-line="287" selection-start-column="34" selection-end-line="287" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CF36860C-A68E-4293-B5F6-DFEF9FAC8BD2/5e/8799dfff/Sdl2NativeWindow.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="577" column="8" selection-start-line="577" selection-start-column="8" selection-end-line="577" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/Graphics/VertextArray.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="12" column="8" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CF36860C-A68E-4293-B5F6-DFEF9FAC8BD2/c7/2271701c/SDL.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="493" column="6" selection-start-line="493" selection-start-column="6" selection-end-line="493" selection-end-column="6" />
+          <folding>
+            <marker date="1560423378129" expanded="true" signature="0:317" ph="/* Decompiled with JetBrains decompiler ... */" />
+            <marker date="1560423378129" expanded="false" signature="325:393" ph="..." />
+            <marker date="1560423378129" expanded="true" signature="425:41375" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="448:41373" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="12185:12476" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="12511:12853" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="12527:12847" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="12547:12698" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="12727:12839" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="12907:12962" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="13044:13123" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="13173:13223" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="13268:13325" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="13374:13423" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="13498:13561" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="13631:13695" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="13905:14029" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="14166:14243" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="14299:14360" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="14435:14499" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="14569:14632" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="14685:14738" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="14790:14842" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="14915:14985" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="15080:15162" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="15296:15385" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="15525:15618" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="15718:15804" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="15879:15959" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="16044:16128" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="16205:16278" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="16284:16568" ph="/// Return the name for an openend game controller instance. ... " />
+            <marker date="1560423378129" expanded="true" signature="16635:16727" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="16792:16865" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="16938:17017" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="17110:17198" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="17244:17293" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="17330:17399" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="17439:17491" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="17560:17628" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="17688:17759" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="17804:17864" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="17924:17986" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="18042:18097" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="18137:18229" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="18280:18338" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="18417:18488" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="18563:18630" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="18694:18755" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="18811:18896" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="18946:18996" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="19043:19093" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="19149:19208" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="19269:19340" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="19395:19450" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="19519:19585" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="19653:19723" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="19794:19868" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="19933:19997" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="20062:20123" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="20179:20259" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="20315:20379" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="20436:20501" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="20560:20627" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="20683:20747" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="20804:20869" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="20910:20958" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="21012:21066" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="21120:21174" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="21212:21265" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="21394:21491" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="21635:21890" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="22034:22111" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="22285:22407" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="22453:22508" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="22545:22589" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="22640:22700" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="22751:22802" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="22855:22908" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="22966:23034" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="23106:23173" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="23243:23316" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="23383:23445" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="23511:23570" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="23641:23704" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="23771:23830" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="23898:23959" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="24006:24063" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="24113:24163" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="24214:24267" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="24338:24401" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="24407:24864" ph="///Retrieves driver-dependent window information. ... " />
+            <marker date="1560423378129" expanded="true" signature="24938:25079" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="25163:25235" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="27138:27561" ph="/// Gets the SDL joystick layer binding for the specified game controller axis ... " />
+            <marker date="1560423378129" expanded="true" signature="27746:28175" ph="/// Gets the SDL joystick layer binding for the specified game controller button ... " />
+            <marker date="1560423378129" expanded="true" signature="28366:28767" ph="/// Gets the current state of a button on a game controller. ... " />
+            <marker date="1560423378129" expanded="true" signature="28931:29345" ph="/// Retrieve the joystick handle that corresponds to the specified game controller. ... " />
+            <marker date="1560423378129" expanded="true" signature="29716:30077" ph="///Opens a game controller for use. ... " />
+            <marker date="1560423378129" expanded="true" signature="31895:32214" ph="/// Determines if the specified joystick is supported by the GameController API. ... " />
+            <marker date="1560423378129" expanded="true" signature="36195:41369" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="38122:38194" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="38250:38316" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="38392:38472" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="38520:38590" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="38669:38750" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="38806:38877" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="38933:39178" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="39017:39090" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="39106:39170" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="39221:39289" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="39357:39436" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="39508:39584" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="39665:39736" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="39824:39895" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="39950:40026" ph="{...}" />
+            <marker date="1560423378129" expanded="true" signature="40078:40140" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1E12AA92-1E57-4067-A322-8F82407CE9DD/25/a6edcb4d/Monitor.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="6" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CF36860C-A68E-4293-B5F6-DFEF9FAC8BD2/1b/a204c3b0/GameWindow.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="764" column="6" selection-start-line="764" selection-start-column="6" selection-end-line="764" selection-end-column="6" />
+          <folding>
+            <marker date="1560423337793" expanded="true" signature="0:310" ph="/* Decompiled with JetBrains decompiler ... */" />
+            <marker date="1560423337793" expanded="false" signature="318:454" ph="..." />
+            <marker date="1560423337793" expanded="true" signature="472:27262" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="477:1707" ph="/// The GameWindow class contains cross-platform methods to create and render on an OpenGL ... " />
+            <marker date="1560423337793" expanded="true" signature="1789:27260" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="2778:2790" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="2796:3029" ph="///Constructs a new GameWindow with the specified attributes. ... " />
+            <marker date="1560423337793" expanded="true" signature="3194:3206" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="3212:3532" ph="///Constructs a new GameWindow with the specified attributes. ... " />
+            <marker date="1560423337793" expanded="true" signature="3700:3712" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="3718:4103" ph="///Constructs a new GameWindow with the specified attributes. ... " />
+            <marker date="1560423337793" expanded="true" signature="4270:4282" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="4288:4772" ph="///Constructs a new GameWindow with the specified attributes. ... " />
+            <marker date="1560423337793" expanded="true" signature="4979:4991" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="4997:5584" ph="///Constructs a new GameWindow with the specified attributes. ... " />
+            <marker date="1560423337793" expanded="true" signature="5840:5852" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="5858:6718" ph="///Constructs a new GameWindow with the specified attributes. ... " />
+            <marker date="1560423337793" expanded="true" signature="7052:7064" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="7070:8019" ph="///Constructs a new GameWindow with the specified attributes. ... " />
+            <marker date="1560423337793" expanded="true" signature="8424:8879" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="8440:8755" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="8782:8873" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="8885:8993" ph="/// Disposes of the GameWindow, releasing all resources consumed by it. ... " />
+            <marker date="1560423337793" expanded="true" signature="9028:9414" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="9044:9088" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="9102:9366" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="9122:9296" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="9170:9286" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="9312:9358" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="9420:9789" ph="/// Closes the GameWindow. Equivalent to &lt;see cref=&quot;M:OpenTK.NativeWindow.Close&quot; /&gt; method. ... " />
+            <marker date="1560423337793" expanded="true" signature="9820:9852" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="9858:9955" ph="/// Makes the GraphicsContext current on the calling thread. ... " />
+            <marker date="1560423337793" expanded="true" signature="9985:10077" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="10083:10344" ph="///Called when the NativeWindow is about to close. ... " />
+            <marker date="1560423337793" expanded="true" signature="10401:10549" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="10555:10725" ph="/// Called after an OpenGL context has been established, but before entering the main loop. ... " />
+            <marker date="1560423337793" expanded="true" signature="10772:10819" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="10825:10990" ph="/// Called after GameWindow.Exit was called, but before destroying the OpenGL context. ... " />
+            <marker date="1560423337793" expanded="true" signature="11039:11088" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="11094:11270" ph="/// Enters the game loop of the GameWindow using the maximum update rate. ... " />
+            <marker date="1560423337793" expanded="true" signature="11292:11330" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="11336:11491" ph="/// Enters the game loop of the GameWindow using the specified update rate. ... " />
+            <marker date="1560423337793" expanded="true" signature="11530:11575" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="11581:12195" ph="/// Enters the game loop of the GameWindow updating and rendering at the specified frequency. ... " />
+            <marker date="1560423337793" expanded="true" signature="12268:13643" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="12315:13396" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="13177:13388" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="13410:13637" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="13692:13754" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="13829:14787" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="14086:14562" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="14350:14524" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="14860:15151" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="15224:15515" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="15521:15637" ph="/// Swaps the front and back buffer, presenting the rendered scene to the user. ... " />
+            <marker date="1560423337793" expanded="true" signature="15667:15744" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="15750:15866" ph="/// Returns the opengl IGraphicsContext associated with the current GameWindow. ... " />
+            <marker date="1560423337793" expanded="true" signature="15902:16004" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="15918:15998" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="16010:16346" ph="/// Gets a value indicating whether the shutdown sequence has been initiated ... " />
+            <marker date="1560423337793" expanded="true" signature="16372:16474" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="16388:16468" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="16480:16597" ph="/// Gets a readonly IList containing all available OpenTK.Input.JoystickDevices. ... " />
+            <marker date="1560423337793" expanded="true" signature="16704:16788" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="16720:16782" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="16794:16899" ph="/// Gets the primary Keyboard device, or null if no Keyboard exists. ... " />
+            <marker date="1560423337793" expanded="true" signature="16934:17107" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="16950:17101" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="17113:17212" ph="/// Gets the primary Mouse device, or null if no Mouse exists. ... " />
+            <marker date="1560423337793" expanded="true" signature="17241:17405" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="17257:17399" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="17411:17564" ph="/// Gets a double representing the actual frequency of RenderFrame events, in hertz (i.e. fps or frames per secon ... " />
+            <marker date="1560423337793" expanded="true" signature="17598:17771" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="17614:17765" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="17777:17890" ph="/// Gets a double representing the period of RenderFrame events, in seconds. ... " />
+            <marker date="1560423337793" expanded="true" signature="17921:18027" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="17937:18021" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="18033:18156" ph="/// Gets a double representing the time spent in the RenderFrame function, in seconds. ... " />
+            <marker date="1560423337793" expanded="true" signature="18185:18392" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="18201:18283" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="18303:18386" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="18398:18835" ph="/// Gets or sets a double representing the target render frequency, in hertz. ... " />
+            <marker date="1560423337793" expanded="true" signature="18875:19362" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="18891:19052" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="19062:19356" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="19368:19826" ph="/// Gets or sets a double representing the target render period, in seconds. ... " />
+            <marker date="1560423337793" expanded="true" signature="19863:20266" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="19879:19970" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="19980:20260" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="20272:20709" ph="/// Gets or sets a double representing the target update frequency, in hertz. ... " />
+            <marker date="1560423337793" expanded="true" signature="20749:21236" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="20765:20926" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="20936:21230" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="21242:21700" ph="/// Gets or sets a double representing the target update period, in seconds. ... " />
+            <marker date="1560423337793" expanded="true" signature="21737:22140" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="21753:21844" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="21854:22134" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="22146:22260" ph="/// Gets a double representing the frequency of UpdateFrame events, in hertz. ... " />
+            <marker date="1560423337793" expanded="true" signature="22294:22467" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="22310:22461" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="22473:22586" ph="/// Gets a double representing the period of UpdateFrame events, in seconds. ... " />
+            <marker date="1560423337793" expanded="true" signature="22617:22723" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="22633:22717" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="22729:22852" ph="/// Gets a double representing the time spent in the UpdateFrame function, in seconds. ... " />
+            <marker date="1560423337793" expanded="true" signature="22881:22985" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="22897:22979" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="23068:23748" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="23084:23325" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="23335:23742" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="23433:23734" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="23866:24185" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="23882:23931" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="23941:24179" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="24191:24289" ph="/// Occurs before the window is displayed for the first time. ... " />
+            <marker date="1560423337793" expanded="true" signature="24824:25023" ph="///Override to add custom cleanup logic. ... " />
+            <marker date="1560423337793" expanded="true" signature="25071:25083" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="25089:25380" ph="///Called when the frame is rendered. ... " />
+            <marker date="1560423337793" expanded="true" signature="25439:25493" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="25499:25788" ph="///Called when the frame is updated. ... " />
+            <marker date="1560423337793" expanded="true" signature="25847:25901" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="25907:26049" ph="/// Called when the WindowInfo for this GameWindow has changed. ... " />
+            <marker date="1560423337793" expanded="true" signature="26109:26121" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="26127:26489" ph="///Called when this window is resized. ... " />
+            <marker date="1560423337793" expanded="true" signature="26539:26621" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="26667:26701" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="26759:26858" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="26906:26942" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="27000:27099" ph="{...}" />
+            <marker date="1560423337793" expanded="true" signature="27158:27256" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CF36860C-A68E-4293-B5F6-DFEF9FAC8BD2/91/220a2d8e/Color.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-163">
+          <caret line="33" column="6" selection-start-line="33" selection-start-column="6" selection-end-line="33" selection-end-column="6" />
+          <folding>
+            <marker date="1560423508686" expanded="true" signature="0:305" ph="/* Decompiled with JetBrains decompiler ... */" />
+            <marker date="1560423508686" expanded="true" signature="338:39737" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="343:435" ph="/// Represents a color with 4 8bit components (R, G, B, A). ... " />
+            <marker date="1560423508686" expanded="true" signature="477:39735" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="848:1269" ph="/// Constructs a new Color structure from the specified components. ... " />
+            <marker date="1560423508686" expanded="true" signature="1314:1426" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="1432:1819" ph="/// Converts this color to an integer representation with 8 bits per channel. ... " />
+            <marker date="1560423508686" expanded="true" signature="1843:2032" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="2038:2338" ph="///Compares the specified Color structures for equality. ... " />
+            <marker date="1560423508686" expanded="true" signature="2398:2443" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="2449:2773" ph="/// Compares the specified Color structures for inequality. ... " />
+            <marker date="1560423508686" expanded="true" signature="2833:2879" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="2885:3170" ph="/// Compares whether this Color structure is equal to the specified object. ... " />
+            <marker date="1560423508686" expanded="true" signature="3214:3314" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="3320:3484" ph="///Calculates the hash code for this Color structure. ... " />
+            <marker date="1560423508686" expanded="true" signature="3522:3562" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="3568:3749" ph="/// Creates a System.String that describes this Color structure. ... " />
+            <marker date="1560423508686" expanded="true" signature="3787:3982" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="3988:4090" ph="/// Gets the system color with (R, G, B, A) = (255, 255, 255, 0). ... " />
+            <marker date="1560423508686" expanded="true" signature="4126:4256" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="4142:4250" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="4262:4366" ph="/// Gets the system color with (R, G, B, A) = (240, 248, 255, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="4400:4516" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="4416:4510" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="4522:4626" ph="/// Gets the system color with (R, G, B, A) = (250, 235, 215, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="4663:4763" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="4679:4757" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="4769:4871" ph="/// Gets the system color with (R, G, B, A) = (0, 255, 255, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="4900:5030" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="4916:5024" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="5036:5140" ph="/// Gets the system color with (R, G, B, A) = (127, 255, 212, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="5175:5308" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="5191:5302" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="5314:5418" ph="/// Gets the system color with (R, G, B, A) = (240, 255, 255, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="5448:5580" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="5464:5574" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="5586:5690" ph="/// Gets the system color with (R, G, B, A) = (245, 245, 220, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="5720:5820" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="5736:5814" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="5826:5930" ph="/// Gets the system color with (R, G, B, A) = (255, 228, 196, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="5961:6077" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="5977:6071" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="6083:6181" ph="/// Gets the system color with (R, G, B, A) = (0, 0, 0, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="6211:6305" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="6227:6299" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="6311:6415" ph="/// Gets the system color with (R, G, B, A) = (255, 235, 205, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="6454:6570" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="6470:6564" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="6576:6676" ph="/// Gets the system color with (R, G, B, A) = (0, 0, 255, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="6705:6817" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="6721:6811" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="6823:6926" ph="/// Gets the system color with (R, G, B, A) = (138, 43, 226, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="6961:7060" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="6977:7054" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="7066:7168" ph="/// Gets the system color with (R, G, B, A) = (165, 42, 42, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="7198:7296" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="7214:7290" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="7302:7406" ph="/// Gets the system color with (R, G, B, A) = (222, 184, 135, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="7440:7540" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="7456:7534" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="7546:7649" ph="/// Gets the system color with (R, G, B, A) = (95, 158, 160, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="7683:7782" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="7699:7776" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="7788:7890" ph="/// Gets the system color with (R, G, B, A) = (127, 255, 0, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="7925:8056" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="7941:8050" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="8062:8165" ph="/// Gets the system color with (R, G, B, A) = (210, 105, 30, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="8199:8298" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="8215:8292" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="8304:8407" ph="/// Gets the system color with (R, G, B, A) = (255, 127, 80, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="8437:8569" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="8453:8563" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="8575:8679" ph="/// Gets the system color with (R, G, B, A) = (100, 149, 237, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="8718:8818" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="8734:8812" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="8824:8928" ph="/// Gets the system color with (R, G, B, A) = (255, 248, 220, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="8961:9077" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="8977:9071" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="9083:9185" ph="/// Gets the system color with (R, G, B, A) = (220, 20, 60, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="9217:9315" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="9233:9309" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="9321:9423" ph="/// Gets the system color with (R, G, B, A) = (0, 255, 255, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="9452:9582" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="9468:9576" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="9588:9688" ph="/// Gets the system color with (R, G, B, A) = (0, 0, 139, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="9721:9817" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="9737:9811" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="9823:9925" ph="/// Gets the system color with (R, G, B, A) = (0, 139, 139, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="9958:10056" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="9974:10050" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="10062:10165" ph="/// Gets the system color with (R, G, B, A) = (184, 134, 11, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="10203:10302" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="10219:10296" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="10308:10412" ph="/// Gets the system color with (R, G, B, A) = (169, 169, 169, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="10445:10545" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="10461:10539" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="10551:10651" ph="/// Gets the system color with (R, G, B, A) = (0, 100, 0, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="10685:10781" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="10701:10775" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="10787:10891" ph="/// Gets the system color with (R, G, B, A) = (189, 183, 107, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="10925:11025" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="10941:11019" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="11031:11133" ph="/// Gets the system color with (R, G, B, A) = (139, 0, 139, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="11169:11267" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="11185:11261" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="11273:11375" ph="/// Gets the system color with (R, G, B, A) = (85, 107, 47, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="11414:11512" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="11430:11506" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="11518:11620" ph="/// Gets the system color with (R, G, B, A) = (255, 140, 0, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="11655:11769" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="11671:11763" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="11775:11878" ph="/// Gets the system color with (R, G, B, A) = (153, 50, 204, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="11913:12012" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="11929:12006" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="12018:12118" ph="/// Gets the system color with (R, G, B, A) = (139, 0, 0, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="12150:12246" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="12166:12240" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="12252:12356" ph="/// Gets the system color with (R, G, B, A) = (233, 150, 122, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="12391:12491" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="12407:12485" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="12497:12601" ph="/// Gets the system color with (R, G, B, A) = (143, 188, 139, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="12638:12738" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="12654:12732" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="12744:12846" ph="/// Gets the system color with (R, G, B, A) = (72, 61, 139, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="12884:12982" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="12900:12976" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="12988:13089" ph="/// Gets the system color with (R, G, B, A) = (47, 79, 79, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="13127:13224" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="13143:13218" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="13230:13332" ph="/// Gets the system color with (R, G, B, A) = (0, 206, 209, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="13370:13468" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="13386:13462" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="13474:13576" ph="/// Gets the system color with (R, G, B, A) = (148, 0, 211, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="13611:13709" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="13627:13703" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="13715:13818" ph="/// Gets the system color with (R, G, B, A) = (255, 20, 147, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="13851:13966" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="13867:13960" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="13972:14074" ph="/// Gets the system color with (R, G, B, A) = (0, 191, 255, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="14110:14224" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="14126:14218" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="14230:14334" ph="/// Gets the system color with (R, G, B, A) = (105, 105, 105, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="14366:14466" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="14382:14460" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="14472:14575" ph="/// Gets the system color with (R, G, B, A) = (30, 144, 255, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="14610:14725" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="14626:14719" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="14731:14833" ph="/// Gets the system color with (R, G, B, A) = (178, 34, 34, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="14867:14965" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="14883:14959" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="14971:15075" ph="/// Gets the system color with (R, G, B, A) = (255, 250, 240, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="15111:15227" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="15127:15221" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="15233:15335" ph="/// Gets the system color with (R, G, B, A) = (34, 139, 34, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="15371:15469" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="15387:15463" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="15475:15577" ph="/// Gets the system color with (R, G, B, A) = (255, 0, 255, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="15609:15739" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="15625:15733" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="15745:15849" ph="/// Gets the system color with (R, G, B, A) = (220, 220, 220, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="15883:15983" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="15899:15977" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="15989:16093" ph="/// Gets the system color with (R, G, B, A) = (248, 248, 255, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="16128:16244" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="16144:16238" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="16250:16352" ph="/// Gets the system color with (R, G, B, A) = (255, 215, 0, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="16381:16495" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="16397:16489" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="16501:16604" ph="/// Gets the system color with (R, G, B, A) = (218, 165, 32, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="16638:16737" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="16654:16731" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="16743:16847" ph="/// Gets the system color with (R, G, B, A) = (128, 128, 128, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="16876:16976" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="16892:16970" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="16982:17082" ph="/// Gets the system color with (R, G, B, A) = (0, 128, 0, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="17112:17208" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="17128:17202" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="17214:17317" ph="/// Gets the system color with (R, G, B, A) = (173, 255, 47, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="17353:17468" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="17369:17462" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="17474:17578" ph="/// Gets the system color with (R, G, B, A) = (240, 255, 240, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="17611:17727" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="17627:17721" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="17733:17837" ph="/// Gets the system color with (R, G, B, A) = (255, 105, 180, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="17869:17985" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="17885:17979" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="17991:18093" ph="/// Gets the system color with (R, G, B, A) = (205, 92, 92, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="18127:18225" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="18143:18219" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="18231:18332" ph="/// Gets the system color with (R, G, B, A) = (75, 0, 130, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="18363:18460" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="18379:18454" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="18466:18570" ph="/// Gets the system color with (R, G, B, A) = (255, 255, 240, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="18600:18732" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="18616:18726" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="18738:18842" ph="/// Gets the system color with (R, G, B, A) = (240, 230, 140, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="18872:18972" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="18888:18966" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="18978:19082" ph="/// Gets the system color with (R, G, B, A) = (230, 230, 250, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="19115:19215" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="19131:19209" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="19221:19325" ph="/// Gets the system color with (R, G, B, A) = (255, 240, 245, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="19363:19479" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="19379:19473" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="19485:19587" ph="/// Gets the system color with (R, G, B, A) = (124, 252, 0, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="19621:19719" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="19637:19713" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="19725:19829" ph="/// Gets the system color with (R, G, B, A) = (255, 250, 205, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="19866:19982" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="19882:19976" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="19988:20092" ph="/// Gets the system color with (R, G, B, A) = (173, 216, 230, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="20126:20226" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="20142:20220" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="20232:20336" ph="/// Gets the system color with (R, G, B, A) = (240, 128, 128, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="20371:20471" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="20387:20465" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="20477:20581" ph="/// Gets the system color with (R, G, B, A) = (224, 255, 255, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="20615:20747" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="20631:20741" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="20753:20857" ph="/// Gets the system color with (R, G, B, A) = (250, 250, 210, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="20902:21002" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="20918:20996" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="21008:21112" ph="/// Gets the system color with (R, G, B, A) = (144, 238, 144, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="21147:21247" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="21163:21241" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="21253:21357" ph="/// Gets the system color with (R, G, B, A) = (211, 211, 211, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="21391:21491" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="21407:21485" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="21497:21601" ph="/// Gets the system color with (R, G, B, A) = (255, 182, 193, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="21635:21751" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="21651:21745" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="21757:21861" ph="/// Gets the system color with (R, G, B, A) = (255, 160, 122, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="21897:22013" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="21913:22007" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="22019:22122" ph="/// Gets the system color with (R, G, B, A) = (32, 178, 170, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="22160:22259" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="22176:22253" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="22265:22369" ph="/// Gets the system color with (R, G, B, A) = (135, 206, 250, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="22406:22506" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="22422:22500" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="22512:22616" ph="/// Gets the system color with (R, G, B, A) = (119, 136, 153, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="22655:22755" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="22671:22749" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="22761:22865" ph="/// Gets the system color with (R, G, B, A) = (176, 196, 222, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="22904:23004" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="22920:22998" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="23010:23114" ph="/// Gets the system color with (R, G, B, A) = (255, 255, 224, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="23150:23282" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="23166:23276" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="23288:23388" ph="/// Gets the system color with (R, G, B, A) = (0, 255, 0, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="23417:23529" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="23433:23523" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="23535:23637" ph="/// Gets the system color with (R, G, B, A) = (50, 205, 50, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="23671:23769" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="23687:23763" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="23775:23879" ph="/// Gets the system color with (R, G, B, A) = (250, 240, 230, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="23909:24009" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="23925:24003" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="24015:24117" ph="/// Gets the system color with (R, G, B, A) = (255, 0, 255, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="24149:24279" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="24165:24273" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="24285:24385" ph="/// Gets the system color with (R, G, B, A) = (128, 0, 0, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="24416:24512" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="24432:24506" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="24518:24622" ph="/// Gets the system color with (R, G, B, A) = (102, 205, 170, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="24663:24763" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="24679:24757" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="24769:24869" ph="/// Gets the system color with (R, G, B, A) = (0, 0, 205, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="24904:25000" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="24920:24994" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="25006:25109" ph="/// Gets the system color with (R, G, B, A) = (186, 85, 211, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="25146:25245" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="25162:25239" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="25251:25355" ph="/// Gets the system color with (R, G, B, A) = (147, 112, 219, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="25392:25492" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="25408:25486" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="25498:25601" ph="/// Gets the system color with (R, G, B, A) = (60, 179, 113, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="25640:25739" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="25656:25733" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="25745:25849" ph="/// Gets the system color with (R, G, B, A) = (123, 104, 238, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="25889:25989" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="25905:25983" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="25995:26097" ph="/// Gets the system color with (R, G, B, A) = (0, 250, 154, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="26139:26237" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="26155:26231" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="26243:26346" ph="/// Gets the system color with (R, G, B, A) = (72, 209, 204, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="26386:26485" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="26402:26479" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="26491:26594" ph="/// Gets the system color with (R, G, B, A) = (199, 21, 133, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="26634:26733" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="26650:26727" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="26739:26841" ph="/// Gets the system color with (R, G, B, A) = (25, 25, 112, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="26878:26976" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="26894:26970" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="26982:27086" ph="/// Gets the system color with (R, G, B, A) = (245, 255, 250, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="27120:27236" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="27136:27230" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="27242:27346" ph="/// Gets the system color with (R, G, B, A) = (255, 228, 225, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="27380:27496" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="27396:27490" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="27502:27606" ph="/// Gets the system color with (R, G, B, A) = (255, 228, 181, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="27639:27755" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="27655:27749" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="27761:27865" ph="/// Gets the system color with (R, G, B, A) = (255, 222, 173, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="27901:28017" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="27917:28011" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="28023:28123" ph="/// Gets the system color with (R, G, B, A) = (0, 0, 128, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="28152:28248" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="28168:28242" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="28254:28358" ph="/// Gets the system color with (R, G, B, A) = (253, 245, 230, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="28390:28490" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="28406:28484" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="28496:28598" ph="/// Gets the system color with (R, G, B, A) = (128, 128, 0, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="28628:28726" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="28644:28720" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="28732:28835" ph="/// Gets the system color with (R, G, B, A) = (107, 142, 35, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="28869:28968" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="28885:28962" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="28974:29076" ph="/// Gets the system color with (R, G, B, A) = (255, 165, 0, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="29107:29221" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="29123:29215" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="29227:29328" ph="/// Gets the system color with (R, G, B, A) = (255, 69, 0, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="29362:29475" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="29378:29469" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="29481:29585" ph="/// Gets the system color with (R, G, B, A) = (218, 112, 214, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="29616:29716" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="29632:29710" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="29722:29826" ph="/// Gets the system color with (R, G, B, A) = (238, 232, 170, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="29864:29964" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="29880:29958" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="29970:30074" ph="/// Gets the system color with (R, G, B, A) = (152, 251, 152, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="30108:30208" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="30124:30202" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="30214:30318" ph="/// Gets the system color with (R, G, B, A) = (175, 238, 238, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="30356:30456" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="30372:30450" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="30462:30566" ph="/// Gets the system color with (R, G, B, A) = (219, 112, 147, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="30604:30704" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="30620:30698" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="30710:30814" ph="/// Gets the system color with (R, G, B, A) = (255, 239, 213, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="30849:30965" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="30865:30959" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="30971:31075" ph="/// Gets the system color with (R, G, B, A) = (255, 218, 185, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="31109:31225" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="31125:31219" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="31231:31334" ph="/// Gets the system color with (R, G, B, A) = (205, 133, 63, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="31363:31462" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="31379:31456" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="31468:31572" ph="/// Gets the system color with (R, G, B, A) = (255, 192, 203, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="31601:31717" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="31617:31711" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="31723:31827" ph="/// Gets the system color with (R, G, B, A) = (221, 160, 221, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="31856:31956" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="31872:31950" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="31962:32066" ph="/// Gets the system color with (R, G, B, A) = (176, 224, 230, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="32101:32201" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="32117:32195" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="32207:32309" ph="/// Gets the system color with (R, G, B, A) = (128, 0, 128, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="32340:32438" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="32356:32432" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="32444:32544" ph="/// Gets the system color with (R, G, B, A) = (255, 0, 0, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="32572:32684" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="32588:32678" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="32690:32794" ph="/// Gets the system color with (R, G, B, A) = (188, 143, 143, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="32828:32928" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="32844:32922" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="32934:33037" ph="/// Gets the system color with (R, G, B, A) = (65, 105, 225, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="33071:33170" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="33087:33164" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="33176:33278" ph="/// Gets the system color with (R, G, B, A) = (139, 69, 19, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="33314:33412" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="33330:33406" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="33418:33522" ph="/// Gets the system color with (R, G, B, A) = (250, 128, 114, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="33553:33653" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="33569:33647" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="33659:33762" ph="/// Gets the system color with (R, G, B, A) = (244, 164, 96, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="33797:33896" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="33813:33890" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="33902:34004" ph="/// Gets the system color with (R, G, B, A) = (46, 139, 87, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="34037:34135" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="34053:34129" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="34141:34245" ph="/// Gets the system color with (R, G, B, A) = (255, 245, 238, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="34278:34394" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="34294:34388" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="34400:34502" ph="/// Gets the system color with (R, G, B, A) = (160, 82, 45, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="34533:34631" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="34549:34625" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="34637:34741" ph="/// Gets the system color with (R, G, B, A) = (192, 192, 192, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="34772:34872" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="34788:34866" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="34878:34982" ph="/// Gets the system color with (R, G, B, A) = (135, 206, 235, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="35014:35114" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="35030:35108" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="35120:35223" ph="/// Gets the system color with (R, G, B, A) = (106, 90, 205, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="35257:35356" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="35273:35350" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="35362:35466" ph="/// Gets the system color with (R, G, B, A) = (112, 128, 144, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="35500:35600" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="35516:35594" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="35606:35710" ph="/// Gets the system color with (R, G, B, A) = (255, 250, 250, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="35739:35855" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="35755:35849" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="35861:35963" ph="/// Gets the system color with (R, G, B, A) = (0, 255, 127, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="35999:36130" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="36015:36124" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="36136:36239" ph="/// Gets the system color with (R, G, B, A) = (70, 130, 180, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="36273:36372" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="36289:36366" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="36378:36482" ph="/// Gets the system color with (R, G, B, A) = (210, 180, 140, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="36510:36610" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="36526:36604" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="36616:36718" ph="/// Gets the system color with (R, G, B, A) = (0, 128, 128, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="36747:36845" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="36763:36839" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="36851:36955" ph="/// Gets the system color with (R, G, B, A) = (216, 191, 216, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="36987:37087" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="37003:37081" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="37093:37195" ph="/// Gets the system color with (R, G, B, A) = (255, 99, 71, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="37226:37340" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="37242:37334" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="37346:37449" ph="/// Gets the system color with (R, G, B, A) = (64, 224, 208, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="37483:37582" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="37499:37576" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="37588:37692" ph="/// Gets the system color with (R, G, B, A) = (238, 130, 238, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="37723:37823" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="37739:37817" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="37829:37933" ph="/// Gets the system color with (R, G, B, A) = (245, 222, 179, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="37963:38063" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="37979:38057" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="38069:38173" ph="/// Gets the system color with (R, G, B, A) = (255, 255, 255, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="38203:38351" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="38219:38345" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="38357:38461" ph="/// Gets the system color with (R, G, B, A) = (245, 245, 245, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="38496:38596" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="38512:38590" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="38602:38704" ph="/// Gets the system color with (R, G, B, A) = (255, 255, 0, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="38735:38865" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="38751:38859" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="38871:38974" ph="/// Gets the system color with (R, G, B, A) = (154, 205, 50, 255). ... " />
+            <marker date="1560423508686" expanded="true" signature="39010:39109" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="39026:39103" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="39115:39400" ph="/// Compares whether this Color structure is equal to the specified Color. ... " />
+            <marker date="1560423508686" expanded="true" signature="39436:39621" ph="{...}" />
+            <marker date="1560423508686" expanded="true" signature="39683:39731" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/RectangleModel.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="21" column="70" lean-forward="true" selection-start-line="21" selection-start-column="70" selection-end-line="21" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/Panel.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="13" column="8" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/Camera.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="615">
+          <caret line="69" column="27" lean-forward="true" selection-start-line="69" selection-start-column="27" selection-end-line="69" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/Input.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/Button.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="32" column="8" selection-start-line="32" selection-start-column="8" selection-end-line="32" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Defsite/Utils.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="1" lean-forward="true" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
+          <folding>
+            <marker date="1549805077690" expanded="true" signature="57:444" ph="{...}" />
+            <marker date="1549805077690" expanded="true" signature="86:442" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Defsite/Config.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="57" lean-forward="true" selection-start-line="57" selection-end-line="57" />
+          <folding>
+            <marker date="1560430780812" expanded="false" signature="6:83" ph="..." />
+            <marker date="1560430780812" expanded="true" signature="103:3671" ph="{...}" />
+            <marker date="1560430780812" expanded="true" signature="126:3669" ph="{...}" />
+            <marker date="1560430780812" expanded="true" signature="155:1839" ph="{...}" />
+            <marker date="1560430780812" expanded="true" signature="545:573" ph="{...}" />
+            <marker date="1560430780812" expanded="true" signature="627:701" ph="{...}" />
+            <marker date="1560430780812" expanded="true" signature="759:827" ph="{...}" />
+            <marker date="1560430780812" expanded="true" signature="1059:1158" ph="{...}" />
+            <marker date="1560430780812" expanded="true" signature="1193:1286" ph="{...}" />
+            <marker date="1560430780812" expanded="true" signature="1323:1418" ph="{...}" />
+            <marker date="1560430780812" expanded="true" signature="1461:1573" ph="{...}" />
+            <marker date="1560430780812" expanded="true" signature="1614:1835" ph="{...}" />
+            <marker date="1560430780812" expanded="true" signature="1968:2535" ph="{...}" />
+            <marker date="1560430780812" expanded="true" signature="2097:2531" ph="{...}" />
+            <marker date="1560430780812" expanded="true" signature="2231:2353" ph="{...}" />
+            <marker date="1560430780812" expanded="true" signature="2385:2526" ph="{...}" />
+            <marker date="1560430780812" expanded="true" signature="2600:2895" ph="{...}" />
+            <marker date="1560430780812" expanded="true" signature="2716:2873" ph="{...}" />
+            <marker date="1560430780812" expanded="true" signature="3085:3202" ph="{...}" />
+            <marker date="1560430780812" expanded="true" signature="3238:3315" ph="{...}" />
+            <marker date="1560430780812" expanded="true" signature="3349:3425" ph="{...}" />
+            <marker date="1560430780812" expanded="true" signature="3467:3547" ph="{...}" />
+            <marker date="1560430780812" expanded="true" signature="3587:3666" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Defsite/Client.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+          <folding>
+            <marker date="1549805025340" expanded="false" signature="6:76" ph="..." />
+            <marker date="1549805025340" expanded="true" signature="96:325" ph="{...}" />
+            <marker date="1549805025340" expanded="true" signature="119:323" ph="{...}" />
+            <marker date="1549805025340" expanded="true" signature="253:258" ph="{...}" />
+            <marker date="1549805025340" expanded="true" signature="294:320" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/Server.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="73" column="28" lean-forward="true" selection-start-line="73" selection-start-column="28" selection-end-line="73" selection-end-column="28" />
+          <folding>
+            <marker date="1560430893526" expanded="false" signature="6:179" ph="..." />
+            <marker date="1560430893526" expanded="true" signature="198:1939" ph="{...}" />
+            <marker date="1560430893526" expanded="true" signature="221:1937" ph="{...}" />
+            <marker date="1560430893526" expanded="true" signature="871:1090" ph="{...}" />
+            <marker date="1560430893526" expanded="true" signature="1134:1193" ph="{...}" />
+            <marker date="1560430893526" expanded="true" signature="1246:1305" ph="{...}" />
+            <marker date="1560430893526" expanded="true" signature="1356:1425" ph="{...}" />
+            <marker date="1560430893526" expanded="true" signature="1447:1934" ph="{...}" />
+            <marker date="1560430893526" expanded="true" signature="1599:1850" ph="{...}" />
+            <marker date="1560430893526" expanded="true" signature="1627:1845" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/Program.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="32">
+          <caret line="6" column="10" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
+          <folding>
+            <marker date="1549805132090" expanded="false" signature="6:86" ph="..." />
+            <marker date="1549805132090" expanded="true" signature="105:1159" ph="{...}" />
+            <marker date="1549805132090" expanded="true" signature="122:1157" ph="{...}" />
+            <marker date="1549805132090" expanded="true" signature="158:1154" ph="{...}" />
+            <marker date="1549805132090" expanded="true" signature="312:560" ph="{...}" />
+            <marker date="1549805132090" expanded="true" signature="597:1150" ph="{...}" />
+            <marker date="1549805132090" expanded="true" signature="692:718" ph="{...}" />
+            <marker date="1549805132090" expanded="true" signature="771:841" ph="{...}" />
+            <marker date="1549805132090" expanded="true" signature="902:973" ph="{...}" />
+            <marker date="1549805132090" expanded="true" signature="1031:1106" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/NetworkHandler.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="32" column="55" lean-forward="true" selection-start-line="32" selection-start-column="55" selection-end-line="32" selection-end-column="55" />
+          <folding>
+            <marker date="1560430938269" expanded="false" signature="6:156" ph="..." />
+            <marker date="1560430938269" expanded="true" signature="175:1671" ph="{...}" />
+            <marker date="1560430938269" expanded="true" signature="216:1669" ph="{...}" />
+            <marker date="1560430938269" expanded="true" signature="355:582" ph="{...}" />
+            <marker date="1560430938269" expanded="true" signature="364:536" ph="{...}" />
+            <marker date="1560430938269" expanded="true" signature="617:700" ph="{...}" />
+            <marker date="1560430938269" expanded="true" signature="647:696" ph="{...}" />
+            <marker date="1560430938269" expanded="true" signature="738:1115" ph="{...}" />
+            <marker date="1560430938269" expanded="true" signature="768:1111" ph="{...}" />
+            <marker date="1560430938269" expanded="true" signature="918:1106" ph="{...}" />
+            <marker date="1560430938269" expanded="true" signature="1031:1100" ph="{...}" />
+            <marker date="1560430938269" expanded="true" signature="1177:1351" ph="{...}" />
+            <marker date="1560430938269" expanded="true" signature="1207:1347" ph="{...}" />
+            <marker date="1560430938269" expanded="true" signature="1283:1342" ph="{...}" />
+            <marker date="1560430938269" expanded="true" signature="1385:1666" ph="{...}" />
+            <marker date="1560430938269" expanded="true" signature="1432:1662" ph="{...}" />
+            <marker date="1560430938269" expanded="true" signature="1463:1492" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/MessageTypes.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="5" column="16" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
+          <folding>
+            <marker date="1552136855706" expanded="false" signature="6:66" ph="..." />
+            <marker date="1552136855706" expanded="true" signature="85:187" ph="{...}" />
+            <marker date="1552136855706" expanded="true" signature="119:185" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/MessageManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+          <folding>
+            <marker date="1552138489903" expanded="false" signature="6:66" ph="..." />
+            <marker date="1552138489903" expanded="true" signature="85:1237" ph="{...}" />
+            <marker date="1552138489903" expanded="true" signature="116:1235" ph="{...}" />
+            <marker date="1552138489903" expanded="true" signature="180:598" ph="{...}" />
+            <marker date="1552138489903" expanded="true" signature="446:594" ph="/* Console.WriteLine($&quot;[{message_id.ToString()}] {Encoding.ASCII.GetString(message_data, 0, length - 1)}&quot;); ... */" />
+            <marker date="1552138489903" expanded="true" signature="640:697" ph="{...}" />
+            <marker date="1552138489903" expanded="true" signature="743:1232" ph="{...}" />
+            <marker date="1552138489903" expanded="true" signature="778:1228" ph="{...}" />
+            <marker date="1552138489903" expanded="true" signature="1182:1211" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/Message.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-104">
+          <caret line="116" column="42" lean-forward="true" selection-start-line="116" selection-start-column="42" selection-end-line="116" selection-end-column="42" />
+          <folding>
+            <marker date="1560431110752" expanded="false" signature="6:102" ph="..." />
+            <marker date="1560431110752" expanded="true" signature="121:4094" ph="{...}" />
+            <marker date="1560431110752" expanded="true" signature="154:3190" ph="{...}" />
+            <marker date="1560431110752" expanded="true" signature="376:1455" ph="{...}" />
+            <marker date="1560431110752" expanded="true" signature="395:1451" ph="{...}" />
+            <marker date="1560431110752" expanded="true" signature="1493:3187" ph="{...}" />
+            <marker date="1560431110752" expanded="true" signature="1532:1703" ph="{...}" />
+            <marker date="1560431110752" expanded="true" signature="1739:1907" ph="{...}" />
+            <marker date="1560431110752" expanded="true" signature="1942:2110" ph="{...}" />
+            <marker date="1560431110752" expanded="true" signature="2147:2319" ph="{...}" />
+            <marker date="1560431110752" expanded="true" signature="2355:2526" ph="{...}" />
+            <marker date="1560431110752" expanded="true" signature="2564:2736" ph="{...}" />
+            <marker date="1560431110752" expanded="true" signature="2774:3095" ph="{...}" />
+            <marker date="1560431110752" expanded="true" signature="2897:2996" ph="/* String length + string + null char ... */" />
+            <marker date="1560431110752" expanded="true" signature="3264:3327" ph="{...}" />
+            <marker date="1560431110752" expanded="true" signature="3366:3659" ph="{...}" />
+            <marker date="1560431110752" expanded="true" signature="3556:3656" ph="{...}" />
+            <marker date="1560431110752" expanded="true" signature="3702:3915" ph="{...}" />
+            <marker date="1560431110752" expanded="true" signature="3852:3912" ph="{...}" />
+            <marker date="1560431110752" expanded="true" signature="3953:4092" ph="{...}" />
+            <marker date="1560431110752" expanded="true" signature="4046:4089" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/Handler.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-60">
+          <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
+          <folding>
+            <marker date="1549805106356" expanded="false" signature="6:126" ph="..." />
+            <marker date="1549805106356" expanded="true" signature="145:959" ph="{...}" />
+            <marker date="1549805106356" expanded="true" signature="178:957" ph="{...}" />
+            <marker date="1549805106356" expanded="true" signature="431:500" ph="{...}" />
+            <marker date="1549805106356" expanded="true" signature="533:539" ph="{...}" />
+            <marker date="1549805106356" expanded="true" signature="592:598" ph="{...}" />
+            <marker date="1549805106356" expanded="true" signature="656:954" ph="{...}" />
+            <marker date="1549805106356" expanded="true" signature="722:923" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/GameHandler.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+          <folding>
+            <marker date="1549805102313" expanded="false" signature="6:128" ph="..." />
+            <marker date="1549805102313" expanded="true" signature="147:699" ph="{...}" />
+            <marker date="1549805102313" expanded="true" signature="185:697" ph="{...}" />
+            <marker date="1549805102313" expanded="true" signature="300:329" ph="{...}" />
+            <marker date="1549805102313" expanded="true" signature="375:694" ph="{...}" />
+            <marker date="1549805102313" expanded="true" signature="380:690" ph="/* foreach (var client in Clients.ToArray()) { ... */" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/DatabaseHandler.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+          <folding>
+            <marker date="1549805098093" expanded="false" signature="6:66" ph="..." />
+            <marker date="1549805098093" expanded="true" signature="85:302" ph="{...}" />
+            <marker date="1549805098093" expanded="true" signature="127:300" ph="{...}" />
+            <marker date="1549805098093" expanded="true" signature="191:196" ph="{...}" />
+            <marker date="1549805098093" expanded="true" signature="242:297" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/IO/FileLoader.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-240">
+          <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/Graphics/Primitives.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-734">
+          <caret line="3" column="24" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/Graphics/Shader.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-854">
+          <caret line="38" column="29" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/Graphics/Renderer.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="34" column="35" lean-forward="true" selection-start-line="34" selection-start-column="35" selection-end-line="34" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/Graphics/Texture.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+          <folding>
+            <marker date="1560627921793" expanded="false" signature="6:80" ph="..." />
+            <marker date="1560627921793" expanded="true" signature="99:1033" ph="{...}" />
+            <marker date="1560627921793" expanded="true" signature="123:1031" ph="{...}" />
+            <marker date="1560627921793" expanded="true" signature="155:801" ph="{...}" />
+            <marker date="1560627921793" expanded="true" signature="998:1028" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/Model.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="8" column="39" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
+          <folding>
+            <marker date="1560628185139" expanded="false" signature="6:15" ph="..." />
+            <marker date="1560628185139" expanded="true" signature="32:1306" ph="{...}" />
+            <marker date="1560628185139" expanded="true" signature="63:1304" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/AssetManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="565">
+          <caret line="45" column="26" selection-start-line="45" selection-start-column="26" selection-end-line="45" selection-end-column="26" />
+          <folding>
+            <marker date="1560628185456" expanded="false" signature="6:79" ph="..." />
+            <marker date="1560628185456" expanded="true" signature="98:1659" ph="{...}" />
+            <marker date="1560628185456" expanded="true" signature="123:171" ph="{...}" />
+            <marker date="1560628185456" expanded="true" signature="207:1657" ph="{...}" />
+            <marker date="1560628185456" expanded="true" signature="933:1497" ph="{...}" />
+            <marker date="1560628185456" expanded="true" signature="968:1493" ph="{...}" />
+            <marker date="1560628185456" expanded="true" signature="987:1489" ph="{...}" />
+            <marker date="1560628185456" expanded="true" signature="1537:1654" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/TextModel.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="160" selection-start-line="160" selection-end-line="160" />
+          <folding>
+            <marker date="1560628185599" expanded="false" signature="6:66" ph="..." />
+            <marker date="1560628185599" expanded="true" signature="85:4212" ph="{...}" />
+            <marker date="1560628185599" expanded="true" signature="121:4210" ph="{...}" />
+            <marker date="1560628185599" expanded="true" signature="836:1445" ph="{...}" />
+            <marker date="1560628185599" expanded="true" signature="2061:2215" ph="{...}" />
+            <marker date="1560628185599" expanded="true" signature="2334:2567" ph="{...}" />
+            <marker date="1560628185599" expanded="true" signature="2606:2810" ph="{...}" />
+            <marker date="1560628185599" expanded="true" signature="2814:2919" ph="/* fix this ... */" />
+            <marker date="1560628185599" expanded="true" signature="2968:3308" ph="{...}" />
+            <marker date="1560628185599" expanded="true" signature="3057:3255" ph="{...}" />
+            <marker date="1560628185599" expanded="true" signature="3079:3213" ph="{...}" />
+            <marker date="1560628185599" expanded="true" signature="3351:3777" ph="{...}" />
+            <marker date="1560628185599" expanded="true" signature="3420:3725" ph="{...}" />
+            <marker date="1560628185599" expanded="true" signature="3477:3699" ph="{...}" />
+            <marker date="1560628185599" expanded="true" signature="3826:4083" ph="{...}" />
+            <marker date="1560628185599" expanded="true" signature="3903:4034" ph="{...}" />
+            <marker date="1560628185599" expanded="true" signature="3947:4027" ph="{...}" />
+            <marker date="1560628185599" expanded="true" signature="4118:4207" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/CubeModel.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-482">
+          <folding>
+            <marker date="1560628185693" expanded="false" signature="6:14" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/IO/SoundFile.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="6" column="25" selection-start-line="6" selection-start-column="14" selection-end-line="6" selection-end-column="25" />
+          <folding>
+            <marker date="1560627921276" expanded="false" signature="6:58" ph="..." />
+            <marker date="1560627921276" expanded="true" signature="77:1925" ph="{...}" />
+            <marker date="1560627921276" expanded="true" signature="101:1842" ph="{...}" />
+            <marker date="1560627921276" expanded="true" signature="356:394" ph="{...}" />
+            <marker date="1560627921276" expanded="true" signature="570:1839" ph="{...}" />
+            <marker date="1560627921276" expanded="true" signature="1484:1835" ph="{...}" />
+            <marker date="1560627921276" expanded="true" signature="1845:1923" ph="/* public class SoundFile { ... */" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/IO/ImageFile.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="424">
+          <caret line="69" column="44" selection-start-line="69" selection-start-column="44" selection-end-line="69" selection-end-column="44" />
+          <folding>
+            <marker date="1560627921186" expanded="false" signature="6:83" ph="..." />
+            <marker date="1560627921186" expanded="true" signature="102:2229" ph="{...}" />
+            <marker date="1560627921186" expanded="true" signature="124:395" ph="{...}" />
+            <marker date="1560627921186" expanded="true" signature="173:218" ph="{...}" />
+            <marker date="1560627921186" expanded="true" signature="357:392" ph="{...}" />
+            <marker date="1560627921186" expanded="true" signature="420:1288" ph="{...}" />
+            <marker date="1560627921186" expanded="true" signature="496:578" ph="{...}" />
+            <marker date="1560627921186" expanded="true" signature="745:769" ph="{...}" />
+            <marker date="1560627921186" expanded="true" signature="802:1091" ph="{...}" />
+            <marker date="1560627921186" expanded="true" signature="1117:1285" ph="{...}" />
+            <marker date="1560627921186" expanded="true" signature="1177:1255" ph="{...}" />
+            <marker date="1560627921186" expanded="true" signature="1317:2227" ph="{...}" />
+            <marker date="1560627921186" expanded="true" signature="1362:1425" ph="{...}" />
+            <marker date="1560627921186" expanded="true" signature="1464:2224" ph="{...}" />
+            <marker date="1560627921186" expanded="true" signature="1495:2174" ph="{...}" />
+            <marker date="1560627921186" expanded="true" signature="1646:2121" ph="{...}" />
+            <marker date="1560627921186" expanded="true" signature="1822:2115" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TODO">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="36" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/ClientUtils.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
+          <folding>
+            <marker date="1560627923443" expanded="true" signature="32:1357" ph="{...}" />
+            <marker date="1560627923443" expanded="true" signature="67:1355" ph="{...}" />
+            <marker date="1560627923443" expanded="true" signature="122:164" ph="{...}" />
+            <marker date="1560627923443" expanded="true" signature="212:253" ph="{...}" />
+            <marker date="1560627923443" expanded="true" signature="313:368" ph="{...}" />
+            <marker date="1560627923443" expanded="true" signature="461:537" ph="{...}" />
+            <marker date="1560627923443" expanded="true" signature="595:700" ph="{...}" />
+            <marker date="1560627923443" expanded="true" signature="767:911" ph="{...}" />
+            <marker date="1560627923443" expanded="true" signature="983:1028" ph="{...}" />
+            <marker date="1560627923443" expanded="true" signature="1099:1352" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Defsite/Log.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="55" column="14" selection-start-line="55" selection-start-column="14" selection-end-line="55" selection-end-column="14" />
+          <folding>
+            <marker date="1560430569842" expanded="false" signature="6:95" ph="..." />
+            <marker date="1560430569842" expanded="true" signature="115:2909" ph="{...}" />
+            <marker date="1560430569842" expanded="true" signature="142:2907" ph="{...}" />
+            <marker date="1560430569842" expanded="true" signature="237:261" ph="{...}" />
+            <marker date="1560430569842" expanded="true" signature="295:346" ph="{...}" />
+            <marker date="1560430569842" expanded="true" signature="462:655" ph="{...}" />
+            <marker date="1560430569842" expanded="true" signature="771:1039" ph="{...}" />
+            <marker date="1560430569842" expanded="true" signature="1156:1421" ph="{...}" />
+            <marker date="1560430569842" expanded="true" signature="1538:1876" ph="{...}" />
+            <marker date="1560430569842" expanded="true" signature="1880:2904" ph="/* public enum NotificationType { ... */" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/Assets/Settings.cfg">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/Window.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="69" column="46" lean-forward="true" selection-start-line="69" selection-start-column="46" selection-end-line="69" selection-end-column="46" />
+          <folding>
+            <marker date="1560628185756" expanded="true" signature="6:215" ph="..." />
+            <marker date="1560628185756" expanded="true" signature="234:6657" ph="{...}" />
+            <marker date="1560628185756" expanded="true" signature="270:6655" ph="{...}" />
+            <marker date="1560628185756" expanded="true" signature="806:1973" ph="{...}" />
+            <marker date="1560628185756" expanded="true" signature="1396:1704" ph="{...}" />
+            <marker date="1560628185756" expanded="true" signature="2188:4307" ph="{...}" />
+            <marker date="1560628185756" expanded="true" signature="4020:4104" ph="{...}" />
+            <marker date="1560628185756" expanded="true" signature="4141:4302" ph="{...}" />
+            <marker date="1560628185756" expanded="true" signature="4369:4401" ph="{...}" />
+            <marker date="1560628185756" expanded="true" signature="4461:4494" ph="{...}" />
+            <marker date="1560628185756" expanded="true" signature="4556:4596" ph="{...}" />
+            <marker date="1560628185756" expanded="true" signature="4660:4688" ph="{...}" />
+            <marker date="1560628185756" expanded="true" signature="4752:4787" ph="{...}" />
+            <marker date="1560628185756" expanded="true" signature="4849:4885" ph="{...}" />
+            <marker date="1560628185756" expanded="true" signature="4942:4993" ph="{...}" />
+            <marker date="1560628185756" expanded="true" signature="5043:5216" ph="{...}" />
+            <marker date="1560628185756" expanded="true" signature="5276:5495" ph="{...}" />
+            <marker date="1560628185756" expanded="true" signature="5513:5995" ph="{...}" />
+            <marker date="1560628185756" expanded="true" signature="6055:6488" ph="{...}" />
+            <marker date="1560628185756" expanded="true" signature="6538:6570" ph="{...}" />
+            <marker date="1560628185756" expanded="true" signature="6620:6652" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
