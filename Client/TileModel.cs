@@ -1,19 +1,13 @@
 using OpenTK;
 using OpenTK.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Client {
 	public class TileModel : Model {
-		VertextArray va = new VertextArray();
-		IndexBuffer ib = new IndexBuffer(Primitives.QuadCentered.IndexBufferData);
+		static readonly Shader shader = AssetManager.Get<Shader>("ObjectShader");
+		static readonly Texture texture = AssetManager.Get<Texture>("Ghost");
 
-		static Shader shader = AssetManager.Get<Shader>("ObjectShader");
-		static Texture texture = AssetManager.Get<Texture>("Ghost");
-
-		Vector3 direction_vector = new Vector3();
-		Vector3 position = new Vector3();
+		Vector3 direction_vector;
+		Vector3 position;
 
 		public TileModel() {
 			VA.Enable();
@@ -24,11 +18,19 @@ namespace Client {
 			var pos = Shader.GetAttribute("position");
 			var uv = Shader.GetAttribute("uv_coords");
 
-			VA.AddBuffer(vbo_pos, pos, 2, 0);
-			VA.AddBuffer(vbo_uv, uv, 2, 0);
+			VA.AddBuffer(vbo_pos, pos, 2);
+			VA.AddBuffer(vbo_uv, uv, 2);
 
 			VA.Disable();
 		}
+
+		public override Shader Shader => shader;
+
+		public override VertextArray VA { get; } = new VertextArray();
+
+		public override IndexBuffer IB { get; } = new IndexBuffer(Primitives.QuadCentered.IndexBufferData);
+
+		public override Texture Texture => texture;
 
 		public override void Update(double delta_time) {
 			direction_vector = Vector3.Zero;
@@ -49,7 +51,7 @@ namespace Client {
 				direction_vector = Vector3.Zero - position;
 
 			direction_vector.NormalizeFast();
-			direction_vector *= (float)delta_time * 2;
+			direction_vector *= (float) delta_time * 2;
 
 			Move(direction_vector);
 
@@ -60,13 +62,5 @@ namespace Client {
 			Shader.SetUniform("glow_size", .3f);
 			Shader.SetUniform("glow_color", Color.Black);
 		}
-
-		public override Shader Shader => shader;
-
-		public override VertextArray VA => va;
-
-		public override IndexBuffer IB => ib;
-
-		public override Texture Texture => texture;
 	}
 }

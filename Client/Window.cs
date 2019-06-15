@@ -1,18 +1,32 @@
+using System;
+using System.ComponentModel;
+using System.Threading;
+using Defsite;
 using OpenTK;
 using OpenTK.Audio;
 using OpenTK.Audio.OpenAL;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using Defsite;
 
 namespace Client {
-	public partial class Window : GameWindow {
+	public class Window : GameWindow {
+		readonly AudioContext AudioContext;
+
+		Button button;
+		Camera camera;
+		Panel panel, panel2;
+
+		Renderer renderer;
+		SoundBuffer sb;
+
+		WAVFile sound;
+		SoundSource ss;
+
+		CubeModel test;
+		TextModel text, fps, mouse_info;
+		bool text_glow;
+		TileModel tile;
 
 		public Window(int width, int height, GraphicsMode mode, string title, GameWindowFlags window_flags, DisplayDevice device, int major, int minor, GraphicsContextFlags context_flags)
 			: base(width, height, mode, title, window_flags, device, major, minor, context_flags) {
@@ -60,24 +74,7 @@ namespace Client {
 		public static int ClientHeight { get; private set; }
 		public static Point ClientCenter { get; private set; }
 
-		Renderer renderer;
-		AudioContext AudioContext;
-		Camera camera;
-		TileModel tile;
-		TextModel text, fps, mouse_info;
-
-		Button button;
-		Panel panel, panel2;
-		bool text_glow = false;
-
-		WAVFile sound;
-		SoundBuffer sb;
-		SoundSource ss;
-
-		CubeModel test;
-
 		protected override void OnLoad(EventArgs e) {
-
 			AssetManager.Load(AssetType.Texture, "Ghost", "Ghost.vif");
 
 			//Add credits for both fonts & fix scaling of scientifica
@@ -119,19 +116,13 @@ namespace Client {
 			panel2 = new Panel(new Rectangle(100, 100, 200, 20), Color.Gray);
 			button = new Button("X", new Rectangle(panel.X + panel.Width - 40, panel.Y, 40, 19), Color.Tomato, Color.Wheat);
 
-			button.OnClick += (b) => {
-				b.Color = Color.Tomato;
-			};
+			button.OnClick += b => { b.Color = Color.Tomato; };
 
-			button.OnHover += (b) => {
-				b.Color = Color.IndianRed;
-			};
+			button.OnHover += b => { b.Color = Color.IndianRed; };
 
-			button.OnUpdate += (b) => {
-				button.Color = Color.Goldenrod;
-			};
+			button.OnUpdate += b => { button.Color = Color.Goldenrod; };
 
-			panel.OnLeftClick += (p) => {
+			panel.OnLeftClick += p => {
 				text_glow = !text_glow;
 				mouse_info.Glow = text_glow;
 				ss.Play(sb);
@@ -145,22 +136,33 @@ namespace Client {
 				button.X = panel.X + panel.Width - button.Width;
 				button.Y = panel.Y;
 			};
-
 		}
 
-		protected override void OnKeyDown(KeyboardKeyEventArgs e) => Input.Set(e.Key, true);
+		protected override void OnKeyDown(KeyboardKeyEventArgs e) {
+			Input.Set(e.Key, true);
+		}
 
-		protected override void OnKeyUp(KeyboardKeyEventArgs e) => Input.Set(e.Key, false);
+		protected override void OnKeyUp(KeyboardKeyEventArgs e) {
+			Input.Set(e.Key, false);
+		}
 
-		protected override void OnMouseMove(MouseMoveEventArgs e) => Input.Set(new Point(e.X, e.Y));
+		protected override void OnMouseMove(MouseMoveEventArgs e) {
+			Input.Set(new Point(e.X, e.Y));
+		}
 
-		protected override void OnMouseWheel(MouseWheelEventArgs e) => Input.Set(e.Delta);
+		protected override void OnMouseWheel(MouseWheelEventArgs e) {
+			Input.Set(e.Delta);
+		}
 
-		protected override void OnMouseDown(MouseButtonEventArgs e) => Input.Set(e.Button, true);
+		protected override void OnMouseDown(MouseButtonEventArgs e) {
+			Input.Set(e.Button, true);
+		}
 
-		protected override void OnMouseUp(MouseButtonEventArgs e) => Input.Set(e.Button, false);
+		protected override void OnMouseUp(MouseButtonEventArgs e) {
+			Input.Set(e.Button, false);
+		}
 
-		protected override void OnClosing(System.ComponentModel.CancelEventArgs e) {
+		protected override void OnClosing(CancelEventArgs e) {
 			DisplayDevice.Default.RestoreResolution();
 		}
 
@@ -173,9 +175,7 @@ namespace Client {
 		}
 
 		protected override void OnUpdateFrame(FrameEventArgs e) {
-			if (WindowState == WindowState.Minimized || !Focused) return;
-
-			ProcessEvents();
+			if (WindowState == WindowState.Minimized || !Focused) Thread.Sleep(200);
 
 			if (Input.IsActive(Key.Escape))
 				Close();
@@ -199,19 +199,18 @@ namespace Client {
 			button.X = panel.X + panel.Width - button.Width;
 			button.Y = panel.Y;
 
-			mouse_info.Text = $"{Input.MousePos.X}:{Input.MousePos.Y}:{Input.IsActive(MouseButton.Left)}:{Input.IsActive(MouseButton.Right)}";
+			// mouse_info.Text = $"{Input.MousePos.X}:{Input.MousePos.Y}:{Input.IsActive(MouseButton.Left)}:{Input.IsActive(MouseButton.Right)}";
 			mouse_info.MoveText(0, fps.Height);
 
 			button.Update();
 			panel.Update();
 			panel2.Update();
-
 		}
 
 		protected override void OnRenderFrame(FrameEventArgs e) {
 			if (WindowState == WindowState.Minimized || !Focused) return;
 
-			fps.Text = $"{1 / e.Time:.0}";
+			// fps.Text = $"{1 / e.Time:.0}";
 			renderer.Clear();
 
 			renderer.Draw(camera, tile);

@@ -2,15 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Client {
 	public class Pixel {
-		public byte R { get; private set; }
-		public byte G { get; private set; }
-		public byte B { get; private set; }
-		public byte A { get; private set; }
-
 		public Pixel(byte r, byte g, byte b, byte a) {
 			R = r;
 			G = g;
@@ -18,15 +12,17 @@ namespace Client {
 			A = a;
 		}
 
-		public override string ToString() => $"{R} {G} {B} {A}";
+		public byte R { get; }
+		public byte G { get; }
+		public byte B { get; }
+		public byte A { get; }
+
+		public override string ToString() {
+			return $"{R} {G} {B} {A}";
+		}
 	}
 
 	public class VIFImage {
-		public int Width { get; private set; }
-		public int Height { get; private set; }
-		public List<Pixel> Data { get; private set; }
-		public int Components { get; private set; }
-
 		public VIFImage(int width, int height, List<Pixel> data, int comps = 4) {
 			Width = width;
 			Height = height;
@@ -34,7 +30,14 @@ namespace Client {
 			Components = comps;
 		}
 
-		public void Rotate180() => Data.Reverse();
+		public int Width { get; }
+		public int Height { get; }
+		public List<Pixel> Data { get; private set; }
+		public int Components { get; }
+
+		public void Rotate180() {
+			Data.Reverse();
+		}
 
 		public void FlipHorizontal() {
 			var new_data = new List<Pixel[]>();
@@ -54,12 +57,15 @@ namespace Client {
 				ret.Add(p.B);
 				ret.Add(p.A);
 			}
+
 			return ret.ToArray();
 		}
 	}
 
-	static class VIF {
-		public static VIFImage Load(string file) => Parse(File.Exists(file) ? file : string.Empty);
+	internal static class VIF {
+		public static VIFImage Load(string file) {
+			return Parse(File.Exists(file) ? file : string.Empty);
+		}
 
 		static VIFImage Parse(string path) {
 			if (path != string.Empty) {
@@ -70,8 +76,8 @@ namespace Client {
 					var height = reader.ReadUInt16();
 					var comps = reader.ReadByte();
 
-					if ((width > 0 && height > 0) && (comps > 0 && comps < 5)) {
-						var data = reader.ReadBytes((int)reader.BaseStream.Length - 8).ToList();
+					if (width > 0 && height > 0 && comps > 0 && comps < 5) {
+						var data = reader.ReadBytes((int) reader.BaseStream.Length - 8).ToList();
 						var res = new List<Pixel>();
 
 						for (var i = 0; i < data.Count; i += 4)
@@ -80,9 +86,11 @@ namespace Client {
 						return new VIFImage(width, height, res);
 					}
 				}
-				throw (new Exception("Invalid VIF header"));
+
+				throw new Exception("Invalid VIF header");
 			}
-			throw (new Exception("Invalid file path"));
+
+			throw new Exception("Invalid file path");
 		}
 	}
 }

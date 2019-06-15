@@ -1,17 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Defsite;
 using OpenTK;
-using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
 namespace Client {
 	public class Shader {
-		public int ID { get; private set; }
-
 		public Shader(FileInfo file) :
 			this(File.Exists(file.FullName) ? file.FullName : "") {
 		}
@@ -22,6 +17,8 @@ namespace Client {
 			Parse(File.Exists(file) ? File.ReadAllText(file) : "");
 			Disable();
 		}
+
+		public int ID { get; }
 
 		public void Parse(string source) {
 			if (!source.Contains('$')) {
@@ -69,13 +66,21 @@ namespace Client {
 			}
 		}
 
-		public void Enable() => GL.UseProgram(ID);
+		public void Enable() {
+			GL.UseProgram(ID);
+		}
 
-		public void Disable() => GL.UseProgram(0);
+		public void Disable() {
+			GL.UseProgram(0);
+		}
 
-		public int GetAttribute(string attr) => GL.GetAttribLocation(ID, attr);
+		public int GetAttribute(string attr) {
+			return GL.GetAttribLocation(ID, attr);
+		}
 
-		public int GetUniform(string unif) => GL.GetUniformLocation(ID, unif);
+		public int GetUniform(string unif) {
+			return GL.GetUniformLocation(ID, unif);
+		}
 
 		public void SetUniform<T>(string unif, T data) {
 			Enable();
@@ -114,7 +119,7 @@ namespace Client {
 					GL.Uniform4(GetUniform(unif), v4);
 					break;
 				default:
-					throw (new InvalidCastException());
+					throw new InvalidCastException();
 			}
 		}
 

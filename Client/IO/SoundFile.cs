@@ -1,31 +1,32 @@
-using System;
 using System.IO;
 using Defsite;
 using OpenTK.Audio.OpenAL;
 
 namespace Client {
 	public class WAVFile {
-		string RIFF;
-		int FileLength;
-
-		string WAVE;
-
-		string FMT;
-		int FormatChunkSize;
 		short AudioFormat;
-		short Channels;
-		int ByteRate;
-		short BlockAlign;
 		short BitsPerSample;
+		short BlockAlign;
+		int ByteRate;
+		short Channels;
 
 		string DATA;
 		int DataChunkSize;
+		int FileLength;
+
+		string FMT;
+		int FormatChunkSize;
+		string RIFF;
+
+		string WAVE;
+
+		public WAVFile(string path) {
+			ParseWAV(new FileInfo(path));
+		}
 
 		public byte[] Data { get; protected set; }
 		public int SampleRate { get; protected set; }
 		public ALFormat Format { get; protected set; }
-
-		public WAVFile(string path) => ParseWAV(new FileInfo(path));
 
 		void ParseWAV(FileInfo file) {
 			if (!file.Exists)
@@ -33,17 +34,17 @@ namespace Client {
 
 			var bin = new BinaryReader(file.OpenRead());
 
-			RIFF = new String(bin.ReadChars(4));
+			RIFF = new string(bin.ReadChars(4));
 			if (RIFF != "RIFF")
 				Log.Panic("Invalid file header: RIFF");
 
 			FileLength = bin.ReadInt32();
 
-			WAVE = new String(bin.ReadChars(4));
+			WAVE = new string(bin.ReadChars(4));
 			if (WAVE != "WAVE")
 				Log.Panic("Invalid file header: WAVE");
 
-			FMT = new String(bin.ReadChars(4));
+			FMT = new string(bin.ReadChars(4));
 			if (FMT != "fmt ")
 				Log.Panic("Invalid file header: fmt");
 
@@ -55,7 +56,7 @@ namespace Client {
 			BlockAlign = bin.ReadInt16();
 			BitsPerSample = bin.ReadInt16();
 
-			DATA = new String(bin.ReadChars(4));
+			DATA = new string(bin.ReadChars(4));
 			if (DATA != "data")
 				Log.Panic("Invalid file header: data");
 
@@ -76,7 +77,9 @@ namespace Client {
 					else
 						Format = ALFormat.Stereo16;
 					break;
-				default: Log.Panic("The specified sound format is not supported."); break;
+				default:
+					Log.Panic("The specified sound format is not supported.");
+					break;
 			}
 		}
 	}

@@ -1,38 +1,47 @@
 using OpenTK;
 using OpenTK.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Client {
 	public static class Input {
-		static bool[] active_keys = new bool[(int)Key.LastKey];
-		static bool[] active_buttons = new bool[(int)MouseButton.LastButton];
-		static Point mouse_pos = Point.Zero;
-		static int scroll_wheel = 0;
+		static readonly bool[] active_keys = new bool[(int) Key.LastKey];
+		static readonly bool[] active_buttons = new bool[(int) MouseButton.LastButton];
+		static int scroll_wheel;
 
-		public static void Set(Key key, bool value) => active_keys[(int)key] = value;
-
-		public static void Set(MouseButton button, bool value) => active_buttons[(int)button] = value;
-
-		public static void Set(Point pos) => mouse_pos = pos;
-
-		public static void Set(int value) => scroll_wheel = value;
-
-		public static bool IsActive(Key key) => active_keys[(int)key];
-
-		public static bool IsActive(MouseButton button) => active_buttons[(int)button];
-
-		public static Point MousePos => mouse_pos;
+		public static Point MousePos { get; set; } = Point.Zero;
 
 		public static int ScrollWheel {
 			get {
 				try {
 					return scroll_wheel;
-				} finally {
+				}
+				finally {
 					scroll_wheel = 0;
 				}
 			}
+		}
+
+		public static void Set(Key key, bool value) {
+			active_keys[(int) key] = value;
+		}
+
+		public static void Set(MouseButton button, bool value) {
+			active_buttons[(int) button] = value;
+		}
+
+		public static void Set(Point pos) {
+			MousePos = pos;
+		}
+
+		public static void Set(int value) {
+			scroll_wheel = value;
+		}
+
+		public static bool IsActive(Key key) {
+			return active_keys[(int) key];
+		}
+
+		public static bool IsActive(MouseButton button) {
+			return active_buttons[(int) button];
 		}
 	}
 }

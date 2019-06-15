@@ -1,28 +1,26 @@
 using OpenTK;
 using OpenTK.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Client {
 	public class Camera {
-		public Matrix4 ViewMatrix { get; private set; }
-		public Matrix4 ProjectionMatrix { get; private set; }
-		public static float ZoomFactor { get; private set; }
+		const float zoom_constant = 1f / 15f;
 
 		Vector2 direction_vector = Vector2.Zero;
 		float zoom = 1;
 
-		const float zoom_constant = 1f / 15f;
 		public Camera(float zoom = 50) {
 			ZoomFactor = zoom;
 			ViewMatrix = Matrix4.LookAt(
-					new Vector3(0, 0, 1),
-					new Vector3(0, 0, 0),
-					new Vector3(0, 1, 0)
-				);
+				new Vector3(0, 0, 1),
+				new Vector3(0, 0, 0),
+				new Vector3(0, 1, 0)
+			);
 			UpdateProjectionMatrix();
 		}
+
+		public Matrix4 ViewMatrix { get; private set; }
+		public Matrix4 ProjectionMatrix { get; private set; }
+		public static float ZoomFactor { get; private set; }
 
 		public void Move(Vector2 move_vector) {
 			ViewMatrix *= Matrix4.CreateTranslation(move_vector.X, move_vector.Y, 0);
@@ -56,14 +54,15 @@ namespace Client {
 			if (scroll_value > 0) {
 				ZoomFactor *= 1 + zoom_constant;
 				zoom = 1 + zoom_constant;
-			} else if (scroll_value < 0) {
+			}
+			else if (scroll_value < 0) {
 				ZoomFactor *= 1 - zoom_constant;
 				zoom = 1 - zoom_constant;
 			}
 
 			if (direction_vector != Vector2.Zero) {
 				direction_vector.NormalizeFast();
-				Move(direction_vector * (float)delta_time);
+				Move(direction_vector * (float) delta_time);
 			}
 
 			if (zoom != 0)

@@ -1,14 +1,10 @@
 using OpenTK;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Client {
 	public class Cube {
-		public int Width;
-		public int Height;
 		public int Depth;
+		public int Height;
+		public int Width;
 
 		public int X;
 		public int Y;
@@ -26,21 +22,18 @@ namespace Client {
 		public static Cube Zero => new Cube(20, 20, 80, 0, 0, 0);
 	}
 
-	class CubeModel : Model {
-		VertextArray va = new VertextArray();
-		VertexBuffer<Vector3> vbo_pos = new VertexBuffer<Vector3>(Primitives.CubeCentered.PositionData);
-		IndexBuffer ib = new IndexBuffer(Primitives.CubeCentered.IndexBufferData);
+	internal class CubeModel : Model {
+		static readonly Shader shader = AssetManager.Get<Shader>("ColorShader");
 
-		static Shader shader = AssetManager.Get<Shader>("ColorShader");
-
-		Vector3 cube_world_position = Vector3.Zero;
-		Cube cube_screen = Cube.Zero;
+		Color cube_color = new Color(0, 0, 0, 255);
 
 		float cube_scale_x = 1;
 		float cube_scale_y = 1;
-		float cube_scale_z = 1;
+		readonly float cube_scale_z = 1;
+		readonly Cube cube_screen = Cube.Zero;
 
-		Color cube_color = new Color(0, 0, 0, 255);
+		Vector3 cube_world_position = Vector3.Zero;
+		readonly VertexBuffer<Vector3> vbo_pos = new VertexBuffer<Vector3>(Primitives.CubeCentered.PositionData);
 
 		public CubeModel(Color color = default) {
 			VA.Enable();
@@ -59,7 +52,60 @@ namespace Client {
 			VA.Disable();
 		}
 
-		void SetColor(Color color) => cube_color = color;
+		public int Width {
+			get => (int) ClientUtils.WorldUnitToScreen(cube_scale_x);
+			set => ResizeCube(value, Height, Depth);
+		}
+
+		public int Height {
+			get => (int) ClientUtils.WorldUnitToScreen(cube_scale_y);
+			set => ResizeCube(Width, value, Depth);
+		}
+
+		public int Depth {
+			get => (int) ClientUtils.WorldUnitToScreen(cube_scale_z);
+			set => ResizeCube(Width, Height, value);
+		}
+
+		public int X {
+			get => cube_screen.X;
+			set => MoveCube(value, cube_screen.Y, cube_screen.Z);
+		}
+
+		public int Y {
+			get => cube_screen.Y;
+			set => MoveCube(cube_screen.X, value, cube_screen.Z);
+		}
+
+		public int Z {
+			get => cube_screen.Z;
+			set => MoveCube(cube_screen.X, cube_screen.Y, value);
+		}
+
+		public Cube Cube {
+			get => new Cube(cube_screen.X, cube_screen.Y, cube_screen.Z, Width, Height, Depth);
+			set {
+				X = value.X;
+				Y = value.Y;
+				Width = value.Width;
+				Height = value.Height;
+			}
+		}
+
+		public Color Color {
+			get => cube_color;
+			set => SetColor(value);
+		}
+
+		public override Shader Shader => shader;
+
+		public override VertextArray VA { get; } = new VertextArray();
+
+		public override IndexBuffer IB { get; } = new IndexBuffer(Primitives.CubeCentered.IndexBufferData);
+
+		void SetColor(Color color) {
+			cube_color = color;
+		}
 
 		void ResizeCube(int width, int height, int depth) {
 			cube_screen.Width = width;
@@ -88,28 +134,8 @@ namespace Client {
 			cube_world_position = move_pos;
 		}
 
-		public override void PreDraw() => Shader.SetUniform("color", Color.WhiteSmoke);
-
-		public int Width { get => (int)ClientUtils.WorldUnitToScreen(cube_scale_x); set => ResizeCube(value, Height, Depth); }
-
-		public int Height { get => (int)ClientUtils.WorldUnitToScreen(cube_scale_y); set => ResizeCube(Width, value, Depth); }
-
-		public int Depth { get => (int)ClientUtils.WorldUnitToScreen(cube_scale_z); set => ResizeCube(Width, Height, value); }
-
-		public int X { get => cube_screen.X; set => MoveCube(value, cube_screen.Y, cube_screen.Z); }
-
-		public int Y { get => cube_screen.Y; set => MoveCube(cube_screen.X, value, cube_screen.Z); }
-
-		public int Z { get => cube_screen.Z; set => MoveCube(cube_screen.X, cube_screen.Y, value); }
-
-		public Cube Cube { get => new Cube(cube_screen.X, cube_screen.Y, cube_screen.Z, Width, Height, Depth); set { X = value.X; Y = value.Y; Width = value.Width; Height = value.Height; } }
-
-		public Color Color { get => cube_color; set => SetColor(value); }
-
-		public override Shader Shader => shader;
-
-		public override VertextArray VA => va;
-
-		public override IndexBuffer IB => ib;
+		public override void PreDraw() {
+			Shader.SetUniform("color", Color.WhiteSmoke);
+		}
 	}
 }

@@ -1,29 +1,29 @@
 using System;
+using Defsite;
 using OpenTK;
 using OpenTK.Graphics;
-using Defsite;
 
 namespace Client {
-	class Program {
-
+	internal class Program {
 		static void Main(string[] args) {
 			GameWindow window = default;
 
 			var device = DisplayDevice.GetDisplay(DisplayIndex.Primary);
 
-			if (Utils.IsDebug) {
+			if (Utils.IsDebug)
 				try {
 					window = new Window(device.Width / 2, device.Height / 2, GraphicsMode.Default, "Defsite - Debug", GameWindowFlags.Default, device, 1, 0, GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					Log.Panic(e);
 				}
-			} else {
+			else
 				try {
 					window = new Window(device.Width, device.Height, GraphicsMode.Default, "Defsite", GameWindowFlags.Fullscreen, device, 1, 0, GraphicsContextFlags.ForwardCompatible);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					Log.Panic(e);
 				}
-			}
 
 			window.Run();
 		}

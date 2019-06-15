@@ -1,12 +1,8 @@
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Client {
 	public class Renderer {
-
 		public Renderer(Color clear_color = default) {
 			GL.ClearColor(clear_color);
 			GL.Enable(EnableCap.Blend);
@@ -35,6 +31,8 @@ namespace Client {
 			model.Shader.Disable();
 		}
 
-		public void Clear() => GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+		public void Clear() {
+			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+		}
 	}
 }

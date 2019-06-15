@@ -1,11 +1,8 @@
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using System;
 
 namespace Client {
 	public class VertexBuffer<T> {
-		public int ID { get; private set; }
-
 		public VertexBuffer(T[] data) {
 			GL.CreateBuffers(1, out int buffer);
 			ID = buffer;
@@ -14,8 +11,15 @@ namespace Client {
 			Disable();
 		}
 
-		public void Enable() => GL.BindBuffer(BufferTarget.ArrayBuffer, ID);
-		public void Disable() => GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+		public int ID { get; }
+
+		public void Enable() {
+			GL.BindBuffer(BufferTarget.ArrayBuffer, ID);
+		}
+
+		public void Disable() {
+			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+		}
 
 		public void Update(T[] data) {
 			Enable();
@@ -31,6 +35,7 @@ namespace Client {
 					GL.BufferData(BufferTarget.ArrayBuffer, data.Length * Vector2.SizeInBytes, v4, BufferUsageHint.StaticDraw);
 					break;
 			}
+
 			Disable();
 		}
 
