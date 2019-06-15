@@ -2,29 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="461ce260-f2fe-4f1e-8c90-e932d8b9ccdf" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Client/Assets/Settings.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Assets/Settings.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Assets/Shaders/Color.shdr" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Assets/Shaders/Color.shdr" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Assets/Shaders/Object.shdr" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Assets/Shaders/Object.shdr" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Assets/Shaders/Text.shdr" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Assets/Shaders/Text.shdr" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Assets/Shaders/Texture.shdr" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Assets/Shaders/Texture.shdr" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Button.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Button.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Client.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Client.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/ClientUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/ClientUtils.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/CubeModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/CubeModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Graphics/IndexBuffer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Graphics/IndexBuffer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Graphics/Renderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Graphics/Renderer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Graphics/VertexBuffer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Graphics/VertexBuffer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Graphics/VertextArray.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Graphics/VertextArray.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Panel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Panel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/RectangleModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/RectangleModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/TextModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/TextModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Window.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Window.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Defsite/Config.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Defsite/Config.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Defsite/Log.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Defsite/Log.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/Message.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Message.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/NetworkHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/NetworkHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/Server.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TODO" beforeDir="false" afterPath="$PROJECT_DIR$/TODO" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitlab-ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.gitlab-ci.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Defsite/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Defsite/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/AssetManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Client/AssetManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Defsite.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Defsite.sln" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -53,11 +34,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Client/Window.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="69" column="46" lean-forward="true" selection-start-line="69" selection-start-column="46" selection-end-line="69" selection-end-column="46" />
+            <state relative-caret-position="271">
+              <caret line="105" column="32" selection-start-line="105" selection-start-column="20" selection-end-line="105" selection-end-column="32" />
               <folding>
                 <marker date="1560628185756" expanded="true" signature="6:215" ph="..." />
                 <marker date="1560628185756" expanded="true" signature="234:6657" ph="{...}" />
@@ -80,6 +61,24 @@
                 <marker date="1560628185756" expanded="true" signature="6055:6488" ph="{...}" />
                 <marker date="1560628185756" expanded="true" signature="6538:6570" ph="{...}" />
                 <marker date="1560628185756" expanded="true" signature="6620:6652" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Client/AssetManager.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
+              <folding>
+                <marker date="1560640815826" expanded="false" signature="6:79" ph="..." />
+                <marker date="1560640815826" expanded="true" signature="98:1659" ph="{...}" />
+                <marker date="1560640815826" expanded="true" signature="123:171" ph="{...}" />
+                <marker date="1560640815826" expanded="true" signature="207:1657" ph="{...}" />
+                <marker date="1560640815826" expanded="true" signature="933:1497" ph="{...}" />
+                <marker date="1560640815826" expanded="true" signature="987:1493" ph="{...}" />
+                <marker date="1560640815826" expanded="true" signature="1537:1654" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -154,8 +153,9 @@
         <option value="$PROJECT_DIR$/Client/IO/ImageFile.cs" />
         <option value="$PROJECT_DIR$/Client/Graphics/Renderer.cs" />
         <option value="$PROJECT_DIR$/Client/Model.cs" />
-        <option value="$PROJECT_DIR$/Client/AssetManager.cs" />
         <option value="$PROJECT_DIR$/Client/Window.cs" />
+        <option value="$PROJECT_DIR$/Client/Client.csproj" />
+        <option value="$PROJECT_DIR$/Client/AssetManager.cs" />
       </list>
     </option>
   </component>
@@ -170,6 +170,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AssemblyExplorer" />
       <pane id="FileSystemExplorer">
         <subPane>
           <expand>
@@ -181,11 +182,24 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AssemblyExplorer" />
-      <pane id="Scratches" />
       <pane id="SolutionExplorer">
+        <subPane>
+          <expand>
+            <path>
+              <item name="" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="Defsite" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="Defsite" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Client" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
         <option name="show-all-files" value="false" />
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -247,11 +261,12 @@
       <workItem from="1560630469968" duration="100000" />
       <workItem from="1560630884645" duration="1268000" />
       <workItem from="1560638465182" duration="405000" />
+      <workItem from="1560640068105" duration="858000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13418000" />
+    <option name="totallyTimeSpent" value="14276000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -266,7 +281,7 @@
     <frame x="10" y="45" width="1580" height="845" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49733335" visible="true" weight="0.1546855" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49733335" visible="true" weight="0.1546855" />
       <window_info id="Structure" order="1" show_stripe_button="false" sideWeight="0.50111854" side_tool="true" weight="0.15384616" />
       <window_info id="Favorites" order="2" show_stripe_button="false" sideWeight="0.50111854" side_tool="true" weight="0.15384616" />
       <window_info content_ui="combo" id="TODO" order="3" sideWeight="0.50266665" side_tool="true" weight="0.15532735" />
@@ -1454,23 +1469,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Client/AssetManager.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="565">
-          <caret line="45" column="26" selection-start-line="45" selection-start-column="26" selection-end-line="45" selection-end-column="26" />
-          <folding>
-            <marker date="1560628185456" expanded="false" signature="6:79" ph="..." />
-            <marker date="1560628185456" expanded="true" signature="98:1659" ph="{...}" />
-            <marker date="1560628185456" expanded="true" signature="123:171" ph="{...}" />
-            <marker date="1560628185456" expanded="true" signature="207:1657" ph="{...}" />
-            <marker date="1560628185456" expanded="true" signature="933:1497" ph="{...}" />
-            <marker date="1560628185456" expanded="true" signature="968:1493" ph="{...}" />
-            <marker date="1560628185456" expanded="true" signature="987:1489" ph="{...}" />
-            <marker date="1560628185456" expanded="true" signature="1537:1654" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Client/TextModel.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="595">
@@ -1597,10 +1595,17 @@
     <entry file="file://$PROJECT_DIR$/Client/Assets/Settings.cfg">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/Client/Client.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="37" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Client/Window.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="69" column="46" lean-forward="true" selection-start-line="69" selection-start-column="46" selection-end-line="69" selection-end-column="46" />
+        <state relative-caret-position="271">
+          <caret line="105" column="32" selection-start-line="105" selection-start-column="20" selection-end-line="105" selection-end-column="32" />
           <folding>
             <marker date="1560628185756" expanded="true" signature="6:215" ph="..." />
             <marker date="1560628185756" expanded="true" signature="234:6657" ph="{...}" />
@@ -1623,6 +1628,22 @@
             <marker date="1560628185756" expanded="true" signature="6055:6488" ph="{...}" />
             <marker date="1560628185756" expanded="true" signature="6538:6570" ph="{...}" />
             <marker date="1560628185756" expanded="true" signature="6620:6652" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/AssetManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
+          <folding>
+            <marker date="1560640815826" expanded="false" signature="6:79" ph="..." />
+            <marker date="1560640815826" expanded="true" signature="98:1659" ph="{...}" />
+            <marker date="1560640815826" expanded="true" signature="123:171" ph="{...}" />
+            <marker date="1560640815826" expanded="true" signature="207:1657" ph="{...}" />
+            <marker date="1560640815826" expanded="true" signature="933:1497" ph="{...}" />
+            <marker date="1560640815826" expanded="true" signature="987:1493" ph="{...}" />
+            <marker date="1560640815826" expanded="true" signature="1537:1654" ph="{...}" />
           </folding>
         </state>
       </provider>

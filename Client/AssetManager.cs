@@ -20,29 +20,29 @@ namespace Client {
 		static readonly string FontsPath = settings["client"].GetString("assets_fonts") ?? "Fonts";
 		static readonly string SoundsPath = settings["client"].GetString("assets_sounds") ?? "Sounds";
 
-		static readonly Dictionary<string, object> assets = new Dictionary<string, object>();
+		static readonly Dictionary<string, object> Assets = new Dictionary<string, object>();
 
 		public static void Load(AssetType type, string name, string asset_name) {
-			if (!assets.ContainsKey(name))
+			if (!Assets.ContainsKey(name))
 				switch (type) {
 					case AssetType.Texture:
-						assets.Add(name, new Texture(Path.Join(AssetsRoot, TexturesPath, asset_name)));
+						Assets.Add(name, new Texture(Path.Join(AssetsRoot, TexturesPath, asset_name)));
 						break;
 					case AssetType.Shader:
-						assets.Add(name, new Shader(Path.Join(AssetsRoot, ShadersPath, asset_name)));
+						Assets.Add(name, new Shader(Path.Join(AssetsRoot, ShadersPath, asset_name)));
 						break;
 					case AssetType.Font:
-						assets.Add(name, new Texture(Path.Join(AssetsRoot, FontsPath, asset_name)));
+						Assets.Add(name, new Texture(Path.Join(AssetsRoot, FontsPath, asset_name)));
 						break;
 					case AssetType.Sound:
-						assets.Add(name, new WAVFile(Path.Join(AssetsRoot, SoundsPath, asset_name)));
+						Assets.Add(name, new WAVFile(Path.Join(AssetsRoot, SoundsPath, asset_name)));
 						break;
 				}
 		}
 
 		public static T Get<T>(string name) {
-			if (assets.ContainsKey(name))
-				return (T) Convert.ChangeType(assets[name], typeof(T));
+			if (Assets.ContainsKey(name))
+				return (T) Convert.ChangeType(Assets[name], typeof(T));
 			return default;
 		}
 	}

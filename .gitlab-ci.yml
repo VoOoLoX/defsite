@@ -1,24 +1,9 @@
 image: microsoft/dotnet:latest
 
 stages:
-  - build_defsite
-  - build_client
-  - build_server
+  - build_all
 
-build_defsite:
-  stage: build_defsite
+build_all:
+  stage: build_all
   script:
-    - "cd Defsite"
-    - "dotnet build"
-
-build_client:
-  stage: build_client
-  script:
-    - "cd Client"
-    - "dotnet build"
-
-build_server:
-  stage: build_server
-  script:
-    - "cd Server"
-    - "dotnet build"
+    - "dotnet build Defsite.sln"
