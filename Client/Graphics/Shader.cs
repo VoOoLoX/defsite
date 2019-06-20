@@ -74,49 +74,51 @@ namespace Client {
 			GL.UseProgram(0);
 		}
 
-		public int GetAttribute(string attr) {
+		public int GetAttributeLocation(string attr) {
 			return GL.GetAttribLocation(ID, attr);
 		}
+		
+		public int this[string attr] => GetAttributeLocation(attr);
 
-		public int GetUniform(string unif) {
+		public int Get(string unif) {
 			return GL.GetUniformLocation(ID, unif);
 		}
 
-		public void SetUniform<T>(string unif, T data) {
+		public void Set<T>(string unif, T data) {
 			Enable();
 			switch (data) {
 				case Matrix2 m2:
-					GL.UniformMatrix2(GetUniform(unif), false, ref m2);
+					GL.UniformMatrix2(Get(unif), false, ref m2);
 					break;
 				case Matrix3 m3:
-					GL.UniformMatrix3(GetUniform(unif), false, ref m3);
+					GL.UniformMatrix3(Get(unif), false, ref m3);
 					break;
 				case Matrix4 m4:
-					GL.UniformMatrix4(GetUniform(unif), false, ref m4);
+					GL.UniformMatrix4(Get(unif), false, ref m4);
 					break;
 				case bool b:
-					GL.Uniform1(GetUniform(unif), b ? 1 : 0);
+					GL.Uniform1(Get(unif), b ? 1 : 0);
 					break;
 				case int i:
-					GL.Uniform1(GetUniform(unif), i);
+					GL.Uniform1(Get(unif), i);
 					break;
 				case float f:
-					GL.Uniform1(GetUniform(unif), f);
+					GL.Uniform1(Get(unif), f);
 					break;
 				case double d:
-					GL.Uniform1(GetUniform(unif), d);
+					GL.Uniform1(Get(unif), d);
 					break;
 				case Vector2 v2:
-					GL.Uniform2(GetUniform(unif), v2);
+					GL.Uniform2(Get(unif), v2);
 					break;
 				case Vector3 v3:
-					GL.Uniform3(GetUniform(unif), v3);
+					GL.Uniform3(Get(unif), v3);
 					break;
 				case Vector4 v4:
-					GL.Uniform4(GetUniform(unif), v4);
+					GL.Uniform4(Get(unif), v4);
 					break;
 				case Color v4:
-					GL.Uniform4(GetUniform(unif), v4);
+					GL.Uniform4(Get(unif), v4);
 					break;
 				default:
 					throw new InvalidCastException();

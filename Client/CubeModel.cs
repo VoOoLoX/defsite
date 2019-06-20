@@ -36,10 +36,8 @@ namespace Client {
 		readonly VertexBuffer<Vector3> vbo_pos = new VertexBuffer<Vector3>(Primitives.CubeCentered.PositionData);
 
 		public CubeModel(Color color = default) {
-			VA.Enable();
-
-			var pos = Shader.GetAttribute("position");
-			VA.AddBuffer(vbo_pos, pos, 3);
+			var pos = Shader["position"];
+			VertexArray.AddVertexBuffer(vbo_pos, pos);
 
 			ResizeCube(cube_screen.Width, cube_screen.Height, cube_screen.Depth);
 			MoveCube(cube_screen.X, cube_screen.Y, cube_screen.Z);
@@ -48,8 +46,6 @@ namespace Client {
 				cube_color = color;
 
 			SetColor(cube_color);
-
-			VA.Disable();
 		}
 
 		public int Width {
@@ -99,9 +95,9 @@ namespace Client {
 
 		public override Shader Shader => shader;
 
-		public override VertextArray VA { get; } = new VertextArray();
-
-		public override IndexBuffer IB { get; } = new IndexBuffer(Primitives.CubeCentered.IndexBufferData);
+		public override VertexArray VertexArray { get; } = new VertexArray();
+		
+		public override IndexBuffer IndexBuffer { get; } = new IndexBuffer(Primitives.CubeCentered.IndexBufferData);
 
 		void SetColor(Color color) {
 			cube_color = color;
@@ -135,7 +131,7 @@ namespace Client {
 		}
 
 		public override void PreDraw() {
-			Shader.SetUniform("color", Color.WhiteSmoke);
+			Shader.Set("color", Color.WhiteSmoke);
 		}
 	}
 }

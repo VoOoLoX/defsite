@@ -3,14 +3,14 @@ using OpenTK.Graphics.OpenGL;
 namespace Client {
 	public class IndexBuffer {
 		public IndexBuffer(uint[] data) {
-			ID = GL.GenBuffer();
+			GL.CreateBuffers(1, out int buffer);
+			ID = buffer;
 			Enable();
-			Count = data.Length;
-			GL.BufferData(BufferTarget.ElementArrayBuffer, data.Length * sizeof(uint), data, BufferUsageHint.StaticDraw);
+			SetData(data);
 			Disable();
 		}
 
-		public int Count { get; }
+		public int Count { get; private set; }
 		public int ID { get; }
 
 		public void Enable() {
@@ -21,8 +21,16 @@ namespace Client {
 			GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
 		}
 
-		~IndexBuffer() {
-			// GL.DeleteBuffer(ID);
+		public void SetData(uint[] data) {
+			Enable();
+			Count = data.Length;
+			GL.InvalidateBufferData(ID);
+			GL.BufferData(BufferTarget.ElementArrayBuffer, data.Length * sizeof(uint), data, BufferUsageHint.StaticDraw);
+			Disable();
+		}
+
+		public void Dispose() {
+			GL.DeleteBuffer(ID);
 		}
 	}
 }

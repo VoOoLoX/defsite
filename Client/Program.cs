@@ -25,7 +25,7 @@ namespace Client {
 					Log.Panic(e);
 				}
 
-			window.Run();
+			window?.Run(0.0, 60);
 		}
 	}
 }

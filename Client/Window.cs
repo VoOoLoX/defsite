@@ -60,7 +60,7 @@ namespace Client {
 			if (Context == null)
 				Log.Panic("Invalid context");
 
-			VSync = VSyncMode.Off;
+			VSync = VSyncMode.Adaptive;
 			CursorVisible = true;
 
 			ClientWidth = Width;
@@ -73,6 +73,9 @@ namespace Client {
 		public static int ClientWidth { get; private set; }
 		public static int ClientHeight { get; private set; }
 		public static Point ClientCenter { get; private set; }
+
+		
+		Config settings = new Config("Assets/Settings.cfg");
 
 		protected override void OnLoad(EventArgs e) {
 			AssetManager.Load(AssetType.Texture, "Ghost", "Ghost.vif");
@@ -98,8 +101,7 @@ namespace Client {
 
 			var f = new FileLoader();
 
-			var settings = new Config("Assets/Settings.cfg");
-
+			
 			AL.Listener(ALListener3f.Position, 0, 0, 0);
 			AL.Listener(ALListener3f.Velocity, 0, 0, 0);
 
@@ -175,7 +177,7 @@ namespace Client {
 		}
 
 		protected override void OnUpdateFrame(FrameEventArgs e) {
-			if (WindowState == WindowState.Minimized || !Focused) Thread.Sleep(200);
+			if (WindowState == WindowState.Minimized || !Focused) Thread.Sleep(100);
 
 			if (Input.IsActive(Key.Escape))
 				Close();
@@ -199,18 +201,20 @@ namespace Client {
 			button.X = panel.X + panel.Width - button.Width;
 			button.Y = panel.Y;
 
-			// mouse_info.Text = $"{Input.MousePos.X}:{Input.MousePos.Y}:{Input.IsActive(MouseButton.Left)}:{Input.IsActive(MouseButton.Right)}";
+			mouse_info.Text = $"{Input.MousePos.X}:{Input.MousePos.Y}:{Input.IsActive(MouseButton.Left)}:{Input.IsActive(MouseButton.Right)}";
 			mouse_info.MoveText(0, fps.Height);
 
 			button.Update();
 			panel.Update();
 			panel2.Update();
+			
+//			text.Text = settings["client"].GetString("player_name");
 		}
 
 		protected override void OnRenderFrame(FrameEventArgs e) {
-			if (WindowState == WindowState.Minimized || !Focused) return;
+			if (WindowState == WindowState.Minimized) return;
 
-			// fps.Text = $"{1 / e.Time:.0}";
+			fps.Text = $"{1 / e.Time:00}";
 			renderer.Clear();
 
 			renderer.Draw(camera, tile);

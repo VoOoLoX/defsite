@@ -21,8 +21,6 @@ namespace Client {
 		readonly VertexBuffer<Vector2> vbo_uv;
 
 		public TextModel(string text, Vector2 position = default, float scale = 1, Color color = default, bool glow = false) {
-			VA.Enable();
-
 			text_value = text;
 			text_position = position;
 			text_scale = scale;
@@ -32,12 +30,12 @@ namespace Client {
 			vbo_uv = new VertexBuffer<Vector2>(GenerateCharUVs(text));
 			ib = new IndexBuffer(GenerateIndexBuffers(text.Length));
 
-			var pos = Shader.GetAttribute("position");
-			VA.AddBuffer(vbo_pos, pos, 2);
+			var pos = Shader["position"];
+			var uv = Shader["uv_coords"];
 
-			var uv = Shader.GetAttribute("uv_coords");
-			VA.AddBuffer(vbo_uv, uv, 2);
-
+			VertexArray.AddVertexBuffer(vbo_pos, pos);
+			VertexArray.AddVertexBuffer(vbo_uv, uv);
+			
 			Scale(text_scale);
 			MoveText(text_position);
 
@@ -45,8 +43,6 @@ namespace Client {
 				text_color = color;
 
 			SetColor(text_color);
-
-			VA.Disable();
 		}
 
 		public bool Glow { get; set; }
@@ -67,9 +63,9 @@ namespace Client {
 
 		public override Shader Shader => shader;
 
-		public override VertextArray VA { get; } = new VertextArray();
+		public override VertexArray VertexArray { get; } = new VertexArray();
 
-		public override IndexBuffer IB => ib;
+		public override IndexBuffer IndexBuffer => ib;
 
 		public override Texture Texture => texture;
 
@@ -78,9 +74,9 @@ namespace Client {
 		}
 
 		void SetText(string text) {
-			vbo_pos.Update(GenerateCharPositions(text));
-			vbo_uv.Update(GenerateCharUVs(text));
-			ib = new IndexBuffer(GenerateIndexBuffers(text.Length));
+			vbo_pos.SetData(GenerateCharPositions(text));
+			vbo_uv.SetData(GenerateCharUVs(text));
+			ib.SetData(GenerateIndexBuffers(text.Length));
 		}
 
 		public void MoveText(int x, int y) {
@@ -108,7 +104,7 @@ namespace Client {
 		// 	ScaleText((float)pixels / Camera.ZoomFactor);
 		// }
 
-		Vector2[] GenerateCharPositions(string text) {
+		static Vector2[] GenerateCharPositions(string text) {
 			var poslist = new List<Vector2[]>();
 			var offset = 0;
 			foreach (var ch in text) {
@@ -125,7 +121,7 @@ namespace Client {
 			return poslist.SelectMany(i => i).ToArray();
 		}
 
-		Vector2[] GenerateCharUVs(string text) {
+		static Vector2[] GenerateCharUVs(string text) {
 			var uvlist = new List<Vector2[]>();
 			foreach (var ch in text) {
 				var offset = chars.IndexOf(ch);
@@ -141,7 +137,7 @@ namespace Client {
 			return uvlist.SelectMany(x => x).ToArray();
 		}
 
-		uint[] GenerateIndexBuffers(int text_length) {
+		static uint[] GenerateIndexBuffers(int text_length) {
 			var ibs = new List<uint[]>();
 			for (uint i = 0; i < text_length; i++) {
 				var offset = i * 4;
@@ -155,8 +151,8 @@ namespace Client {
 		}
 
 		public override void PreDraw() {
-			Shader.SetUniform("text_color", text_color);
-			Shader.SetUniform("glow", Glow);
+			Shader.Set("text_color", text_color);
+			Shader.Set("glow", Glow);
 		}
 	}
 }

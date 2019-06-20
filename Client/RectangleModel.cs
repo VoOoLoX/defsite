@@ -13,12 +13,10 @@ namespace Client {
 		readonly VertexBuffer<Vector2> vbo_pos = new VertexBuffer<Vector2>(Primitives.Quad.PositionData);
 
 		public RectangleModel(Rectangle rect, Color color = default) {
-			VA.Enable();
-
 			rect_screen = rect;
 
-			var pos = Shader.GetAttribute("position");
-			VA.AddBuffer(vbo_pos, pos, 2);
+			var pos = Shader["position"];
+			VertexArray.AddVertexBuffer(vbo_pos, pos);
 
 			ResizeRect(rect_screen.Width, rect_screen.Height);
 			MoveRect(rect_screen.X, rect_screen.Y);
@@ -27,8 +25,6 @@ namespace Client {
 				rect_color = color;
 
 			SetColor(rect_color);
-
-			VA.Disable();
 		}
 
 		public int Width {
@@ -68,9 +64,9 @@ namespace Client {
 
 		public override Shader Shader => shader;
 
-		public override VertextArray VA { get; } = new VertextArray();
-
-		public override IndexBuffer IB { get; } = new IndexBuffer(Primitives.Quad.IndexBufferData);
+		public override VertexArray VertexArray { get; } = new VertexArray();
+		
+		public override IndexBuffer IndexBuffer { get; } = new IndexBuffer(Primitives.Quad.IndexBufferData);
 
 		public void SetColor(Color color) {
 			rect_color = color;
@@ -102,7 +98,7 @@ namespace Client {
 		}
 
 		public override void PreDraw() {
-			Shader.SetUniform("color", rect_color);
+			Shader.Set("color", rect_color);
 		}
 	}
 }

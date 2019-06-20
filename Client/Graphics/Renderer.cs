@@ -13,21 +13,21 @@ namespace Client {
 		public void Draw(Camera camera, Model model, bool gui = false) {
 			GL.Viewport(0, 0, Window.ClientWidth, Window.ClientHeight);
 			model.Shader.Enable();
-			model.VA.Enable();
+			model.VertexArray.Enable();
+			model.IndexBuffer.Enable();
 			model.Texture?.Enable();
-			model.IB.Enable();
 
 			if (gui)
-				model.Shader.SetUniform("mvp", camera.ProjectionMatrix * model.ModelMatrix);
+				model.Shader.Set("mvp", camera.ProjectionMatrix * model.ModelMatrix);
 			else
-				model.Shader.SetUniform("mvp", camera.ProjectionMatrix * camera.ViewMatrix * model.ModelMatrix);
+				model.Shader.Set("mvp", camera.ProjectionMatrix * camera.ViewMatrix * model.ModelMatrix);
 
 			model.PreDraw();
-			GL.DrawElements(PrimitiveType.Triangles, model.IB.Count, DrawElementsType.UnsignedInt, 0);
+			GL.DrawElements(PrimitiveType.Triangles, model.IndexBuffer.Count, DrawElementsType.UnsignedInt, 0);
 
-			model.IB.Disable();
 			model.Texture?.Disable();
-			model.VA.Disable();
+			model.VertexArray.Disable();
+			model.IndexBuffer.Disable();
 			model.Shader.Disable();
 		}
 

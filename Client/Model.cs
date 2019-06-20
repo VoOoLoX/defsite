@@ -2,10 +2,10 @@ using OpenTK;
 
 namespace Client {
 	public abstract class Model {
-		public Matrix4 ModelMatrix { get; set; } = Matrix4.Identity;
+		public Matrix4 ModelMatrix { get; private set; } = Matrix4.Identity;
 		public abstract Shader Shader { get; }
-		public abstract VertextArray VA { get; }
-		public abstract IndexBuffer IB { get; }
+		public abstract VertexArray VertexArray { get; }
+		public abstract IndexBuffer IndexBuffer { get; }
 		public virtual Texture Texture => default;
 
 		public virtual void PreDraw() {

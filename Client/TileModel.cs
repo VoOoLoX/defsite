@@ -10,26 +10,21 @@ namespace Client {
 		Vector3 position;
 
 		public TileModel() {
-			VA.Enable();
-
 			var vbo_pos = new VertexBuffer<Vector2>(Primitives.QuadCentered.PositionData);
 			var vbo_uv = new VertexBuffer<Vector2>(Primitives.QuadCentered.UVData);
 
-			var pos = Shader.GetAttribute("position");
-			var uv = Shader.GetAttribute("uv_coords");
+			var pos = Shader["position"];
+			var uv = Shader["uv_coords"];
 
-			VA.AddBuffer(vbo_pos, pos, 2);
-			VA.AddBuffer(vbo_uv, uv, 2);
-
-			VA.Disable();
+			VertexArray.AddVertexBuffer(vbo_pos, pos);
+			VertexArray.AddVertexBuffer(vbo_uv, uv);
 		}
 
 		public override Shader Shader => shader;
 
-		public override VertextArray VA { get; } = new VertextArray();
+		public override VertexArray VertexArray { get; } = new VertexArray();
 
-		public override IndexBuffer IB { get; } = new IndexBuffer(Primitives.QuadCentered.IndexBufferData);
-
+		public override IndexBuffer IndexBuffer { get; } = new IndexBuffer(Primitives.QuadCentered.IndexBufferData);
 		public override Texture Texture => texture;
 
 		public override void Update(double delta_time) {
@@ -51,7 +46,7 @@ namespace Client {
 				direction_vector = Vector3.Zero - position;
 
 			direction_vector.NormalizeFast();
-			direction_vector *= (float) delta_time * 2;
+			direction_vector *= (float)delta_time * 2;
 
 			Move(direction_vector);
 
@@ -59,8 +54,8 @@ namespace Client {
 		}
 
 		public override void PreDraw() {
-			Shader.SetUniform("glow_size", .3f);
-			Shader.SetUniform("glow_color", Color.Black);
+			Shader.Set("glow_size", .3f);
+			Shader.Set("glow_color", Color.Black);
 		}
 	}
 }
