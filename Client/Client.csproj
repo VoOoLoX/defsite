@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>netcoreapp3.0</TargetFramework>
+		<TargetFramework>netcoreapp2.2</TargetFramework>
 		<RuntimeIdentifiers>linux-x64;win-x64;win-x86;</RuntimeIdentifiers>
 		<NoVBRuntimeReference>True</NoVBRuntimeReference>
 		<AssemblyVersion>$([System.DateTime]::Now.ToString(`y\.d\.H\.m`))</AssemblyVersion>
