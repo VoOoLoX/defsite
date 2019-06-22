@@ -131,7 +131,7 @@ namespace Client {
 		}
 
 		public override void PreDraw() {
-			Shader.Set("color", Color.WhiteSmoke);
+			Shader.Set("color", cube_color);
 		}
 	}
 }

@@ -1,41 +1,42 @@
+using System;
 using OpenTK;
 using OpenTK.Input;
 
 namespace Client {
-	public class Camera {
+	public static class Camera {
 		const float zoom_constant = 1f / 15f;
 
-		Vector2 direction_vector = Vector2.Zero;
-		float zoom = 1;
+		static Vector2 direction_vector = Vector2.Zero;
+		static float zoom = 1;
 
-		public Camera(float zoom = 50) {
-			ZoomFactor = zoom;
-			ViewMatrix = Matrix4.LookAt(
-				new Vector3(0, 0, 1),
-				new Vector3(0, 0, 0),
-				new Vector3(0, 1, 0)
-			);
+		public static void Init(float zoom = 50) {
+			ZoomFactor = 1;
 			UpdateProjectionMatrix();
+			ViewMatrix = Matrix4.LookAt(
+				new Vector3(0,0,1f),
+				new Vector3(0,0,0),
+				new Vector3(0,1,0));
 		}
 
-		public Matrix4 ViewMatrix { get; private set; }
-		public Matrix4 ProjectionMatrix { get; private set; }
+		public static Matrix4 ViewMatrix { get; private set; }
+		public static Matrix4 ProjectionMatrix { get; private set; }
 		public static float ZoomFactor { get; private set; }
 
-		public void Move(Vector2 move_vector) {
+		public static void Move(Vector2 move_vector) {
 			ViewMatrix *= Matrix4.CreateTranslation(move_vector.X, move_vector.Y, 0);
 		}
 
-		public void UpdateProjectionMatrix() {
-			ProjectionMatrix = Matrix4.CreateOrthographic(Window.ClientWidth, Window.ClientHeight, 1.0f, -1.0f);
+		public static void UpdateProjectionMatrix() {
+//			ProjectionMatrix = Matrix4.CreateOrthographic(1, 1, 1.0f, -1.0f);
+			ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 3, (float) Window.ClientWidth / Window.ClientHeight, 0.1f, 10f);
 			Zoom(ZoomFactor);
 		}
 
-		public void Zoom(float zoom_factor) {
+		public static void Zoom(float zoom_factor) {
 			ProjectionMatrix *= Matrix4.CreateScale(zoom_factor, zoom_factor, 0);
 		}
 
-		public void Update(double delta_time) {
+		public static void Update(double delta_time) {
 			direction_vector = Vector2.Zero;
 			if (Input.IsActive(Key.Right))
 				direction_vector.X = 1;

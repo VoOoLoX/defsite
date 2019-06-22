@@ -23,21 +23,21 @@ namespace Client {
 		static readonly Dictionary<string, object> Assets = new Dictionary<string, object>();
 
 		public static void Load(AssetType type, string name, string asset_name) {
-			if (!Assets.ContainsKey(name))
-				switch (type) {
-					case AssetType.Texture:
-						Assets.Add(name, new Texture(Path.Join(AssetsRoot, TexturesPath, asset_name)));
-						break;
-					case AssetType.Shader:
-						Assets.Add(name, new Shader(Path.Join(AssetsRoot, ShadersPath, asset_name)));
-						break;
-					case AssetType.Font:
-						Assets.Add(name, new Texture(Path.Join(AssetsRoot, FontsPath, asset_name)));
-						break;
-					case AssetType.Sound:
-						Assets.Add(name, new WAVFile(Path.Join(AssetsRoot, SoundsPath, asset_name)));
-						break;
-				}
+			if (Assets.ContainsKey(name)) return;
+			switch (type) {
+				case AssetType.Texture:
+					Assets.Add(name, new Texture(Path.Join(AssetsRoot, TexturesPath, asset_name)));
+					break;
+				case AssetType.Shader:
+					Assets.Add(name, new Shader(Path.Join(AssetsRoot, ShadersPath, asset_name)));
+					break;
+				case AssetType.Font:
+					Assets.Add(name, new Texture(Path.Join(AssetsRoot, FontsPath, asset_name)));
+					break;
+				case AssetType.Sound:
+					Assets.Add(name, new WAVFile(Path.Join(AssetsRoot, SoundsPath, asset_name)));
+					break;
+			}
 		}
 
 		public static T Get<T>(string name) {

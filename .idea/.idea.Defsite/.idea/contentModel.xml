@@ -13,10 +13,8 @@
           </e>
           <e p="Settings.cfg" t="Include" />
           <e p="Shaders" t="Include">
-            <e p="Color.shdr" t="Include" />
-            <e p="Object.shdr" t="Include" />
-            <e p="Text.shdr" t="Include" />
-            <e p="Texture.shdr" t="Include" />
+            <e p="Color.glsl" t="Include" />
+            <e p="Sprite.glsl" t="Include" />
           </e>
           <e p="Sounds" t="Include">
             <e p="Coins.wav" t="Include" />
@@ -36,6 +34,20 @@
         <e p="Client.csproj" t="IncludeRecursive" />
         <e p="ClientUtils.cs" t="Include" />
         <e p="CubeModel.cs" t="Include" />
+        <e p="ECS" t="Include">
+          <e p="Components" t="Include">
+            <e p="Sprite.cs" t="Include" />
+            <e p="Transform.cs" t="Include" />
+          </e>
+          <e p="Entity.cs" t="Include" />
+          <e p="EntityType.cs" t="Include" />
+          <e p="IComponent.cs" t="Include" />
+          <e p="ISystem.cs" t="Include" />
+          <e p="Systems" t="Include">
+            <e p="RenderSystem.cs" t="Include" />
+            <e p="UpdateSystem.cs" t="Include" />
+          </e>
+        </e>
         <e p="Graphics" t="Include">
           <e p="IndexBuffer.cs" t="Include" />
           <e p="Primitives.cs" t="Include" />
@@ -54,7 +66,7 @@
         <e p="Model.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
-            <e p="netcoreapp2.2" t="Include">
+            <e p="netcoreapp3.0" t="Include">
               <e p="Client.AssemblyInfo.cs" t="Include" />
             </e>
           </e>

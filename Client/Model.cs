@@ -41,5 +41,15 @@ namespace Client {
 		public void Scale(float scale_factor_x, float scale_factor_y, float scale_factor_z) {
 			ModelMatrix *= Matrix4.CreateScale(scale_factor_x, scale_factor_y, scale_factor_z);
 		}
+
+		public void RotateX(float rad) {
+			ModelMatrix *= Matrix4.CreateRotationX(rad);
+		}
+		public void RotateY(float rad) {
+			ModelMatrix *= Matrix4.CreateRotationY(rad);
+		}
+		public void RotateZ(float rad) {
+			ModelMatrix *= Matrix4.CreateRotationZ(rad);
+		}
 	}
 }

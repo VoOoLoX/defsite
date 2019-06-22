@@ -46,7 +46,7 @@ namespace Client {
 		void Resize(int width, int height) {
 			var old = rect_model.Rect;
 			rect_model.ResizeRect(width, height);
-			Move(old.X, old.Y);
+			Move(old.X -= width, old.Y -= height);
 		}
 
 		void SetColor(Color color) {
@@ -57,8 +57,8 @@ namespace Client {
 
 		public event Action<Panel, Point> OnDrag;
 
-		public void Draw(Renderer renderer, Camera camera) {
-			renderer.Draw(camera, rect_model, true);
+		public void Draw() {
+			Renderer.Draw(rect_model, true);
 		}
 
 		public void Update() {

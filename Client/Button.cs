@@ -4,15 +4,13 @@ using OpenTK.Input;
 
 namespace Client {
 	public class Button {
-		static Color shadow_color;
 		readonly RectangleModel rect_model;
 		readonly RectangleModel shadow_rect_model;
 		readonly TextModel text_model;
 
 		public Button(string text, Rectangle rect, Color button_color, Color text_color) {
-			shadow_color = button_color.Lerp(Color.Black, .4f);
 			rect_model = new RectangleModel(rect, button_color);
-			shadow_rect_model = new RectangleModel(new Rectangle(rect.X, rect.Y, rect.Width, (int) (rect.Height * .1)), shadow_color);
+			shadow_rect_model = new RectangleModel(new Rectangle(rect.X, rect.Y, rect.Width, (int) (rect.Height * .1)), button_color.Lerp(Color.Black, .4f));
 			text_model = new TextModel(text, scale: .2f, color: text_color);
 			Move(rect.X, rect.Y);
 		}
@@ -57,7 +55,7 @@ namespace Client {
 
 		void SetColor(Color color) {
 			rect_model.SetColor(color);
-			shadow_rect_model.SetColor(shadow_color);
+			shadow_rect_model.SetColor(color.Lerp(Color.Black, .4f));
 		}
 
 		public event Action<Button> OnClick;
@@ -66,10 +64,10 @@ namespace Client {
 
 		public event Action<Button> OnUpdate;
 
-		public void Draw(Renderer renderer, Camera camera) {
-			renderer.Draw(camera, rect_model, true);
-			renderer.Draw(camera, shadow_rect_model, true);
-			renderer.Draw(camera, text_model, true);
+		public void Draw() {
+			Renderer.Draw(rect_model, true);
+			Renderer.Draw(shadow_rect_model, true);
+			Renderer.Draw(text_model, true);
 		}
 
 		public void Update() {

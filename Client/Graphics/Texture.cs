@@ -4,6 +4,18 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Client {
 	public class Texture {
+
+		public Texture() {
+			ID = GL.GenTexture();
+			var pixels = new List<Pixel> {new Pixel(255, 0, 255, 255)};
+			var img = new VIFImage(1, 1, pixels);
+
+			Enable();
+			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) TextureMinFilter.Nearest);
+			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Nearest);
+			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, img.Width, img.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, img.Bytes());
+			Disable();
+		}
 		public Texture(string path) {
 			ID = GL.GenTexture();
 			var pixels = new List<Pixel> {new Pixel(255, 0, 255, 255)};

@@ -6,7 +6,7 @@ namespace Client {
 	internal class TextModel : Model {
 		const string chars = " ABCDEFGHIJKLMNOPRSTQUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=[]{}<>,.;:'\"/?\\|";
 
-		static readonly Shader shader = AssetManager.Get<Shader>("TextShader");
+		static readonly Shader shader = AssetManager.Get<Shader>("SpriteShader");
 		static readonly Texture texture = AssetManager.Get<Texture>("TinyFont");
 		static readonly float uv_char_width = 1f / chars.Length;
 		IndexBuffer ib;
