@@ -2,8 +2,9 @@ using OpenTK;
 
 namespace Client {
 	public static class ClientUtils {
+		// Doesn't work for now find better way
 		public static float WorldUnitToScreen(float scale) {
-			return scale * Camera.ZoomFactor;
+			return scale * 1;
 		}
 
 		public static float TextHeight(float scale) {

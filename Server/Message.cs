@@ -6,11 +6,13 @@ using System.Text;
 
 namespace Server {
 	public abstract class Message {
-		public abstract MessageType Type { get; }
-		public virtual List<byte> Data => new List<byte> { (byte)Type };
-		protected void ResetIndex() => reader_index = 0;
-
 		int reader_index;
+		public abstract MessageType Type { get; }
+		public virtual List<byte> Data => new List<byte> {(byte) Type};
+
+		protected void ResetIndex() {
+			reader_index = 0;
+		}
 
 		public void WriteBytes<T>(T data) {
 			switch (data) {
@@ -52,42 +54,41 @@ namespace Server {
 			}
 		}
 
-		public T ReadBytes<T>(byte[] data)
-		{
+		public T ReadBytes<T>(byte[] data) {
 			if (typeof(T) == typeof(bool)) {
 				var b_value = BitConverter.ToBoolean(data.Skip(reader_index).ToArray());
 				reader_index += sizeof(bool);
-				return (T)Convert.ChangeType(b_value, typeof(T));
+				return (T) Convert.ChangeType(b_value, typeof(T));
 			}
 
 			if (typeof(T) == typeof(char)) {
 				var c_value = BitConverter.ToChar(data.Skip(reader_index).ToArray());
 				reader_index += sizeof(char);
-				return (T)Convert.ChangeType(c_value, typeof(T));
+				return (T) Convert.ChangeType(c_value, typeof(T));
 			}
 
 			if (typeof(T) == typeof(int)) {
 				var i_value = BitConverter.ToInt32(data.Skip(reader_index).ToArray());
 				reader_index += sizeof(int);
-				return (T)Convert.ChangeType(i_value, typeof(T));
+				return (T) Convert.ChangeType(i_value, typeof(T));
 			}
 
 			if (typeof(T) == typeof(short)) {
 				var sh_value = BitConverter.ToInt16(data.Skip(reader_index).ToArray());
 				reader_index += sizeof(short);
-				return (T)Convert.ChangeType(sh_value, typeof(T));
+				return (T) Convert.ChangeType(sh_value, typeof(T));
 			}
 
 			if (typeof(T) == typeof(long)) {
 				var ln_value = BitConverter.ToInt64(data.Skip(reader_index).ToArray());
 				reader_index += sizeof(long);
-				return (T)Convert.ChangeType(ln_value, typeof(T));
+				return (T) Convert.ChangeType(ln_value, typeof(T));
 			}
 
 			if (typeof(T) == typeof(double)) {
 				var d_value = BitConverter.ToDouble(data.Skip(reader_index).ToArray());
 				reader_index += sizeof(double);
-				return (T)Convert.ChangeType(d_value, typeof(T));
+				return (T) Convert.ChangeType(d_value, typeof(T));
 			}
 
 			if (typeof(T) == typeof(string)) {
@@ -96,7 +97,7 @@ namespace Server {
 				//String length + string + null char
 				//echo -e 'B\x07VoOoLoX\0\x06CooLpW\0' | nc localhost 7331
 				reader_index += s_value.Length + 2;
-				return (T)Convert.ChangeType(s_value, typeof(T));
+				return (T) Convert.ChangeType(s_value, typeof(T));
 			}
 
 			throw new Exception($"Cannon't interpret given bytes as a type: {typeof(T).Name}");
@@ -109,35 +110,35 @@ namespace Server {
 	}
 
 	public class MessageLogin : Message {
-		public override MessageType Type => MessageType.Login;
-
-		public string Username { get; private set; }
-		public string Password { get; private set; }
-
 		public MessageLogin(byte[] data) {
 			ResetIndex();
 			Username = ReadBytes<string>(data);
 			Password = ReadBytes<string>(data);
 		}
+
+		public override MessageType Type => MessageType.Login;
+
+		public string Username { get; private set; }
+		public string Password { get; private set; }
 	}
 
 	public class MessageBroadcast : Message {
-		public override MessageType Type => MessageType.Broadcast;
-
-		public string Message { get; private set; }
-
 		public MessageBroadcast(byte[] data) {
 			ResetIndex();
 			Message = ReadBytes<string>(data);
 		}
+
+		public override MessageType Type => MessageType.Broadcast;
+
+		public string Message { get; private set; }
 	}
 
 	public class MessageText : Message {
-		public override MessageType Type => MessageType.Text;
-
 		public MessageText(string text) {
 			ResetIndex();
 			WriteBytes(text);
 		}
+
+		public override MessageType Type => MessageType.Text;
 	}
 }

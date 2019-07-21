@@ -2,7 +2,6 @@ using System.Runtime.InteropServices;
 
 namespace Defsite {
 	public static class Utils {
-
 #if DEBUG
 		public static bool IsDebug = true;
 #else

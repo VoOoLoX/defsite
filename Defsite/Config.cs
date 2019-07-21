@@ -1,141 +1,69 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 namespace Defsite {
 	public class Config {
-		public class ConfigScope {
-			string name;
-			Dictionary<string, string> properties = new Dictionary<string, string>();
-			Dictionary<string, ConfigScope> objects = new Dictionary<string, ConfigScope>();
+		string config_path;
+		TomlTable table;
 
-			public string Name => name;
-			public IReadOnlyDictionary<string, string> Properties => properties;
-			public IEnumerable<ConfigScope> Objects => objects.Values.ToList();
+		public Config(string path) => Load(path);
 
-			public ConfigScope(string name) {
-				this.name = name;
-			}
-
-			public void AddPropery(string key, string value) {
-				if (!properties.ContainsKey(key))
-					properties[key] = value;
-			}
-
-			public void AddObject(string key, ConfigScope value) {
-				if (!objects.ContainsKey(key))
-					objects[key] = value;
-			}
-
-			string GetPropery(string key) => properties.ContainsKey(key) ? properties[key] : string.Empty;
-
-			public ConfigScope GetObject(string key) => objects.ContainsKey(key) ? objects[key] : this;
-
-			public bool GetBool(string key) {
-				if (bool.TryParse(GetPropery(key), out bool value))
-					return value;
-				return false;
-			}
-
-			public int GetInt(string key) {
-				if (int.TryParse(GetPropery(key), out int value))
-					return value;
-				return 0;
-			}
-
-			public uint GetUInt(string key) {
-				if (uint.TryParse(GetPropery(key), out uint value))
-					return value;
-				return 0;
-			}
-
-			public decimal GetDecimal(string key) {
-				if (decimal.TryParse(GetPropery(key), out decimal value))
-					return value;
-				return decimal.Zero;
-			}
-
-			public string GetString(string key) {
-				if (GetPropery(key).Contains('\'') || GetPropery(key).Contains('"') || GetPropery(key).Contains('`'))
-					return GetPropery(key).Replace("\"", "").Replace("'", "").Replace("`", "");
-				return GetPropery(key);
-			}
+		public TomlNode this[string variable_name] {
+			get => Get(variable_name);
+			set => Set(variable_name, value);
 		}
 
-		ConfigScope root = new ConfigScope("");
-
-		public Config(string filepath) => Parse(filepath);
-
-		void Parse(string filepath) {
-			var lines = new StreamReader(filepath).ReadToEnd();
-			var current_scope = root;
-			foreach (var line in lines.Split('\n')) {
-				var no_comment = line.Split('#')[0];
-				var trimed = no_comment.Trim();
-
-				if (trimed.Contains('[') && trimed.Contains(']')) {
-					var obj = trimed.Replace("[", "").Replace("]", "");
-
-					current_scope = GetScope(obj, true);
-					continue;
-				}
-
-				if (trimed.Contains('=')) {
-					var key = trimed.Split('=')[0].Trim();
-					var value = trimed.Split('=')[1].Trim();
-
-					current_scope.AddPropery(key, value);
-				}
+		void Load(string file_path) {
+			var path = File.Exists(file_path) ? file_path : string.Empty;
+			if (path != string.Empty) {
+				table = TOML.Parse(new StreamReader(path));
+				table.IsInline = false;
+				config_path = file_path;
 			}
+			else
+				throw new Exception($"Invalid config file path: {path}");
 		}
 
-		ConfigScope GetScope(string scope_path, bool insert = false) {
-			var sub_objs = scope_path.Split(':');
-			var obj_idx = 0;
-			var scope = root;
+		public void Add(string key, TomlNode value) {
+			if (!table.Keys.Contains(key))
+				table.Add(key, value);
+			else
+				Log.Warn($"Config ({config_path}) already contains key: {key}");
+		}
 
-			foreach (var o in sub_objs) {
-				if (insert) scope.AddObject(sub_objs[obj_idx], new ConfigScope(sub_objs[obj_idx]));
-				scope = scope.GetObject(sub_objs[obj_idx]);
-				obj_idx++;
+		public TomlNode Get(string key) {
+			if (table.Keys.Contains(key))
+				return table[key];
+			Log.Warn($"Config ({config_path}) does not contain key: {key}");
+			return null;
+		}
+
+		public void Set(string key, TomlNode value) {
+			if (table.Keys.Contains(key))
+				table[key] = value;
+			else
+				Add(key, value);
+		}
+
+		public void Remove(string key) {
+			if (table.Keys.Contains(key))
+				table.Delete(key);
+			else
+				Log.Warn($"Config ({config_path}) does not contain key: {key}");
+		}
+
+		public void Save(string section = "") {
+			foreach (var node in table.Children) {
+				node.Comment = null;
 			}
 
-			return scope;
-		}
-
-		public ConfigScope GetScope(string path) => GetScope(path, false);
-
-		public ConfigScope this[string scope] => GetScope(scope);
-
-		(ConfigScope scope, string key) ParsePath(string path) {
-			var scope_path = path.Split('.')[0];
-			var key = path.Split('.')[1];
-			return (GetScope(scope_path), key);
-		}
-
-		public bool GetBool(string path)
-		{
-			var (scope, key) = ParsePath(path);
-			return scope.GetBool(key);
-		}
-
-		public int GetInt(string path)
-		{
-			var (scope, key) = ParsePath(path);
-			return scope.GetInt(key);
-		}
-
-		public decimal GetDecimal(string path)
-		{
-			var (scope, key) = ParsePath(path);
-			return scope.GetDecimal(key);
-		}
-
-		public string GetString(string path)
-		{
-			var (scope, key) = ParsePath(path);
-			return scope.GetString(key);
+			using (var writer = new StreamWriter(config_path)) {
+				if (section != string.Empty)
+					table.ToTomlString(writer, section);
+				else
+					table.ToTomlString(writer);
+			}
 		}
 	}
 }

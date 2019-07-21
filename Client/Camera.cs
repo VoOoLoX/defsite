@@ -1,75 +1,41 @@
-using System;
 using OpenTK;
-using OpenTK.Input;
 
 namespace Client {
-	public static class Camera {
-		const float zoom_constant = 1f / 15f;
+	public class Camera : Entity {
+		//Make these configurable!!!
+		float fov = 60;
+		float z_far = 100f;
+		float z_near = 0.1f;
 
-		static Vector2 direction_vector = Vector2.Zero;
-		static float zoom = 1;
+		public Camera(Vector3 position, Vector3 rotation, float fov = 60, float z_near = 0.1f, float z_far = 100f) {
+			Transform = new Transform {
+				Position = position,
+				Rotation = rotation
+			};
 
-		public static void Init(float zoom = 50) {
-			ZoomFactor = 1;
-			UpdateProjectionMatrix();
-			ViewMatrix = Matrix4.LookAt(
-				new Vector3(0,0,1f),
-				new Vector3(0,0,0),
-				new Vector3(0,1,0));
+			AddComponent(Transform);
+			Transform.SetMatrix(
+				Matrix4.LookAt(
+					position,
+					new Vector3(0, 0, 0),
+					new Vector3(0, 1, 0)
+				)
+			);
+			UpdatePerspectiveProjection();
 		}
 
-		public static Matrix4 ViewMatrix { get; private set; }
-		public static Matrix4 ProjectionMatrix { get; private set; }
-		public static float ZoomFactor { get; private set; }
-
-		public static void Move(Vector2 move_vector) {
-			ViewMatrix *= Matrix4.CreateTranslation(move_vector.X, move_vector.Y, 0);
+		public Camera() {
+			ProjectionMatrix = Matrix4.CreateOrthographic(1, 1, -1, 1);
 		}
 
-		public static void UpdateProjectionMatrix() {
-//			ProjectionMatrix = Matrix4.CreateOrthographic(1, 1, 1.0f, -1.0f);
-			ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 3, (float) Window.ClientWidth / Window.ClientHeight, 0.1f, 10f);
-			Zoom(ZoomFactor);
+		public Transform Transform { get; set; }
+		public Matrix4 ProjectionMatrix { get; private set; }
+
+		public void UpdatePerspectiveProjection() {
+			ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(fov), (float) Window.ClientWidth / Window.ClientHeight, z_near, z_far);
 		}
 
-		public static void Zoom(float zoom_factor) {
-			ProjectionMatrix *= Matrix4.CreateScale(zoom_factor, zoom_factor, 0);
-		}
-
-		public static void Update(double delta_time) {
-			direction_vector = Vector2.Zero;
-			if (Input.IsActive(Key.Right))
-				direction_vector.X = 1;
-
-			if (Input.IsActive(Key.Left))
-				direction_vector.X = -1;
-
-			if (Input.IsActive(Key.Up))
-				direction_vector.Y = 1;
-
-			if (Input.IsActive(Key.Down))
-				direction_vector.Y = -1;
-
-			var scroll_value = Input.ScrollWheel;
-
-			if (scroll_value > 0) {
-				ZoomFactor *= 1 + zoom_constant;
-				zoom = 1 + zoom_constant;
-			}
-			else if (scroll_value < 0) {
-				ZoomFactor *= 1 - zoom_constant;
-				zoom = 1 - zoom_constant;
-			}
-
-			if (direction_vector != Vector2.Zero) {
-				direction_vector.NormalizeFast();
-				Move(direction_vector * (float) delta_time);
-			}
-
-			if (zoom != 0)
-				Zoom(zoom);
-
-			zoom = 0;
+		public void Move(Vector3 position) {
 		}
 	}
 }

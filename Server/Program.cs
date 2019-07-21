@@ -1,41 +1,32 @@
-using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Defsite;
 
 namespace Server {
-	class Program {
+	internal class Program {
 		static void Main(string[] args) {
-			var servers = new List<Server>();
-			var settings = new Config("Assets/Settings.cfg");
+			var settings = new Config("Assets/Settings.toml");
 
-			foreach (var obj in settings.GetScope("servers").Objects) {
-				foreach (var p in obj.Properties)
-					Log.Info($"Loaded property: {p}");
-				var server = new Server(obj.GetString("ip"), obj.GetInt("port"), obj.GetString("name"), obj.GetInt("max_players"), obj.GetInt("tps"));
-				servers.Add(server);
-			}
+			var servers = (from server in settings["servers"].Children from prop in server.Children select new Server(prop["ip"], prop["port"], prop["name"], prop["max_players"], prop["tps"])).ToList();
 
 			foreach (var server in servers) {
 				Log.Info($"Server: [{server.Name}] [{server.IP}] [{server.Port}]");
-				new Thread(() => {
-					server.Run();
-				}) { Name = "Server" }.Start();
+				new Thread(() => { server.Run(); }) {Name = "Server"}.Start();
 
 				new Thread(() => {
 					while (server.Running)
 						server.NetworkHandler.Run();
-				}) { Name = "NetworkHandler" }.Start();
+				}) {Name = "NetworkHandler"}.Start();
 
 				new Thread(() => {
 					while (server.Running)
 						server.GameHandler.Run(true);
-				}) { Name = "GameHandler" }.Start();
+				}) {Name = "GameHandler"}.Start();
 
 				new Thread(() => {
 					while (server.Running)
 						server.DatabaseHandler.Run(true);
-				}) { Name = "DatabaseHandler" }.Start();
+				}) {Name = "DatabaseHandler"}.Start();
 			}
 		}
 	}

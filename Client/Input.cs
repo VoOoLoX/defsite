@@ -3,11 +3,11 @@ using OpenTK.Input;
 
 namespace Client {
 	public static class Input {
-		static readonly bool[] active_keys = new bool[(int) Key.LastKey];
-		static readonly bool[] active_buttons = new bool[(int) MouseButton.LastButton];
+		static bool[] active_keys = new bool[(int) Key.LastKey];
+		static bool[] active_buttons = new bool[(int) MouseButton.LastButton];
 		static int scroll_wheel;
 
-		public static Point MousePos { get; set; } = Point.Zero;
+		public static Point MousePos { get; set; } = Point.Empty;
 
 		public static int ScrollWheel {
 			get {

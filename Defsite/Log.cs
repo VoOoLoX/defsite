@@ -1,13 +1,11 @@
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 
 namespace Defsite {
 	public static class Log {
-
-		static short indent_level = 0;
 		const short tab_size = 4;
+		static short indent_level = 0;
 
 		public static void Indent() {
 			indent_level++;
@@ -45,32 +43,5 @@ namespace Defsite {
 			Console.ResetColor();
 			Environment.Exit(1);
 		}
-
-		// public enum NotificationType {
-		// 	Info,
-		// 	Error
-		// }
-
-		// public static void Notify(string title, string text, int duration, NotificationType type) {
-
-		// 	//TODO: Fix this shit
-		// 	string cmd = "";
-		// 	string icon_exe = "";
-		// 	if (Utils.IsWindows)
-		// 		cmd = $@"Add-Type -AssemblyName System.Windows.Forms;$balloon = New-Object System.Windows.Forms.NotifyIcon;$balloon.Icon = [System.Drawing.Icon]::ExtractAssociatedIcon(""{icon_exe}"");$balloon.BalloonTipIcon = [System.Windows.Forms.ToolTipIcon]""{type.ToString()}"";$balloon.BalloonTipText = ""{text}"";$balloon.BalloonTipTitle = ""{title}"";$balloon.Visible = $true;$balloon.ShowBalloonTip({duration});";
-		// 	else
-		// 		cmd = @"notify-send ""Title"" ""Test""";
-
-		// 	// var psh = PowerShell.Ceate()
-
-		// 	var ps_info = new ProcessStartInfo() {
-		// 		FileName = "notify-send",
-		// 		Arguments = $@"""{title}"" ""{text}"" -t {duration}"
-		// 	};
-		// 	Process ps = new Process() {
-		// 		StartInfo = ps_info
-		// 	};
-		// 	ps.Start();
-		// }
 	}
 }

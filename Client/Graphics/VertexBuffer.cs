@@ -2,13 +2,12 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace Client {
-	
-	public interface IVertexBuffer{}
-	
-	public class VertexBuffer<T> : IVertexBuffer{
+	public interface IVertexBuffer {
+	}
+
+	public class VertexBuffer<T> : IVertexBuffer {
 		public VertexBuffer(T[] data) {
-			GL.CreateBuffers(1, out int buffer);
-			ID = buffer;
+			ID = GL.GenBuffer();
 			Enable();
 			SetData(data);
 			Disable();
@@ -38,9 +37,10 @@ namespace Client {
 					GL.BufferData(BufferTarget.ArrayBuffer, data.Length * Vector4.SizeInBytes, v4, BufferUsageHint.StaticDraw);
 					break;
 			}
+
 			Disable();
 		}
-		
+
 		public int Dimensions() {
 			switch (this) {
 				case VertexBuffer<Vector2> _:

@@ -5,12 +5,14 @@ in vec2 position;
 
 in vec2 uv_coords;
 
-uniform mat4 mvp;
+uniform mat4 view_projection;
+
+uniform mat4 model;
 
 out vec2 UV;
 
 void main() {
-	gl_Position = mvp * vec4(position, 0.0, 1.0);
+	gl_Position = view_projection * model * vec4(position, 0.0, 1.0);
 
 	UV = uv_coords;
 }

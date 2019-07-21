@@ -20,6 +20,8 @@ namespace Client {
 
 		public int ID { get; }
 
+		public int this[string attr] => GetAttributeLocation(attr);
+
 		public void Parse(string source) {
 			if (!source.Contains('$')) {
 				Log.Error("Please specify type of the shader by adding line '${vertex | fragment}' on top of shader source.");
@@ -77,8 +79,6 @@ namespace Client {
 		public int GetAttributeLocation(string attr) {
 			return GL.GetAttribLocation(ID, attr);
 		}
-		
-		public int this[string attr] => GetAttributeLocation(attr);
 
 		public int Get(string unif) {
 			return GL.GetUniformLocation(ID, unif);

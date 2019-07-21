@@ -1,7 +1,6 @@
-using Defsite;
 using System;
 using System.Linq;
-using System.Text;
+using Defsite;
 
 namespace Server {
 	public class MessageManager {
@@ -11,7 +10,7 @@ namespace Server {
 
 			var message_type = MessageType.Unknown;
 			if (Enum.IsDefined(typeof(MessageType), data[0]))
-				message_type = (MessageType)data[0];
+				message_type = (MessageType) data[0];
 
 			var message_data = data.Skip(1).ToArray();
 
@@ -36,10 +35,16 @@ namespace Server {
 					msg = new MessageBroadcast(data);
 					// Log.Info((msg as MessageBroadcast).Message);
 					var text = new MessageText((msg as MessageBroadcast).Message);
-					foreach (var c in Server.GetClients()) {
-						Send(c, text);
-					}
+					foreach (var c in Server.GetClients()) Send(c, text);
 					break;
+				case MessageType.Unknown:
+					break;
+				case MessageType.Init:
+					break;
+				case MessageType.Text:
+					break;
+				default:
+					throw new ArgumentOutOfRangeException(nameof(type), type, null);
 			}
 		}
 	}

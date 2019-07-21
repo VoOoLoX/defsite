@@ -3,8 +3,7 @@ using OpenTK.Graphics.OpenGL;
 namespace Client {
 	public class IndexBuffer {
 		public IndexBuffer(uint[] data) {
-			GL.CreateBuffers(1, out int buffer);
-			ID = buffer;
+			ID = GL.GenBuffer();
 			Enable();
 			SetData(data);
 			Disable();

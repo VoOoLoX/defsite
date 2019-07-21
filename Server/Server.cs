@@ -1,11 +1,8 @@
-using Defsite;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using Defsite;
 
 namespace Server {
 	public class Server {
@@ -15,18 +12,15 @@ namespace Server {
 		static object add_clients_lock = new object();
 
 		static List<Client> clients = new List<Client>();
-		IPAddress ip = default(IPAddress);
-		int port = 0;
-		string name = string.Empty;
-
-		public bool Running = true;
-		public IPAddress IP => ip;
-		public string Name => name;
-		public int Port => port;
 
 		public DatabaseHandler DatabaseHandler;
 		public GameHandler GameHandler;
+		IPAddress ip = default(IPAddress);
+		string name = string.Empty;
 		public NetworkHandler NetworkHandler;
+		int port = 0;
+
+		public bool Running = true;
 
 		public Server(string ip, int port, string name, int max_players, int tps) {
 			this.ip = IPAddress.Parse(ip);
@@ -36,6 +30,10 @@ namespace Server {
 			GameHandler = new GameHandler(max_players, tps);
 			NetworkHandler = new NetworkHandler();
 		}
+
+		public IPAddress IP => ip;
+		public string Name => name;
+		public int Port => port;
 
 		public static List<Client> GetClients() {
 			lock (get_clients_lock) {
@@ -59,16 +57,15 @@ namespace Server {
 			var server = new TcpListener(ip, port);
 			server.Start();
 
-			while ((!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape))) {
+			while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape))
 				if (server.Pending()) {
 					var client_socket = server.AcceptTcpClient();
-					lock (add_clients_lock)
-					{
+					lock (add_clients_lock) {
 						clients.Add(new Client(client_socket));
 					}
+
 					Log.Info($"Added client: {client_socket.Client.RemoteEndPoint}");
 				}
-			}
 
 			Log.Info($"Stopping server: {name}");
 			Running = false;

@@ -13,36 +13,36 @@ namespace Client {
 	}
 
 	public static class AssetManager {
-		static readonly Config settings = new Config("Assets/Settings.cfg");
-		static readonly string AssetsRoot = settings["client"].GetString("assets_root") ?? "Assets";
-		static readonly string TexturesPath = settings["client"].GetString("assets_textures") ?? "Textures";
-		static readonly string ShadersPath = settings["client"].GetString("assets_shaders") ?? "Shadres";
-		static readonly string FontsPath = settings["client"].GetString("assets_fonts") ?? "Fonts";
-		static readonly string SoundsPath = settings["client"].GetString("assets_sounds") ?? "Sounds";
+		static Config settings = new Config("Assets/Settings.toml");
+		static string assets_root = settings["assets_root"] ?? "Assets";
+		static string textures_path = settings["assets_textures"] ?? "Textures";
+		static string shaders_path = settings["assets_shaders"] ?? "Shaders";
+		static string fonts_path = settings["assets_fonts"] ?? "Fonts";
+		static string sounds_path = settings["assets_sounds"] ?? "Sounds";
 
-		static readonly Dictionary<string, object> Assets = new Dictionary<string, object>();
+		static Dictionary<string, object> assets = new Dictionary<string, object>();
 
 		public static void Load(AssetType type, string name, string asset_name) {
-			if (Assets.ContainsKey(name)) return;
+			if (assets.ContainsKey(name)) return;
 			switch (type) {
 				case AssetType.Texture:
-					Assets.Add(name, new Texture(Path.Join(AssetsRoot, TexturesPath, asset_name)));
+					assets.Add(name, new Texture(Path.Join(assets_root, textures_path, asset_name)));
 					break;
 				case AssetType.Shader:
-					Assets.Add(name, new Shader(Path.Join(AssetsRoot, ShadersPath, asset_name)));
+					assets.Add(name, new Shader(Path.Join(assets_root, shaders_path, asset_name)));
 					break;
 				case AssetType.Font:
-					Assets.Add(name, new Texture(Path.Join(AssetsRoot, FontsPath, asset_name)));
+					assets.Add(name, new Font(Path.Join(assets_root, fonts_path, asset_name)));
 					break;
 				case AssetType.Sound:
-					Assets.Add(name, new WAVFile(Path.Join(AssetsRoot, SoundsPath, asset_name)));
+					assets.Add(name, new Sound(Path.Join(assets_root, sounds_path, asset_name)));
 					break;
 			}
 		}
 
 		public static T Get<T>(string name) {
-			if (Assets.ContainsKey(name))
-				return (T) Convert.ChangeType(Assets[name], typeof(T));
+			if (assets.ContainsKey(name))
+				return (T) Convert.ChangeType(assets[name], typeof(T));
 			return default;
 		}
 	}

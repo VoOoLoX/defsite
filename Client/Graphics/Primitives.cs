@@ -18,17 +18,16 @@ namespace Client {
 			};
 
 			public static uint[] IndexBufferData = {
-				0, 1, 2,
-				2, 3, 0
+				0, 1, 2, 3
 			};
 		}
 
 		public static class QuadCentered {
 			public static Vector2[] PositionData = {
-				new Vector2(-.5f, -.5f),
-				new Vector2(.5f, -.5f),
-				new Vector2(.5f, .5f),
-				new Vector2(-.5f, .5f)
+				new Vector2(-1f, -1f),
+				new Vector2(1f, -1f),
+				new Vector2(1f, 1f),
+				new Vector2(-1f, 1f)
 			};
 
 			public static Vector2[] UVData = {
@@ -39,41 +38,64 @@ namespace Client {
 			};
 
 			public static uint[] IndexBufferData = {
-				0, 1, 2,
-				2, 3, 0
+				0, 1, 2, 3
 			};
 		}
 
 		public static class CubeCentered {
 			public static Vector3[] PositionData = {
-				new Vector3(1, 1, 1),
-				new Vector3(1, 1, 1),
-				new Vector3(-1, 1, 1),
-				new Vector3(0, 1, 1),
-				new Vector3(-1, -1, 1),
-				new Vector3(0, 0, 1),
-				new Vector3(1, -1, 1),
-				new Vector3(1, 0, 1),
-				new Vector3(1, -1, -1),
-				new Vector3(1, 0, 0),
+				//Back
 				new Vector3(-1, -1, -1),
-				new Vector3(0, 0, 0),
-				new Vector3(-1, 1, -1),
-				new Vector3(0, 1, 0),
+				new Vector3(1, -1, -1),
 				new Vector3(1, 1, -1),
-				new Vector3(1, 1, 0)
+				new Vector3(-1, 1, -1),
+
+				//Front
+				new Vector3(-1, -1, 1),
+				new Vector3(1, -1, 1),
+				new Vector3(1, 1, 1),
+				new Vector3(-1, 1, 1)
 			};
 
 			public static Vector2[] UVData = {
+				new Vector2(0, 0),
+				new Vector2(1, 0),
+				new Vector2(1, 1),
+				new Vector2(0, 1),
+
+				new Vector2(0, 0),
+				new Vector2(1, 0),
+				new Vector2(1, 1),
+				new Vector2(0, 1),
+
+				new Vector2(0, 0),
+				new Vector2(1, 0),
+				new Vector2(1, 1),
+				new Vector2(0, 1),
+
+				new Vector2(0, 0),
+				new Vector2(1, 0),
+				new Vector2(1, 1),
+				new Vector2(0, 1),
+
+				new Vector2(0, 0),
+				new Vector2(1, 0),
+				new Vector2(1, 1),
+				new Vector2(0, 1),
+
+				new Vector2(0, 0),
+				new Vector2(1, 0),
+				new Vector2(1, 1),
+				new Vector2(0, 1),
 			};
 
 			public static uint[] IndexBufferData = {
 				0, 1, 2, 3,
-				7, 4, 5, 6,
-				6, 5, 2, 1,
-				7, 0, 3, 4,
-				7, 6, 1, 0,
-				3, 2, 5, 4
+				4, 5, 1, 0,
+				5, 1, 2, 6,
+				7, 6, 2, 3,
+				4, 0, 3, 7,
+				4, 5, 6, 7
 			};
 		}
 	}
