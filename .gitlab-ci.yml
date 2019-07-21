@@ -1,4 +1,4 @@
-image: microsoft/dotnet/core-nightly/sdk
+image: microsoft/dotnet/core-nightly/sdk:latest
 
 stages:
   - build_all
