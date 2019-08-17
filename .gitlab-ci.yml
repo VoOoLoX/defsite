@@ -1,4 +1,4 @@
-image: microsoft/dotnet:latest
+image: "mcr.microsoft.com/dotnet/core-nightly/sdk:3.0"
 
 stages:
   - build_all
@@ -6,4 +6,4 @@ stages:
 build_all:
   stage: build_all
   script:
-    - "dotnet build Defsite.sln"
+    - "dotnet restore Defsite.sln && dotnet build Defsite.sln"
