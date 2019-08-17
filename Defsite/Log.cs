@@ -21,7 +21,7 @@ namespace Defsite {
 			Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] <{file_info.Name.Split('.')[0]}:{line_number}> {new string(' ', indent_level * tab_size) + text}");
 		}
 
-		public static void Warn(object text, [CallerFilePath] string file = "", [CallerLineNumber] int line_number = 0) {
+		public static void Warning(object text, [CallerFilePath] string file = "", [CallerLineNumber] int line_number = 0) {
 			var file_info = new FileInfo(file);
 			Console.ForegroundColor = ConsoleColor.Yellow;
 			Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] <{file_info.Name.Split('.')[0]}:{line_number}> {new string(' ', indent_level * tab_size) + text}");

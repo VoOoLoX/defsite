@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using Defsite;
 
 namespace Server {
@@ -13,8 +14,7 @@ namespace Server {
 				if (client.Socket != null)
 					return !(client.Socket.Client.Poll(1, SelectMode.SelectRead) && client.Socket.Client.Available == 0);
 				return false;
-			}
-			catch (SocketException) {
+			} catch (SocketException) {
 				return false;
 			}
 		}
@@ -34,7 +34,7 @@ namespace Server {
 			}
 		}
 
-		public static async void Send(Client client, byte[] data) {
+		public static async Task Send(Client client, byte[] data) {
 			if (IsConnected(client)) {
 				var stream = client.Socket.GetStream();
 				if (stream.DataAvailable) await stream.WriteAsync(data, 0, data.Length);
@@ -45,8 +45,7 @@ namespace Server {
 			foreach (var client in Clients.ToArray())
 				if (IsConnected(client)) {
 					Recieve(client);
-				}
-				else {
+				} else {
 					Disconnect(client);
 					Server.RemoveClient(client);
 					Clients.Remove(client);

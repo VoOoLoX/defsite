@@ -5,17 +5,10 @@
     <e p="$USER_HOME$/.Rider2019.1/system/resharper-host/local/Transient/ReSharperHost/v191/SolutionCaches/_Defsite.219853378.00" t="ExcludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeFlat">
       <e p="Client" t="IncludeRecursive">
-        <e p="AssetManager.cs" t="Include" />
         <e p="Assets" t="Include">
+          <e p="Assets.toml" t="Include" />
           <e p="Fonts" t="Include">
-            <e p="ARotorcap.vif" t="Include" />
-            <e p="Minimal.font" t="Include" />
-            <e p="Minimal.vif" t="Include" />
-            <e p="Rotorcap.font" t="Include" />
-            <e p="Rotorcap.vif" t="Include" />
-            <e p="Scientifica.vif" t="Include" />
-            <e p="Tiny.font" t="Include" />
-            <e p="Tiny.vif" t="Include" />
+            <e p="Monogram.vff" t="Include" />
           </e>
           <e p="Settings.toml" t="Include" />
           <e p="Shaders" t="Include">
@@ -24,36 +17,43 @@
             <e p="Sprite.glsl" t="Include" />
           </e>
           <e p="Sounds" t="Include">
-            <e p="Coins.wav" t="Include" />
+            <e p="Fireplace.vsf" t="Include" />
           </e>
           <e p="Textures" t="Include">
             <e p="Ghost.vif" t="Include" />
-            <e p="Pot.vif" t="Include" />
+            <e p="Ground.vif" t="Include" />
           </e>
         </e>
         <e p="Audio" t="Include">
           <e p="SoundBuffer.cs" t="Include" />
+          <e p="SoundListener.cs" t="Include" />
           <e p="SoundSource.cs" t="Include" />
         </e>
-        <e p="Camera.cs" t="Include" />
         <e p="Client.csproj" t="IncludeRecursive" />
         <e p="ECS" t="Include">
+          <e p="Component.cs" t="Include" />
           <e p="Components" t="Include">
             <e p="Mesh.cs" t="Include" />
+            <e p="Sound.cs" t="Include" />
             <e p="Sprite.cs" t="Include" />
             <e p="Transform.cs" t="Include" />
           </e>
           <e p="Entity.cs" t="Include" />
           <e p="EntityType.cs" t="Include" />
-          <e p="IComponent.cs" t="Include" />
           <e p="ISystem.cs" t="Include" />
           <e p="Systems" t="Include">
-            <e p="RenderSystem.cs" t="Include" />
+            <e p="SpriteRenderer.cs" t="Include" />
+            <e p="UIRenderer.cs" t="Include" />
             <e p="UpdateSystem.cs" t="Include" />
           </e>
         </e>
+        <e p="GUI" t="Include">
+          <e p="Text.cs" t="Include" />
+        </e>
         <e p="Graphics" t="Include">
           <e p="IndexBuffer.cs" t="Include" />
+          <e p="OrthographicCamera.cs" t="Include" />
+          <e p="PerspectiveCamera.cs" t="Include" />
           <e p="Primitives.cs" t="Include" />
           <e p="Shader.cs" t="Include" />
           <e p="Texture.cs" t="Include" />
@@ -61,16 +61,20 @@
           <e p="VertexBuffer.cs" t="Include" />
         </e>
         <e p="IO" t="Include">
+          <e p="Assets.cs" t="Include" />
           <e p="FileLoader.cs" t="Include" />
           <e p="FileTypes" t="Include">
-            <e p="Font.cs" t="Include" />
-            <e p="Image.cs" t="Include" />
-            <e p="Sound.cs" t="Include" />
+            <e p="FontFile.cs" t="Include" />
+            <e p="ImageFile.cs" t="Include" />
+            <e p="SoundFile.cs" t="Include" />
           </e>
         </e>
         <e p="Input.cs" t="Include" />
         <e p="Program.cs" t="Include" />
         <e p="Scene.cs" t="Include" />
+        <e p="Scenes" t="Include">
+          <e p="MainScene.cs" t="Include" />
+        </e>
         <e p="TOREMOVE" t="Include">
           <e p="Button.cs" t="Include" />
           <e p="CubeModel.cs" t="Include" />
@@ -80,9 +84,8 @@
           <e p="TextModel.cs" t="Include" />
           <e p="TileModel.cs" t="Include" />
         </e>
-        <e p="Text.cs" t="Include" />
         <e p="Utils" t="Include">
-          <e p="ClientUtils.cs" t="Include" />
+          <e p="Utils.cs" t="Include" />
         </e>
         <e p="Window.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
@@ -95,7 +98,6 @@
       <e p="Defsite" t="IncludeRecursive">
         <e p="Client.cs" t="Include" />
         <e p="Config.cs" t="Include" />
-        <e p="ConfigOld.cs" t="Include" />
         <e p="Defsite.csproj" t="IncludeRecursive" />
         <e p="Log.cs" t="Include" />
         <e p="Tommy.cs" t="Include" />

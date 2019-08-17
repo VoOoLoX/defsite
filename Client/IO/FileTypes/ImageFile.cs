@@ -1,0 +1,140 @@
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Defsite;
+using OpenTK;
+
+namespace Client {
+	public struct Pixel {
+		public Pixel(byte r, byte g, byte b, byte a) {
+			R = r;
+			G = g;
+			B = b;
+			A = a;
+		}
+
+		public Pixel(Color color) {
+			R = color.R;
+			G = color.G;
+			B = color.B;
+			A = color.A;
+		}
+
+		public byte R { get; }
+		public byte G { get; }
+		public byte B { get; }
+		public byte A { get; }
+
+		public override string ToString() => $"{R} {G} {B} {A}";
+	}
+
+	public class ImageFile {
+		public static ImageFile Default = new ImageFile(2, 2, new List<Pixel>() {
+			new Pixel(Color.Magenta), new Pixel(Color.Black), new Pixel(Color.Black), new Pixel(Color.Magenta)
+		});
+
+		public ImageFile(ushort width, ushort height, List<Pixel> pixels, byte comps = 4) {
+			Width = width;
+			Height = height;
+			Pixels = pixels;
+			Components = comps;
+		}
+
+		public ImageFile(string path) => Load(path);
+
+		public ImageFile(Stream stream) => Load(stream);
+
+		public ushort Width { get; private set; }
+		public ushort Height { get; private set; }
+		public byte Components { get; private set; }
+		public byte Compressed { get; private set; }
+		public List<Pixel> Pixels { get; private set; }
+
+		public byte[] Bytes {
+			get {
+				var ret = new List<byte>();
+				foreach (var p in Pixels) {
+					ret.Add(p.R);
+					ret.Add(p.G);
+					ret.Add(p.B);
+					ret.Add(p.A);
+				}
+
+				return ret.ToArray();
+			}
+		}
+
+		void Load(string file_path) {
+			var path = File.Exists(file_path) ? file_path : string.Empty;
+			if (path == string.Empty) Log.Error($"Invalid image file path: {path}");
+
+			Load(File.OpenRead(path));
+		}
+
+		void Load(Stream data_stream) {
+			var reader = new BinaryReader(data_stream);
+
+			var vif = new string(reader.ReadChars(3));
+
+			if (vif.ToUpper() != "VIF") Log.Error("Invalid VIF header");
+
+			var width = reader.ReadUInt16();
+			var height = reader.ReadUInt16();
+			var comps = reader.ReadByte();
+			var compressed = reader.ReadByte();
+
+			if (width > 0 && height > 0 && comps > 0) {
+				Width = width;
+				Height = height;
+				Components = comps;
+				Compressed = compressed;
+				Pixels = new List<Pixel>();
+
+				var data_bytes = reader.ReadBytes((int) reader.BaseStream.Length - (int) reader.BaseStream.Position);
+				var data = compressed > 0 ? data_bytes.Decompress() : data_bytes;
+
+				for (var i = 0; i < data.Length; i += comps) {
+					switch (comps) {
+						case 4:
+							Pixels.Add(new Pixel(data[i], data[i + 1], data[i + 2], data[i + 3]));
+							break;
+						case 3:
+							Pixels.Add(new Pixel(data[i], data[i + 1], data[i + 2], 255));
+							break;
+						case 2:
+							break;
+						case 1:
+							break;
+					}
+				}
+			}
+		}
+
+		public void Save(string path) {
+			if (path != string.Empty) {
+				var writer = new BinaryWriter(new StreamWriter(path).BaseStream);
+				writer.Write("VIF".ToCharArray());
+				writer.Write(Width);
+				writer.Write(Height);
+				writer.Write(Components);
+				writer.Write(Compressed);
+				writer.Write(Compressed > 0 ? Bytes.Compress() : Bytes);
+			} else {
+				Log.Error("Invalid file path");
+			}
+		}
+
+		public void Rotate180() => Pixels.Reverse();
+
+
+		public void FlipHorizontal() {
+			var new_data = new List<Pixel[]>();
+			for (var i = 0; i < Pixels.Count; i += Width)
+				new_data.Add(Pixels.Skip(i).Take(Width).ToArray());
+
+			for (var i = 0; i < new_data.Count; i++)
+				new_data[i] = new_data[i].Reverse().ToArray();
+			Pixels = new_data.SelectMany(x => x).ToList();
+		}
+	}
+}

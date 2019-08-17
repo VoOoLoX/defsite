@@ -1,0 +1,31 @@
+#[[texture]]
+#name = "Ghost"
+#file = "Ghost.vif"
+#
+[[texture]]
+name = "Ground"
+file = "Ground.vif"
+#
+#[[texture]]
+#name = "TestCube"
+#file = "TestTexture.vif"
+    	
+[[font]]
+name = "Monogram"
+file = "Monogram.vff"
+		
+[[shader]]
+name = "SpriteShader"
+file = "Sprite.glsl"
+
+[[shader]]
+name = "MeshShader"
+file = "Mesh.glsl"
+
+[[shader]]
+name = "ColorShader"
+file = "Color.glsl"
+    
+[[sound]]
+name = "Fireplace"
+file = "Fireplace.vsf"

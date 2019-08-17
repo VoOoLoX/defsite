@@ -20,8 +20,7 @@ namespace Defsite {
 				table = TOML.Parse(new StreamReader(path));
 				table.IsInline = false;
 				config_path = file_path;
-			}
-			else
+			} else
 				throw new Exception($"Invalid config file path: {path}");
 		}
 
@@ -29,13 +28,13 @@ namespace Defsite {
 			if (!table.Keys.Contains(key))
 				table.Add(key, value);
 			else
-				Log.Warn($"Config ({config_path}) already contains key: {key}");
+				Log.Warning($"Config ({config_path}) already contains key: {key}");
 		}
 
 		public TomlNode Get(string key) {
 			if (table.Keys.Contains(key))
 				return table[key];
-			Log.Warn($"Config ({config_path}) does not contain key: {key}");
+			Log.Warning($"Config ({config_path}) does not contain key: {key}");
 			return null;
 		}
 
@@ -50,7 +49,7 @@ namespace Defsite {
 			if (table.Keys.Contains(key))
 				table.Delete(key);
 			else
-				Log.Warn($"Config ({config_path}) does not contain key: {key}");
+				Log.Warning($"Config ({config_path}) does not contain key: {key}");
 		}
 
 		public void Save(string section = "") {

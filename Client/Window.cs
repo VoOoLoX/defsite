@@ -1,45 +1,30 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using Defsite;
 using OpenTK;
+using OpenTK.Audio;
+using OpenTK.Audio.OpenAL;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 
 namespace Client {
 	public class Window : GameWindow {
-//		Config settings = new Config("Assets/Settings.cfg");
+		AudioContext AudioContext;
 
-		Camera camera;
+		Scene main_scene;
 
-		Entity cube = new Entity();
-		List<Entity> entities = new List<Entity>();
-
-		Entity player = new Entity();
-		Entity player2 = new Entity();
-		RenderSystem render_system;
-
-		Text t;
-//		 AudioContext AudioContext;
-//
-//		Button button;
-//		Panel panel, panel2;
-//
-//		SoundBuffer sb;
-//
-//		WAVFile sound;
-//		SoundSource ss;
-//
-//		CubeModel test;
-//		TextModel fps, mouse_info;
-//		bool text_glow;
-//		TileModel tile;
-//		Panel rtest;
-
-		public Window(int width, int height, GraphicsMode mode, string title, GameWindowFlags window_flags, DisplayDevice device, int major, int minor, GraphicsContextFlags context_flags)
-			: base(width, height, mode, title, window_flags, device, major, minor, context_flags) {
+		public Window(
+			int width,
+			int height,
+			string title,
+			GraphicsMode mode,
+			GameWindowFlags window_flags,
+			DisplayDevice device,
+			int major, int minor,
+			GraphicsContextFlags context_flags
+		) : base(width, height, mode, title, window_flags, device, major, minor, context_flags) {
 			Context.ErrorChecking = true;
 
 			Log.Info("Info:");
@@ -51,6 +36,9 @@ namespace Client {
 			Log.Info($"64 bit processor: {Environment.Is64BitProcess}");
 			Log.Info($"64 bit OS: {Environment.Is64BitOperatingSystem}");
 			Log.Unindent();
+
+			if (Context == null)
+				Log.Panic("Invalid graphics context");
 
 			Log.Info("OpenGL Info:");
 			Log.Indent();
@@ -67,6 +55,17 @@ namespace Client {
 			Log.Info($"IsPrimary: {device.IsPrimary}");
 			Log.Unindent();
 
+			AudioContext = new AudioContext();
+			if (AudioContext == null)
+				Log.Panic("Invalid audio context");
+
+			Log.Info("OpenAL Info:");
+			Log.Indent();
+			Log.Info(AL.Get(ALGetString.Vendor));
+			Log.Info(AL.Get(ALGetString.Renderer));
+			Log.Info(AL.Get(ALGetString.Version));
+			Log.Unindent();
+
 			if (double.Parse(GL.GetString(StringName.ShadingLanguageVersion)) < 1.30) {
 				Close();
 				Log.Error("Minimum required GLSL version: 1.30");
@@ -77,75 +76,33 @@ namespace Client {
 				Log.Panic("Exiting");
 			}
 
-			if (Context == null)
-				Log.Panic("Invalid context");
-
 			VSync = VSyncMode.Adaptive;
 			CursorVisible = true;
 
-			ClientWidth = Width;
-			ClientHeight = Height;
-			ClientCenter = new Point(ClientWidth / 2, ClientHeight / 2);
+			UpdateClientRect();
 
-//			AudioContext = new AudioContext();
+			var window_info_handle = WindowInfo.Handle;
+
+//			Debug.Assert(false, "Test");
+			SoundListener.Init();
 		}
 
-//		public Window(DisplayDevice device, string title, int width, int height, GameWindowFlags window_flags)
+		public new static int X { get; private set; }
+		public new static int Y { get; private set; }
+		public new static int Width { get; private set; }
+		public new static int Height { get; private set; }
 
-		public static int ClientWidth { get; private set; }
-		public static int ClientHeight { get; private set; }
-		public static Point ClientCenter { get; private set; }
+		void UpdateClientRect() {
+			Width = (this as NativeWindow).Width;
+			Height = (this as NativeWindow).Height;
+			X = (this as NativeWindow).X;
+			Y = (this as NativeWindow).Y;
+		}
 
 		protected override void OnLoad(EventArgs e) {
-			AssetManager.Load(AssetType.Texture, "Ghost", "Ghost.vif");
+			Assets.LoadAssets("Assets.toml");
 
-			//Add credits for both fonts & fix scaling of scientifica
-//			AssetManager.Load(AssetType.Font, "ScientificaFont", "Scientifica.vif");
-
-//			AssetManager.Load(AssetType.Font, "TinyFont", "Tiny.font");
-//			AssetManager.Load(AssetType.Font, "RotorcapFont", "Rotorcap.font");
-			AssetManager.Load(AssetType.Font, "MinimalFont", "Minimal.font");
-
-			AssetManager.Load(AssetType.Shader, "SpriteShader", "Sprite.glsl");
-			AssetManager.Load(AssetType.Shader, "MeshShader", "Mesh.glsl");
-//			AssetManager.Load(AssetType.Shader, "TextureShader", "Texture.glsl");
-//			AssetManager.Load(AssetType.Shader, "TextShader", "Text.glsl");
-			AssetManager.Load(AssetType.Shader, "ColorShader", "Color.glsl");
-
-			AssetManager.Load(AssetType.Sound, "Chching", "Coins.wav");
-
-//			var asd = new Texture("Assets/Fonts/Rotorcap.vif");
-
-//			CameraOld.Init();
-			camera = new Camera(new Vector3(0, 0, 5), Vector3.Zero);
-			render_system = new RenderSystem(camera, Color.White);
-
-//			CameraOld.UpdateProjectionMatrix();
-
-//			tile = new TileModel();
-//
-//			test = new CubeModel(Color.Red);
-//
-//			var f = new FileLoader();
-//
-//			
-//			AL.Listener(ALListener3f.Position, 0, 0, 0);
-//			AL.Listener(ALListener3f.Velocity, 0, 0, 0);
-//
-//			sound = AssetManager.Get<WAVFile>("Chching");
-//			sb = new SoundBuffer(sound.Format, sound.Data, sound.SampleRate);
-//			ss = new SoundSource();
-//
-//			text = new TextModel(settings["client"].GetString("player_name"), scale: .16f, color: Color.Black);
-//
-//			fps = new TextModel("", scale: .2f, color: Color.Black);
-//			mouse_info = new TextModel("", scale: .2f, color: Color.Black);
-//
-//			panel = new Panel(new Rectangle(100, 100, 200, 200), new Color(10,10,10,150));
-//			panel2 = new Panel(new Rectangle(100, 100, 200, 20), new Color(0,0,0,150));
-//			button = new Button("X", new Rectangle(panel.X + panel.Width - 40, panel.Y, 40, 19), Color.Goldenrod, Color.Wheat);
-//			
-//			rtest = new Panel(new Rectangle(100, 100, 100, 100), Color.Aqua);
+			main_scene = new MainScene();
 
 //			button.OnClick += b => {
 //				b.Color = Color.Tomato;
@@ -174,74 +131,25 @@ namespace Client {
 //				button.X = panel.X + panel.Width - button.Width;
 //				button.Y = panel.Y;
 //			};
-
-
-//			Log.Info(testvar);
-
-			player.AddComponent(new Transform());
-			player.AddComponent(new Sprite(AssetManager.Get<Texture>("Ghost")));
-			player.GetComponent<Sprite>().GlowColor = Color.RoyalBlue;
-//			
-//			player2.AddComponent(new Transform());
-//			player2.AddComponent(new Sprite(AssetManager.Get<Texture>("Ghost")));
-//			player2.GetComponent<Sprite>().GlowColor = Color.Red;
-//			player2.GetComponent<Transform>().Position = new Vector3(1,0,0);
-//			
-//			player2.GetComponent<Transform>().Scale = new Vector3(-0.5f);
-
-//			cube.AddComponent(new Transform());
-//			cube.AddComponent(new Mesh(
-//				AssetManager.Get<Texture>("Ghost"),
-//				Primitives.CubeCentered.PositionData,
-//				Primitives.CubeCentered.UVData,
-//				Primitives.CubeCentered.IndexBufferData)
-//			);
-//			cube.GetComponent<Mesh>().Color = Color.Red;
-
-			entities.Add(player);
-//			entities.Add(player2);
-
-//			entities.Add(cube);
-
-			t = new Text("FPS: 60");
-			t.GetComponent<Sprite>().Color = Color.Red;
-
-			entities.Add(t);
 		}
 
-		protected override void OnKeyDown(KeyboardKeyEventArgs e) {
-			Input.Set(e.Key, true);
-		}
+		protected override void OnKeyDown(KeyboardKeyEventArgs e) => Input.Set(e.Key, true);
 
-		protected override void OnKeyUp(KeyboardKeyEventArgs e) {
-			Input.Set(e.Key, false);
-		}
+		protected override void OnKeyUp(KeyboardKeyEventArgs e) => Input.Set(e.Key, false);
 
-		protected override void OnMouseMove(MouseMoveEventArgs e) {
-			Input.Set(new Point(e.X, e.Y));
-		}
+		protected override void OnMouseMove(MouseMoveEventArgs e) => Input.Set(new Point(e.X, e.Y));
 
-		protected override void OnMouseWheel(MouseWheelEventArgs e) {
-			Input.Set(e.Delta);
-		}
+		protected override void OnMouseWheel(MouseWheelEventArgs e) => Input.Set(e.Delta);
 
-		protected override void OnMouseDown(MouseButtonEventArgs e) {
-			Input.Set(e.Button, true);
-		}
+		protected override void OnMouseDown(MouseButtonEventArgs e) => Input.Set(e.Button, true);
 
-		protected override void OnMouseUp(MouseButtonEventArgs e) {
-			Input.Set(e.Button, false);
-		}
+		protected override void OnMouseUp(MouseButtonEventArgs e) => Input.Set(e.Button, false);
 
-		protected override void OnClosing(CancelEventArgs e) {
-			DisplayDevice.Default.RestoreResolution();
-		}
+		protected override void OnClosing(CancelEventArgs e) => DisplayDevice.Default.RestoreResolution();
 
 		protected override void OnResize(EventArgs e) {
-			ClientWidth = Width;
-			ClientHeight = Height;
-			ClientCenter = new Point(ClientWidth / 2, ClientHeight / 2);
-			GL.Viewport(0, 0, ClientWidth, ClientHeight);
+			UpdateClientRect();
+			GL.Viewport(0, 0, Width, Height);
 			SwapBuffers();
 		}
 
@@ -252,95 +160,51 @@ namespace Client {
 			if (Input.IsActive(Key.Escape))
 				Close();
 
-//			CameraOld.Update(e.Time);
-//			tile.Update(e.Time);
-//			test.Update(e.Time);
-//			player.GetComponent<Transform>().GetMatrix *= Matrix4.CreateRotationY((float)e.Time);
-//			player2.GetComponent<Transform>().GetMatrix *= Matrix4.CreateRotationY(-(float)e.Time);
-			Update(e.Time);
+			Update((float) e.Time);
 		}
 
-		void Update(double delta_time) {
-//			text.ScaleText(.2f);
-//			text.MoveText(ClientWidth - text.Width, 0);
+		protected override void OnFocusedChanged(EventArgs e) {
+			base.OnFocusedChanged(e);
+			if (Focused)
+				WindowState = WindowState.Normal;
+		}
+
+		void Update(float delta_time) {
+//			if (Input.IsActive(MouseButton.Left) && !down) {
+//				down = true;
+//				mouse_old = Input.MousePos;
+//			}
 //
-//			rtest.X = rtest.X;
-//			rtest.Y = rtest.Y;
+//			if (down) {
+//				var dx = Input.MousePos.X - mouse_old.X;
+//				var dy = Input.MousePos.Y - mouse_old.Y;
+//				
+//				cube.GetComponent<Transform>().RotateBy(dy * delta_time,dx * delta_time,0);
+//			}
 //
-//			panel.X = panel.X;
-//			panel.Y = panel.Y;
+//			if (!Input.IsActive(MouseButton.Left)) down = false;
 //
-//			panel2.X = panel2.X;
-//			panel2.Y = panel2.Y;
-//			button.X = panel.X + panel.Width - button.Width;
-//			button.Y = panel.Y;
-//
-//			mouse_info.Text = $"{Input.MousePos.X}:{Input.MousePos.Y}:{Input.IsActive(MouseButton.Left)}:{Input.IsActive(MouseButton.Right)}";
-//			mouse_info.MoveText(0, fps.Height);
-//
-//			button.Update();
-//			panel.Update();
-//			panel2.Update();
+//			light_cube.GetComponent<Transform>().Matrix *= Matrix4.CreateRotationY((MathF.PI / 4.0f) * delta_time);
+//			cube.GetComponent<Mesh>().Shader.Set("light_position", light_cube.GetComponent<Transform>().Position);
 
-//			text.Text = settings["client"].GetString("player_name");
-
-
-			camera.UpdatePerspectiveProjection();
-
-			var direction_vector = Vector3.Zero;
-			if (Input.IsActive(Key.Right))
-				direction_vector.X = 1;
-
-			if (Input.IsActive(Key.Left))
-				direction_vector.X = -1;
-
-			if (Input.IsActive(Key.Up))
-				direction_vector.Y = 1;
-
-			if (Input.IsActive(Key.Down))
-				direction_vector.Y = -1;
-
-			if (Input.IsActive(Key.E))
-				direction_vector.Z = 1;
-
-			if (Input.IsActive(Key.Q))
-				direction_vector.Z = -1;
-
-			direction_vector.X = Joystick.GetState(0).IsConnected ? -Joystick.GetState(0).GetAxis(JoystickAxis.Axis0) : direction_vector.X;
-			direction_vector.Y = Joystick.GetState(0).IsConnected ? Joystick.GetState(0).GetAxis(JoystickAxis.Axis1) : direction_vector.Y;
-
-			if (direction_vector != Vector3.Zero) {
-				direction_vector.NormalizeFast();
-				camera.Transform.MoveBy(direction_vector * 10 * (float) delta_time);
-			}
+			main_scene.Update(delta_time);
 		}
 
 		protected override void OnRenderFrame(FrameEventArgs e) {
 			base.OnRenderFrame(e);
 			if (WindowState == WindowState.Minimized) return;
-//			fps.Text = $"{1 / e.Time:00}";
-			render_system.Clear();
 
-//			rtest.Draw(Camera);
-//			Renderer.Draw(tile);
-//			Renderer.Draw(test);
-//			Renderer.Draw(text, true);
-//			Renderer.Draw(fps, true);
-//			Renderer.Draw(mouse_info, true);
-//			panel.Draw();
-//			panel2.Draw();
-//			button.Draw();
-			render_system.Render(entities);
+			main_scene.Render((float) e.Time);
 
 			SwapBuffers();
 		}
 
 		protected override void OnUnload(EventArgs e) {
-//			AudioContext.Suspend();
+			AudioContext.Suspend();
 		}
 
 		protected override void OnClosed(EventArgs e) {
-//			AudioContext.Dispose();
+			AudioContext.Dispose();
 		}
 	}
 }

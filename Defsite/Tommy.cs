@@ -89,27 +89,21 @@ namespace Defsite {
 
 		public virtual bool HasItemAt(int index) => false;
 
-		public virtual void Add(string key, TomlNode node) {
-		}
+		public virtual void Add(string key, TomlNode node) { }
 
-		public virtual void Add(TomlNode node) {
-		}
+		public virtual void Add(TomlNode node) { }
 
-		public virtual void Delete(TomlNode node) {
-		}
+		public virtual void Delete(TomlNode node) { }
 
-		public virtual void Delete(string key) {
-		}
+		public virtual void Delete(string key) { }
 
-		public virtual void Delete(int index) {
-		}
+		public virtual void Delete(int index) { }
 
 		public virtual void AddRange(IEnumerable<TomlNode> nodes) {
 			foreach (var tomlNode in nodes) Add(tomlNode);
 		}
 
-		public virtual void ToTomlString(TextWriter tw, string name = null) {
-		}
+		public virtual void ToTomlString(TextWriter tw, string name = null) { }
 
 		#region Native type to TOML cast
 
@@ -475,8 +469,7 @@ namespace Defsite {
 				tw.Write(name);
 				tw.Write(TomlSyntax.ARRAY_END_SYMBOL);
 				tw.WriteLine();
-			}
-			else if (Comment != null) // Add some spacing between the first node and the comment
+			} else if (Comment != null) // Add some spacing between the first node and the comment
 			{
 				tw.WriteLine();
 			}
@@ -576,8 +569,7 @@ namespace Defsite {
 				if (key == null) return default(T);
 
 				parent[key] = newNode;
-			}
-			else if (parent.IsArray) {
+			} else if (parent.IsArray) {
 				var index = 0;
 				foreach (var child in parent.Children) {
 					if (child == this) break;
@@ -587,8 +579,7 @@ namespace Defsite {
 				if (index == parent.ChildrenCount) return default(T);
 
 				parent[index] = newNode;
-			}
-			else {
+			} else {
 				return default(T);
 			}
 
@@ -678,8 +669,7 @@ namespace Defsite {
 
 					if (TomlSyntax.IsBareKey(c) || TomlSyntax.IsQuoted(c)) {
 						currentState = ParseState.KeyValuePair;
-					}
-					else {
+					} else {
 						AddError($"Unexpected character \"{c}\"");
 						continue;
 					}
@@ -965,8 +955,7 @@ namespace Defsite {
 					if (skipWhitespace) {
 						prevWasSpace = true;
 						goto consume_character;
-					}
-					else {
+					} else {
 						break;
 					}
 
@@ -1439,8 +1428,6 @@ namespace Defsite {
 
 				first = false;
 
-				//TODO: Reuse ProcessQuotedValueCharacter
-
 				// Skip the current character if it is going to be escaped later
 				if (escaped) {
 					sb.Append(c);
@@ -1505,8 +1492,7 @@ namespace Defsite {
 					if (latestNode.TryGetNode(subkey, out var currentNode)) {
 						if (currentNode.HasValue)
 							return AddError($"The key {".".Join(path)} already has a value assigned to it!");
-					}
-					else {
+					} else {
 						currentNode = new TomlTable();
 						latestNode[subkey] = currentNode;
 					}
@@ -1571,8 +1557,7 @@ namespace Defsite {
 							return null;
 						}
 					}
-				}
-				else {
+				} else {
 					if (index == path.Count - 1 && arrayTable) {
 						var table = new TomlTable();
 						var arr = new TomlArray {
@@ -1615,8 +1600,7 @@ namespace Defsite {
 	#region Exception Types
 
 	public class TomlFormatException : Exception {
-		public TomlFormatException(string message) : base(message) {
-		}
+		public TomlFormatException(string message) : base(message) { }
 	}
 
 	public class TomlParseException : Exception {
@@ -1886,8 +1870,7 @@ namespace Defsite {
 								stringBuilder.Append("\\U").Append(char.ConvertToUtf32(txt, i++).ToString("X8"));
 							else
 								stringBuilder.Append("\\u").Append(((ushort) c).ToString("X4"));
-						}
-						else {
+						} else {
 							stringBuilder.Append(c);
 						}
 

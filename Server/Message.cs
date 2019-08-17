@@ -8,9 +8,11 @@ namespace Server {
 	public abstract class Message {
 		int reader_index;
 		public abstract MessageType Type { get; }
-		public virtual List<byte> Data => new List<byte> {(byte) Type};
+		public List<byte> Data { get; } = new List<byte>();
 
-		protected void ResetIndex() {
+		protected void ResetIndex(bool writing = false) {
+			if (!writing)
+				Data.Add((byte) Type);
 			reader_index = 0;
 		}
 
@@ -18,38 +20,38 @@ namespace Server {
 			switch (data) {
 				case bool bool_value:
 					var b_value = BitConverter.GetBytes(bool_value);
-					Data.Concat(b_value.ToList());
+					Data.AddRange(b_value);
 					break;
 				case char char_value:
 					var c_value = BitConverter.GetBytes(char_value);
-					Data.Concat(c_value.ToList());
+					Data.AddRange(c_value);
 					break;
 
 				case int int_value:
 					var i_value = BitConverter.GetBytes(int_value);
-					Data.Concat(i_value.ToList());
+					Data.AddRange(i_value);
 					break;
 				case short short_value:
 					var sh_value = BitConverter.GetBytes(short_value);
-					Data.Concat(sh_value.ToList());
+					Data.AddRange(sh_value);
 					break;
 				case long long_value:
 					var ln_value = BitConverter.GetBytes(long_value);
-					Data.Concat(ln_value.ToList());
+					Data.AddRange(ln_value);
 					break;
 
 				case float float_value:
 					var f_value = BitConverter.GetBytes(float_value);
-					Data.Concat(f_value.ToList());
+					Data.AddRange(f_value);
 					break;
 				case double double_value:
 					var d_value = BitConverter.GetBytes(double_value);
-					Data.Concat(d_value.ToList());
+					Data.AddRange(d_value);
 					break;
 
 				case string string_value:
-					var s_value = Encoding.Unicode.GetBytes(string_value);
-					Data.Concat(s_value.ToList());
+					var s_value = Encoding.ASCII.GetBytes(string_value);
+					Data.AddRange(s_value);
 					break;
 			}
 		}
@@ -96,15 +98,15 @@ namespace Server {
 				var s_value = r.ReadString();
 				//String length + string + null char
 				//echo -e 'B\x07VoOoLoX\0\x06CooLpW\0' | nc localhost 7331
-				reader_index += s_value.Length + 2;
+				reader_index += s_value.Length;
 				return (T) Convert.ChangeType(s_value, typeof(T));
 			}
 
-			throw new Exception($"Cannon't interpret given bytes as a type: {typeof(T).Name}");
+			throw new Exception($"Can't interpret given bytes as a type: {typeof(T).Name}");
 		}
 	}
 
-	//Messages recieved from client
+	//Messages received from client
 	public class MessageUnknown : Message {
 		public override MessageType Type => MessageType.Unknown;
 	}
@@ -133,9 +135,10 @@ namespace Server {
 		public string Message { get; private set; }
 	}
 
+	//Messages sent to client
 	public class MessageText : Message {
 		public MessageText(string text) {
-			ResetIndex();
+			ResetIndex(true);
 			WriteBytes(text);
 		}
 

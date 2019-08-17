@@ -12,17 +12,17 @@ namespace Client {
 			Enable();
 			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) TextureMinFilter.Nearest);
 			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Nearest);
-			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Image.Default.Width, Image.Default.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, Image.Default.Bytes);
+			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, ImageFile.Default.Width, ImageFile.Default.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, ImageFile.Default.Bytes);
 			Disable();
 		}
 
 		public Texture(string path) {
 			ID = GL.GenTexture();
 
-			var img = Image.Default;
+			var img = ImageFile.Default;
 
 			if (File.Exists(path))
-				img = new Image(path);
+				img = new ImageFile(path);
 
 			img.Rotate180();
 			img.FlipHorizontal();
@@ -34,6 +34,22 @@ namespace Client {
 			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) TextureMinFilter.Nearest);
 			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Nearest);
 			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, img.Width, img.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, img.Bytes);
+			Disable();
+		}
+
+		public Texture(ImageFile image) {
+			ID = GL.GenTexture();
+
+//			image.Rotate180();
+//			image.FlipHorizontal();
+
+			width = image.Width;
+			height = image.Height;
+
+			Enable();
+			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) TextureMinFilter.Nearest);
+			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Nearest);
+			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, image.Width, image.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, image.Bytes);
 			Disable();
 		}
 

@@ -3,7 +3,7 @@ using System.Threading;
 using Defsite;
 
 namespace Server {
-	internal class Program {
+	internal static class Program {
 		static void Main(string[] args) {
 			var settings = new Config("Assets/Settings.toml");
 

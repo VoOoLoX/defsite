@@ -1,19 +1,44 @@
+using OpenTK;
 using OpenTK.Audio.OpenAL;
 
 namespace Client {
 	public class SoundSource {
-		public SoundSource() {
+		public SoundSource(string path) : this(path, Vector3.Zero) { }
+
+		public SoundSource(string path, Vector3 position) {
+			var buffer = new SoundBuffer(path);
 			ID = AL.GenSource();
+			AL.Source(ID, ALSourcei.Buffer, buffer.ID);
+
+			AL.DistanceModel(ALDistanceModel.LinearDistance);
 			AL.Source(ID, ALSourcef.Gain, 1.0f);
 			AL.Source(ID, ALSourcef.Pitch, 1.0f);
-			AL.Source(ID, ALSource3f.Position, 0, 0, 0);
+			AL.Source(ID, ALSource3f.Position, position.X, position.Y, position.Z);
+			AL.Source(ID, ALSourcef.RolloffFactor, 1);
+			AL.Source(ID, ALSourcef.ReferenceDistance, 1f);
+			AL.Source(ID, ALSourcef.MaxDistance, 10);
 		}
 
 		public int ID { get; }
 
-		public void Play(SoundBuffer buffer) {
-			AL.Source(ID, ALSourcei.Buffer, buffer.ID);
+		public Vector3 Position {
+			get {
+				AL.GetSource(ID, ALSource3f.Position, out var vec);
+				return vec;
+			}
+			set => AL.Source(ID, ALSource3f.Position, value.X, value.Y, value.Z);
+		}
+
+		public void Play() {
 			AL.SourcePlay(ID);
+		}
+
+		public void Pause() {
+			AL.SourcePause(ID);
+		}
+
+		public void Rewind() {
+			AL.SourceRewind(ID);
 		}
 
 		public void Stop() {

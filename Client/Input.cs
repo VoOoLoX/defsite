@@ -7,14 +7,13 @@ namespace Client {
 		static bool[] active_buttons = new bool[(int) MouseButton.LastButton];
 		static int scroll_wheel;
 
-		public static Point MousePos { get; set; } = Point.Empty;
+		public static Point MousePos { get; private set; }
 
 		public static int ScrollWheel {
 			get {
 				try {
 					return scroll_wheel;
-				}
-				finally {
+				} finally {
 					scroll_wheel = 0;
 				}
 			}

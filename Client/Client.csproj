@@ -5,7 +5,6 @@
 		<RuntimeIdentifiers>linux-x64;win-x64;win-x86;</RuntimeIdentifiers>
 		<AssemblyVersion>$([System.DateTime]::Now.ToString(`y\.d\.H\.m`))</AssemblyVersion>
 		<FileVersion>$([System.DateTime]::Now.ToString(`y\.d\.H\.m`))</FileVersion>
-		<LangVersion>latest</LangVersion>
 		<IsPackable>false</IsPackable>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	</PropertyGroup>
