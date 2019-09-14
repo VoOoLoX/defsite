@@ -1,75 +1,50 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using Defsite;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace Client {
 	public class Shader {
-		Dictionary<string, int> AttributeLocationCache = new Dictionary<string, int>();
-		Dictionary<string, int> UniformLocationCache = new Dictionary<string, int>();
+		Dictionary<string, int> attribute_location_cache = new Dictionary<string, int>();
+		Dictionary<string, int> uniform_location_cache = new Dictionary<string, int>();
 
-		public Shader(FileInfo file) :
-			this(File.Exists(file.FullName) ? file.FullName : "") { }
+		ShaderFile shader_file;
+		
+		List<int> shaders = new List<int>();
 
 		public Shader(string file_path) {
 			ID = GL.CreateProgram();
 			Enable();
-			Parse(file_path);
+			
+			shader_file = new ShaderFile(file_path);
+			Create(shader_file);
+			
 			Disable();
 		}
 
-		public int ID { get; }
+		public int ID { get; private set; }
 
 		public int this[string attr] => GetAttributeLocation(attr);
 
-		public void Parse(string file_path) {
-			var path = File.Exists(file_path) ? file_path : string.Empty;
-			if (path == string.Empty) Log.Error($"Invalid shader file path: {path}");
+		void Create(ShaderFile file) => Create(file.Shaders);
+		
+		void Create(Dictionary<ShaderType, string> shader_list) {
+			foreach (var (type, source) in shader_list) {
+				var shader_id = GL.CreateShader(type);
+				GL.ShaderSource(shader_id, source);
+				GL.CompileShader(shader_id);
 
-			var source = File.ReadAllText(path);
-
-			if (!source.Contains('$')) {
-				Log.Error("Please specify type of the shader by adding line '${vertex | fragment}' on top of shader source.");
-				return;
-			}
-
-			var shaders = source.Split('$').ToList();
-
-			foreach (var shader in shaders) {
-				if (string.IsNullOrEmpty(shader)) continue;
-				shader.Replace('\r', '\n').Replace("\n\n", "\n");
-				var shdr = shader.Split('\n', 2);
-				var type = shdr[0];
-				var src = shdr[1];
-				var shader_type = default(ShaderType);
-
-				switch (type.ToLower().Trim()) {
-					case "vertex":
-						shader_type = ShaderType.VertexShader;
-						break;
-					case "fragment":
-						shader_type = ShaderType.FragmentShader;
-						break;
-					case "geometry":
-						shader_type = ShaderType.GeometryShader;
-						break;
-				}
-
-				var id = GL.CreateShader(shader_type);
-				GL.ShaderSource(id, src.Trim());
-				GL.CompileShader(id);
-
-				var shader_info = GL.GetShaderInfoLog(id);
+				var shader_info = GL.GetShaderInfoLog(shader_id);
 				if (!string.IsNullOrEmpty(shader_info)) {
-					Log.Panic($"[{shader_type.ToString()}] Shader compile error: {shader_info}");
+					Log.Panic($"[{type.ToString()}] Shader compile error: {shader_info}");
 				}
 
-				GL.AttachShader(ID, id);
+				shaders.Add(shader_id);
+				
+				GL.AttachShader(ID, shader_id);
 			}
-
+			
 			GL.LinkProgram(ID);
 			var program_info = GL.GetProgramInfoLog(ID);
 			if (!string.IsNullOrEmpty(program_info)) {
@@ -77,26 +52,45 @@ namespace Client {
 			}
 		}
 
+		public void Reload() {
+			shader_file.Reload();
+
+			foreach (var shader_id in shaders) {
+				GL.DetachShader(ID, shader_id);
+				GL.DeleteShader(shader_id);
+			}			
+			
+			Disable();
+			GL.DeleteProgram(ID);
+			
+			ID = GL.CreateProgram();
+			Enable();
+			
+			Create(shader_file);
+			
+			Disable();
+		}
+
 		public void Enable() => GL.UseProgram(ID);
 
 		public void Disable() => GL.UseProgram(0);
 
-		public int GetAttributeLocation(string attrute) {
-			if (AttributeLocationCache.ContainsKey(attrute))
-				return AttributeLocationCache[attrute];
+		public int GetAttributeLocation(string attribute) {
+			if (attribute_location_cache.ContainsKey(attribute))
+				return attribute_location_cache[attribute];
 
-			var location = GL.GetAttribLocation(ID, attrute);
-			AttributeLocationCache.Add(attrute, location);
+			var location = GL.GetAttribLocation(ID, attribute);
+			attribute_location_cache.Add(attribute, location);
 
 			return location;
 		}
 
 		public int GetUniformLocation(string uniform) {
-			if (UniformLocationCache.ContainsKey(uniform))
-				return UniformLocationCache[uniform];
+			if (uniform_location_cache.ContainsKey(uniform))
+				return uniform_location_cache[uniform];
 
 			var location = GL.GetUniformLocation(ID, uniform);
-			UniformLocationCache.Add(uniform, location);
+			uniform_location_cache.Add(uniform, location);
 
 			return location;
 		}
@@ -140,10 +134,6 @@ namespace Client {
 				default:
 					throw new InvalidCastException();
 			}
-		}
-
-		~Shader() {
-			GL.DeleteProgram(ID);
 		}
 	}
 }

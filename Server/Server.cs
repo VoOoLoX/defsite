@@ -15,8 +15,8 @@ namespace Server {
 
 		public DatabaseHandler DatabaseHandler;
 		public GameHandler GameHandler;
-		IPAddress ip = default(IPAddress);
-		string name = string.Empty;
+		IPAddress ip;
+		string name;
 		public NetworkHandler NetworkHandler;
 		int port = 0;
 

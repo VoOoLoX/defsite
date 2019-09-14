@@ -48,6 +48,7 @@
           </e>
         </e>
         <e p="GUI" t="Include">
+          <e p="Rectangle.cs" t="Include" />
           <e p="Text.cs" t="Include" />
         </e>
         <e p="Graphics" t="Include">
@@ -62,11 +63,11 @@
         </e>
         <e p="IO" t="Include">
           <e p="Assets.cs" t="Include" />
-          <e p="FileLoader.cs" t="Include" />
           <e p="FileTypes" t="Include">
             <e p="FontFile.cs" t="Include" />
-            <e p="ImageFile.cs" t="Include" />
+            <e p="ShaderFile.cs" t="Include" />
             <e p="SoundFile.cs" t="Include" />
+            <e p="TextureFile.cs" t="Include" />
           </e>
         </e>
         <e p="Input.cs" t="Include" />
@@ -77,12 +78,9 @@
         </e>
         <e p="TOREMOVE" t="Include">
           <e p="Button.cs" t="Include" />
-          <e p="CubeModel.cs" t="Include" />
-          <e p="Model.cs" t="Include" />
           <e p="Panel.cs" t="Include" />
           <e p="RectangleModel.cs" t="Include" />
           <e p="TextModel.cs" t="Include" />
-          <e p="TileModel.cs" t="Include" />
         </e>
         <e p="Utils" t="Include">
           <e p="Utils.cs" t="Include" />

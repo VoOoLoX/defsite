@@ -68,7 +68,7 @@ namespace Client {
 
 				var image_stream = new MemoryStream(reader.ReadBytes((int) reader.BaseStream.Length - (int) reader.BaseStream.Position));
 
-				Texture = new Texture(new ImageFile(image_stream));
+				Texture = new Texture(new TextureFile(image_stream));
 			}
 		}
 

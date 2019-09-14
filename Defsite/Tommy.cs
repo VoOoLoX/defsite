@@ -2,19 +2,19 @@
 
 /**
  * MIT License
- * 
+ *
  * Copyright (c) 2019 Denis Zhidkikh
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -149,11 +149,11 @@ namespace Defsite {
 
 		public static implicit operator string(TomlNode value) => value.ToString();
 
-		public static implicit operator int(TomlNode value) => (int) value.AsInteger.Value;
+		public static implicit operator int(TomlNode value) => (int)value.AsInteger.Value;
 
 		public static implicit operator long(TomlNode value) => value.AsInteger.Value;
 
-		public static implicit operator float(TomlNode value) => (float) value.AsFloat.Value;
+		public static implicit operator float(TomlNode value) => (float)value.AsFloat.Value;
 
 		public static implicit operator double(TomlNode value) => value.AsFloat.Value;
 
@@ -202,7 +202,7 @@ namespace Defsite {
 
 		public override string ToString() {
 			if (IntegerBase != Base.Decimal)
-				return $"0{TomlSyntax.BaseIdentifiers[(int) IntegerBase]}{Convert.ToString(Value, (int) IntegerBase)}";
+				return $"0{TomlSyntax.BaseIdentifiers[(int)IntegerBase]}{Convert.ToString(Value, (int)IntegerBase)}";
 			return Value.ToString(CultureInfo.InvariantCulture);
 		}
 
@@ -505,7 +505,7 @@ namespace Defsite {
 
 			foreach (var collapsedItem in collapsedItems) {
 				if (collapsedItem.Value is TomlArray arr && arr.IsTableArray ||
-				    collapsedItem.Value is TomlTable tbl && !tbl.IsInline)
+					collapsedItem.Value is TomlTable tbl && !tbl.IsInline)
 					throw new
 						TomlFormatException($"Value {collapsedItem.Key} cannot be defined as collpased, because it is not an inline value!");
 
@@ -630,7 +630,7 @@ namespace Defsite {
 
 			int currentChar;
 			while ((currentChar = reader.Peek()) >= 0) {
-				var c = (char) currentChar;
+				var c = (char)currentChar;
 
 				if (currentState == ParseState.None) {
 					// Skip white space
@@ -725,7 +725,7 @@ namespace Defsite {
 							// Consume the ending bracket so we can peek the next character
 							ConsumeChar();
 							var nextChar = reader.Peek();
-							if (nextChar < 0 || (char) nextChar != TomlSyntax.TABLE_END_SYMBOL) {
+							if (nextChar < 0 || (char)nextChar != TomlSyntax.TABLE_END_SYMBOL) {
 								AddError($"Array table {".".Join(keyParts)} has only one closing bracket.");
 								keyParts.Clear();
 								arrayTable = false;
@@ -782,7 +782,7 @@ namespace Defsite {
 					AddError($"Unexpected character \"{c}\" at the end of the line.");
 				}
 
-				consume_character:
+			consume_character:
 				reader.Read();
 				col++;
 			}
@@ -831,7 +831,7 @@ namespace Defsite {
 		private TomlNode ReadKeyValuePair(List<string> keyParts) {
 			int cur;
 			while ((cur = reader.Peek()) >= 0) {
-				var c = (char) cur;
+				var c = (char)cur;
 
 				if (TomlSyntax.IsQuoted(c) || TomlSyntax.IsBareKey(c)) {
 					if (keyParts.Count != 0) {
@@ -875,7 +875,7 @@ namespace Defsite {
 		private TomlNode ReadValue(bool skipNewlines = false) {
 			int cur;
 			while ((cur = reader.Peek()) >= 0) {
-				var c = (char) cur;
+				var c = (char)cur;
 
 				if (TomlSyntax.IsWhiteSpace(c)) {
 					ConsumeChar();
@@ -937,7 +937,7 @@ namespace Defsite {
 		 *
 		 * Example 2:
 		 * [ foo . bar ] ==>  [ foo . bar ]     (`skipWhitespace = true`, `until = ']'`)
-		 *  ^                             ^        
+		 *  ^                             ^
 		 */
 
 		private bool ReadKeyName(ref List<string> parts, char until, bool skipWhitespace = false) {
@@ -946,7 +946,7 @@ namespace Defsite {
 			var prevWasSpace = false;
 			int cur;
 			while ((cur = reader.Peek()) >= 0) {
-				var c = (char) cur;
+				var c = (char)cur;
 
 				// Reached the final character
 				if (c == until) break;
@@ -985,7 +985,7 @@ namespace Defsite {
 
 					// Consume the quote character and read the key name
 					col++;
-					buffer.Append(ReadQuotedValueSingleLine((char) reader.Read()));
+					buffer.Append(ReadQuotedValueSingleLine((char)reader.Read()));
 					quoted = true;
 					continue;
 				}
@@ -998,7 +998,7 @@ namespace Defsite {
 				// If we see an invalid symbol, let the next parser handle it
 				break;
 
-				consume_character:
+			consume_character:
 				reader.Read();
 				col++;
 			}
@@ -1019,7 +1019,7 @@ namespace Defsite {
 		 * Reads the whole raw value until the first non-value character is encountered.
 		 * Assumes the cursor start position at the first value character and consumes all characters that may be related to the value.
 		 * Example:
-		 * 
+		 *
 		 * 1_0_0_0  ==>  1_0_0_0
 		 * ^                    ^
 		 */
@@ -1029,7 +1029,7 @@ namespace Defsite {
 
 			int cur;
 			while ((cur = reader.Peek()) >= 0) {
-				var c = (char) cur;
+				var c = (char)cur;
 
 				if (c == TomlSyntax.COMMENT_SYMBOL || TomlSyntax.IsNewLine(c) || TomlSyntax.IsValueSeparator(c)) break;
 
@@ -1049,7 +1049,7 @@ namespace Defsite {
 		 *
 		 * Example
 		 * 1_0_0_0 # This is a comment <newline>  ==>  1_0_0_0 # This is a comment
-		 * ^                                                  ^  
+		 * ^                                                  ^
 		 */
 
 		private TomlNode ReadTomlValue() {
@@ -1072,7 +1072,7 @@ namespace Defsite {
 			if (TomlSyntax.IsIntegerWithBase(value, out var numberBase))
 				return new TomlInteger {
 					Value = Convert.ToInt64(value.Substring(2).RemoveAll(TomlSyntax.INT_NUMBER_SEPARATOR), numberBase),
-					IntegerBase = (TomlInteger.Base) numberBase
+					IntegerBase = (TomlInteger.Base)numberBase
 				};
 
 			value = value.Replace("T", " ");
@@ -1141,7 +1141,7 @@ namespace Defsite {
 
 			int cur;
 			while ((cur = reader.Peek()) >= 0) {
-				var c = (char) cur;
+				var c = (char)cur;
 
 				if (c == TomlSyntax.ARRAY_END_SYMBOL) {
 					ConsumeChar();
@@ -1186,7 +1186,7 @@ namespace Defsite {
 
 				continue;
 
-				consume_character:
+			consume_character:
 				ConsumeChar();
 			}
 
@@ -1217,7 +1217,7 @@ namespace Defsite {
 
 			int cur;
 			while ((cur = reader.Peek()) >= 0) {
-				var c = (char) cur;
+				var c = (char)cur;
 
 				if (c == TomlSyntax.INLINE_TABLE_END_SYMBOL) {
 					ConsumeChar();
@@ -1253,7 +1253,7 @@ namespace Defsite {
 				currentValue = ReadKeyValuePair(keyParts);
 				continue;
 
-				consume_character:
+			consume_character:
 				ConsumeChar();
 			}
 
@@ -1298,15 +1298,15 @@ namespace Defsite {
 			}
 
 
-			if ((char) cur != quote) {
+			if ((char)cur != quote) {
 				excess = '\0';
 				return false;
 			}
 
 			// Consume the second quote
-			excess = (char) ConsumeChar();
+			excess = (char)ConsumeChar();
 
-			if ((cur = reader.Peek()) < 0 || (char) cur != quote) return false;
+			if ((cur = reader.Peek()) < 0 || (char)cur != quote) return false;
 
 			// Consume the final quote
 			ConsumeChar();
@@ -1326,7 +1326,7 @@ namespace Defsite {
 			StringBuilder sb,
 			ref bool escaped) {
 			if (TomlSyntax.ShouldBeEscaped(c))
-				return AddError($"The character U+{(int) c:X8} must be escaped in a string!");
+				return AddError($"The character U+{(int)c:X8} must be escaped in a string!");
 
 			if (escaped) {
 				sb.Append(c);
@@ -1337,7 +1337,7 @@ namespace Defsite {
 			if (c == quote) return true;
 
 			if (isNonLiteral && c == TomlSyntax.ESCAPE_SYMBOL)
-				if (next >= 0 && (char) next == quote)
+				if (next >= 0 && (char)next == quote)
 					escaped = true;
 
 			if (c == TomlSyntax.NEWLINE_CHARACTER)
@@ -1378,7 +1378,7 @@ namespace Defsite {
 			while ((cur = reader.Read()) >= 0) {
 				// Consume the character
 				col++;
-				var c = (char) cur;
+				var c = (char)cur;
 				if (ProcessQuotedValueCharacter(quote, isNonLiteral, c, reader.Peek(), sb, ref escaped)) {
 					if (currentState == ParseState.None)
 						return null;
@@ -1411,10 +1411,10 @@ namespace Defsite {
 
 			int cur;
 			while ((cur = ConsumeChar()) >= 0) {
-				var c = (char) cur;
+				var c = (char)cur;
 
 				if (TomlSyntax.ShouldBeEscaped(c))
-					throw new Exception($"The character U+{(int) c:X8} must be escaped!");
+					throw new Exception($"The character U+{(int)c:X8} must be escaped!");
 
 				// Trim the first newline
 				if (first && TomlSyntax.IsNewLine(c)) {
@@ -1451,13 +1451,13 @@ namespace Defsite {
 					var next = reader.Peek();
 					if (next >= 0) {
 						// ...and the next char is empty space, we must skip all whitespaces
-						if (TomlSyntax.IsEmptySpace((char) next)) {
+						if (TomlSyntax.IsEmptySpace((char)next)) {
 							skipWhitespace = true;
 							continue;
 						}
 
 						// ...and we have \", skip the character
-						if ((char) next == quote) escaped = true;
+						if ((char)next == quote) escaped = true;
 					}
 				}
 
@@ -1519,7 +1519,7 @@ namespace Defsite {
 
 				if (latestNode.TryGetNode(subkey, out var node)) {
 					if (node.IsArray && arrayTable) {
-						var arr = (TomlArray) node;
+						var arr = (TomlArray)node;
 
 						if (!arr.IsTableArray) {
 							AddError($"The array {".".Join(path)} cannot be redefined as an array table!");
@@ -1578,7 +1578,7 @@ namespace Defsite {
 				latestNode = node;
 			}
 
-			var result = (TomlTable) latestNode;
+			var result = (TomlTable)latestNode;
 			return result;
 		}
 
@@ -1591,7 +1591,7 @@ namespace Defsite {
 		public static bool ForceASCII { get; set; } = false;
 
 		public static TomlTable Parse(TextReader reader) {
-			using (var parser = new TOMLParser(reader) {ForceASCII = ForceASCII}) {
+			using (var parser = new TOMLParser(reader) { ForceASCII = ForceASCII }) {
 				return parser.Parse();
 			}
 		}
@@ -1757,7 +1757,7 @@ namespace Defsite {
 		public const char LITERAL_STRING_SYMBOL = '\'';
 		public const char INT_NUMBER_SEPARATOR = '_';
 
-		public static readonly char[] NewLineCharacters = {NEWLINE_CHARACTER, NEWLINE_CARRIAGE_RETURN_CHARACTER};
+		public static readonly char[] NewLineCharacters = { NEWLINE_CHARACTER, NEWLINE_CARRIAGE_RETURN_CHARACTER };
 
 		public static bool IsQuoted(char c) => c == BASIC_STRING_SYMBOL || c == LITERAL_STRING_SYMBOL;
 
@@ -1869,7 +1869,7 @@ namespace Defsite {
 							if (char.IsSurrogatePair(txt, i))
 								stringBuilder.Append("\\U").Append(char.ConvertToUtf32(txt, i++).ToString("X8"));
 							else
-								stringBuilder.Append("\\u").Append(((ushort) c).ToString("X4"));
+								stringBuilder.Append("\\u").Append(((ushort)c).ToString("X4"));
 						} else {
 							stringBuilder.Append(c);
 						}

@@ -81,9 +81,6 @@ namespace Client {
 
 			UpdateClientRect();
 
-			var window_info_handle = WindowInfo.Handle;
-
-//			Debug.Assert(false, "Test");
 			SoundListener.Init();
 		}
 
@@ -165,6 +162,13 @@ namespace Client {
 
 		protected override void OnFocusedChanged(EventArgs e) {
 			base.OnFocusedChanged(e);
+			
+			if (Defsite.Utils.IsDebug) {
+				foreach (var shader in Assets.GetAll<Shader>(AssetType.Shader))
+					shader.Reload();
+				Log.Info("Shaders reloaded.");
+			}
+			
 			if (Focused)
 				WindowState = WindowState.Normal;
 		}

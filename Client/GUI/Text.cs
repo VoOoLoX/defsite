@@ -47,10 +47,10 @@ namespace Client {
 				var char_info = font.Layout[ch];
 
 				var pos = new[] {
-					new Vector2(char_spacing + x_position + char_info.XOffset, char_info.YOffset * line + line),
-					new Vector2(x_position + char_info.XOffset + char_info.Width, char_info.YOffset * line + line),
-					new Vector2(x_position + char_info.XOffset + char_info.Width, (char_info.YOffset * line) + line + char_info.Height),
-					new Vector2(char_spacing + char_info.XOffset + x_position, (char_info.YOffset * line) + line + char_info.Height)
+					new Vector2(char_spacing + x_position + char_info.XOffset, char_info.YOffset * line),
+					new Vector2(x_position + char_info.XOffset + char_info.Width, char_info.YOffset * line),
+					new Vector2(x_position + char_info.XOffset + char_info.Width, (char_info.YOffset * line) + char_info.Height),
+					new Vector2(char_spacing + char_info.XOffset + x_position, (char_info.YOffset * line) + char_info.Height)
 				};
 
 				pos_list.Add(pos);

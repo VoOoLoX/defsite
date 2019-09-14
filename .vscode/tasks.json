@@ -1,52 +1,52 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "run_client",
-            "command": "dotnet",
-            "type": "process",
-            "options": {
-                "cwd": "${workspaceFolder}/Client/bin/Debug/netcoreapp2.2/"
-            },
-            "args": [
-                "run",
-                "--project",
-                "${workspaceFolder}/Client/Client.csproj"
-            ],
-            "problemMatcher": "$msCompile",
-            "dependsOn": [
-                "buiild_client"
-            ]
-        },
-        {
-            "label": "build_client",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "build",
-                "${workspaceFolder}/Client/Client.csproj"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "build_defsite",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "build",
-                "${workspaceFolder}/Defsite/Defsite.csproj"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "build_server",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "build",
-                "${workspaceFolder}/Server/Server.csproj"
-            ],
-            "problemMatcher": "$msCompile"
-        }
-    ]
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "run_client",
+			"command": "dotnet",
+			"type": "process",
+			"options": {
+				"cwd": "${workspaceFolder}/Client/bin/Debug/"
+			},
+			"args": [
+				"run",
+				"--project",
+				"${workspaceFolder}/Client/Client.csproj"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"buiild_client"
+			]
+		},
+		{
+			"label": "build_client",
+			"command": "dotnet",
+			"type": "process",
+			"args": [
+				"build",
+				"${workspaceFolder}/Client/Client.csproj"
+			],
+			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "build_defsite",
+			"command": "dotnet",
+			"type": "process",
+			"args": [
+				"build",
+				"${workspaceFolder}/Defsite/Defsite.csproj"
+			],
+			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "build_server",
+			"command": "dotnet",
+			"type": "process",
+			"args": [
+				"build",
+				"${workspaceFolder}/Server/Server.csproj"
+			],
+			"problemMatcher": "$msCompile"
+		}
+	]
 }

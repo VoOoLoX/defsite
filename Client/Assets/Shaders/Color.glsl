@@ -1,15 +1,17 @@
-$vertex
+#type vertex
 #version 130
 
-in vec2 position;
+in vec3 position;
 
-uniform mat4 mvp;
+uniform mat4 projection;
+uniform mat4 view;
+uniform mat4 model;
 
 void main() {
-	gl_Position = mvp * vec4(position, 0.0, 1.0);
+	gl_Position = projection * view * model * vec4(position, 1.0);
 }
 
-$fragment
+#type pixel
 #version 130
 
 uniform vec4 color;

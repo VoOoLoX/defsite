@@ -1,4 +1,4 @@
-$vertex
+#type vertex
 #version 130
 
 in vec3 position;
@@ -7,7 +7,8 @@ in vec2 uv;
 
 in vec3 normal;
 
-uniform mat4 view_projection;
+uniform mat4 projection;
+uniform mat4 view;
 uniform mat4 model;
 
 out vec2 UV;
@@ -15,14 +16,14 @@ out vec2 UV;
 out vec3 Normal;
 
 void main() {
-	gl_Position = view_projection * model * vec4(position, 1.0);
+	gl_Position = projection * view * model * vec4(position, 1.0);
 
 	UV = uv;
 	
 	Normal = normal;
 }
 
-$fragment
+#type pixel
 #version 130
 
 in vec2 UV;

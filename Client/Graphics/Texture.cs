@@ -6,54 +6,37 @@ namespace Client {
 		int height;
 		int width;
 
-		public Texture() {
-			ID = GL.GenTexture();
+		public Texture(string path = "") {
+			var texture = TextureFile.Default;
 
-			Enable();
-			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) TextureMinFilter.Nearest);
-			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Nearest);
-			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, ImageFile.Default.Width, ImageFile.Default.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, ImageFile.Default.Bytes);
-			Disable();
-		}
-
-		public Texture(string path) {
-			ID = GL.GenTexture();
-
-			var img = ImageFile.Default;
-
+			// TODO: Kinda redundant and bad way of handling this, default texture should be set inside the texturefile class.
 			if (File.Exists(path))
-				img = new ImageFile(path);
+				texture = new TextureFile(path);
 
-			img.Rotate180();
-			img.FlipHorizontal();
-
-			width = img.Width;
-			height = img.Height;
-
-			Enable();
-			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) TextureMinFilter.Nearest);
-			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Nearest);
-			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, img.Width, img.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, img.Bytes);
-			Disable();
+			Create(texture);
 		}
 
-		public Texture(ImageFile image) {
+		public Texture(TextureFile texture) => Create(texture);
+
+		void Create(TextureFile texture) {
 			ID = GL.GenTexture();
 
-//			image.Rotate180();
-//			image.FlipHorizontal();
+			//TODO: 
+//			texture.Rotate180();
+//			texture.FlipHorizontal();
+			//UVs are inverted so there is no need proccess textures on the CPU
 
-			width = image.Width;
-			height = image.Height;
+			width = texture.Width;
+			height = texture.Height;
 
 			Enable();
 			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) TextureMinFilter.Nearest);
 			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Nearest);
-			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, image.Width, image.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, image.Bytes);
+			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, texture.Width, texture.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, texture.Bytes);
 			Disable();
 		}
 
-		public int ID { get; }
+		public int ID { get; private set; }
 		public int Width => width;
 		public int Height => height;
 

@@ -21,10 +21,6 @@ file = "Sprite.glsl"
 [[shader]]
 name = "MeshShader"
 file = "Mesh.glsl"
-
-[[shader]]
-name = "ColorShader"
-file = "Color.glsl"
     
 [[sound]]
 name = "Fireplace"

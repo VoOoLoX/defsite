@@ -7,28 +7,27 @@ namespace Client {
 		bool clicked;
 		Text fps = new Text("");
 		Text mouse = new Text("");
-		Entity Player;
+		Entity player;
 
 		public MainScene() {
-			Player = new Entity();
-			Player.AddComponent(new Transform());
-			Player.AddComponent(new Sprite(Assets.Get<Texture>("Ground")));
-			Player.AddComponent(new Sound(Assets.Get<SoundSource>("Fireplace")));
-			AddEntity(Player);
+			player = new Entity();
+			player.AddComponent(new Transform());
+			player.AddComponent(new Sprite(Assets.Get<Texture>("Ground")));
+			player.AddComponent(new Sound(Assets.Get<SoundSource>("Fireplace")));
+			AddEntity(player);
 
-			var t = new Entity();
-			t.AddComponent(new Transform() {
-				Position = new Vector3(30, 30, 0),
-				Scale = new Vector3(25, 25, 1)
-			});
-			t.AddComponent(new Sprite(Assets.Get<Texture>("Ground")));
-			Controls.Add(t);
-
-			fps.GetComponent<Transform>().ScaleXY = 2;
+			Controls.Add(new Rectangle(new OpenTK.Rectangle(0,0,50, 50), new Color(255,16,16, 255)));
+			
+			var fps_transform = fps.GetComponent<Transform>();
+			fps_transform.ScaleXY = 6f;
+			fps_transform.Position = new Vector3(0, -40,0);
 			Controls.Add(fps);
-			mouse.GetComponent<Transform>().ScaleXY = 2;
-			mouse.GetComponent<Transform>().Position = new Vector3(0, 50, 0);
+			
+			var mouse_transform = mouse.GetComponent<Transform>();
+			mouse_transform.ScaleXY = 2;
+			mouse_transform.Position = new Vector3(0, 50, 0);
 			Controls.Add(mouse);
+			
 		}
 
 		public override void Render(float time) {
@@ -90,6 +89,11 @@ namespace Client {
 					s.Pause();
 			}
 
+			if (Input.IsActive(Key.T)) {
+//				Assets.Get<Shader>("SpriteShader").Reload();
+//				Log.Info("AAAAA");
+			}
+
 			if (Input.IsActive(MouseButton.Left) && !clicked) {
 				clicked = true;
 				var p = ScreenToWorld(Input.MousePos);
@@ -125,7 +129,7 @@ namespace Client {
 
 			Camera.GetComponent<Transform>().MoveBy(camera_direction_vector * 10 * time);
 
-			Player.GetComponent<Transform>().RotateTo(0, 0, -rotation_vector.Z * 30 * time);
+			player.GetComponent<Transform>().RotateTo(0, 0, -rotation_vector.Z * 30 * time);
 
 			Camera.GetComponent<Transform>().RotateBy(0, 0, rotation_vector.Z * 30 * time);
 
@@ -133,7 +137,7 @@ namespace Client {
 //			
 //			player_direction_vector = Vector2.Transform(player_direction_vector, rot_q);
 
-			Player.GetComponent<Transform>().MoveBy(player_direction_vector * 10 * time);
+			player.GetComponent<Transform>().MoveBy(player_direction_vector * 10 * time);
 		}
 	}
 }

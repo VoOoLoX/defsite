@@ -10,11 +10,12 @@ namespace Client {
 				new Vector2(0, 0)
 			};
 
+			//"Flipped" (UVs have origin at 0,0 in the bottom left corner) because of OpenGLs coordinate system
 			public static Vector2[] UVData = {
-				new Vector2(0, 0),
-				new Vector2(1, 0),
+				new Vector2(0, 1),
 				new Vector2(1, 1),
-				new Vector2(0, 1)
+				new Vector2(1, 0),
+				new Vector2(0, 0)
 			};
 
 			public static uint[] IndexBufferData = {
@@ -30,11 +31,12 @@ namespace Client {
 				new Vector2(-1f, 1f)
 			};
 
+			//"Flipped" (UVs have origin at 0,0 in the bottom left corner) because of OpenGLs coordinate system
 			public static Vector2[] UVData = {
-				new Vector2(0, 0),
-				new Vector2(1, 0),
+				new Vector2(0, 1),
 				new Vector2(1, 1),
-				new Vector2(0, 1)
+				new Vector2(1, 0),
+				new Vector2(0, 0)
 			};
 
 			public static uint[] IndexBufferData = {

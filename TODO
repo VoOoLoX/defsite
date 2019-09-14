@@ -3,11 +3,10 @@ Defsite:
 Client:
 	✔ Basic OpenAL classes @done
 	✔ Basic WAV file reader @done
-	☐ Better audio abstraction (audio manager, etc.)
-	☐ General files classes for images, sounds, fonts, etc.
+	✔ General files classes for images, sounds, fonts, etc. @done
 	☐ File manager / file abstraction system for different types of files so it's easier to parse files
 	☐ Virtual file system with compression and it should be asynchronous
-	☐ Entity Component System
+	✔ Entity Component System @done
 	☐ Hot swapping
 	☐ Structural changes / split engine and the game into different components
 	☐ Make paths relative to the executable to avoid missing files caused by cwd

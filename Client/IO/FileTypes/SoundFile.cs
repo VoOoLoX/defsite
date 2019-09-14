@@ -13,16 +13,22 @@ namespace Client {
 		}
 
 		public SoundFile(string path) => Load(path);
+		
+		public SoundFile(Stream stream) => Load(stream);
 		public ALFormat Format { get; private set; }
 		public int SampleRate { get; private set; }
 		public byte Compressed { get; private set; }
 		public byte[] Data { get; private set; }
 
 		void Load(string file_path) {
-			var path = File.Exists(file_path) ? file_path : string.Empty;
-			if (path == string.Empty) Log.Error($"Invalid sound file path: {path}");
+			var file_info = File.Exists(file_path) ? new FileInfo(file_path) : null;
+			if (file_info == null)
+				Log.Panic($"Invalid sound file path: {file_path}");
+			Load(file_info?.OpenRead());
+		}
 
-			var reader = new BinaryReader(File.OpenRead(path));
+		void Load(Stream data_stream) {
+			var reader = new BinaryReader(data_stream);
 
 			var vsf = new string(reader.ReadChars(3));
 

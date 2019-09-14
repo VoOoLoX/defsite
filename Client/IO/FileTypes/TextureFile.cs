@@ -28,21 +28,21 @@ namespace Client {
 		public override string ToString() => $"{R} {G} {B} {A}";
 	}
 
-	public class ImageFile {
-		public static ImageFile Default = new ImageFile(2, 2, new List<Pixel>() {
+	public class TextureFile {
+		public static TextureFile Default = new TextureFile(2, 2, new List<Pixel>() {
 			new Pixel(Color.Magenta), new Pixel(Color.Black), new Pixel(Color.Black), new Pixel(Color.Magenta)
 		});
 
-		public ImageFile(ushort width, ushort height, List<Pixel> pixels, byte comps = 4) {
+		public TextureFile(ushort width, ushort height, List<Pixel> pixels, byte comps = 4) {
 			Width = width;
 			Height = height;
 			Pixels = pixels;
 			Components = comps;
 		}
 
-		public ImageFile(string path) => Load(path);
+		public TextureFile(string path) => Load(path);
 
-		public ImageFile(Stream stream) => Load(stream);
+		public TextureFile(Stream stream) => Load(stream);
 
 		public ushort Width { get; private set; }
 		public ushort Height { get; private set; }
@@ -65,10 +65,10 @@ namespace Client {
 		}
 
 		void Load(string file_path) {
-			var path = File.Exists(file_path) ? file_path : string.Empty;
-			if (path == string.Empty) Log.Error($"Invalid image file path: {path}");
-
-			Load(File.OpenRead(path));
+			var file_info = File.Exists(file_path) ? new FileInfo(file_path) : null;
+			if (file_info == null)
+				Log.Panic($"Invalid image file path: {file_path}");
+			Load(file_info?.OpenRead());
 		}
 
 		void Load(Stream data_stream) {
@@ -122,19 +122,6 @@ namespace Client {
 			} else {
 				Log.Error("Invalid file path");
 			}
-		}
-
-		public void Rotate180() => Pixels.Reverse();
-
-
-		public void FlipHorizontal() {
-			var new_data = new List<Pixel[]>();
-			for (var i = 0; i < Pixels.Count; i += Width)
-				new_data.Add(Pixels.Skip(i).Take(Width).ToArray());
-
-			for (var i = 0; i < new_data.Count; i++)
-				new_data[i] = new_data[i].Reverse().ToArray();
-			Pixels = new_data.SelectMany(x => x).ToList();
 		}
 	}
 }
