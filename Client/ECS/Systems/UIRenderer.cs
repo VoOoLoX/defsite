@@ -4,6 +4,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace Client {
+
 	public class UIRenderer : ISystem {
 		OrthographicCamera Camera;
 

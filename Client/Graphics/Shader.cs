@@ -10,70 +10,21 @@ namespace Client {
 		Dictionary<string, int> uniform_location_cache = new Dictionary<string, int>();
 
 		ShaderFile shader_file;
-		
 		List<int> shaders = new List<int>();
+		public int ID { get; private set; }
 
 		public Shader(string file_path) {
 			ID = GL.CreateProgram();
-			Enable();
-			
+			GL.UseProgram(ID);
+
 			shader_file = new ShaderFile(file_path);
 			Create(shader_file);
-			
-			Disable();
+
+			GL.UseProgram(0);
 		}
-
-		public int ID { get; private set; }
-
-		public int this[string attr] => GetAttributeLocation(attr);
-
-		void Create(ShaderFile file) => Create(file.Shaders);
-		
-		void Create(Dictionary<ShaderType, string> shader_list) {
-			foreach (var (type, source) in shader_list) {
-				var shader_id = GL.CreateShader(type);
-				GL.ShaderSource(shader_id, source);
-				GL.CompileShader(shader_id);
-
-				var shader_info = GL.GetShaderInfoLog(shader_id);
-				if (!string.IsNullOrEmpty(shader_info)) {
-					Log.Panic($"[{type.ToString()}] Shader compile error: {shader_info}");
-				}
-
-				shaders.Add(shader_id);
-				
-				GL.AttachShader(ID, shader_id);
-			}
-			
-			GL.LinkProgram(ID);
-			var program_info = GL.GetProgramInfoLog(ID);
-			if (!string.IsNullOrEmpty(program_info)) {
-				Log.Panic($"Shader program error: {program_info}");
-			}
-		}
-
-		public void Reload() {
-			shader_file.Reload();
-
-			foreach (var shader_id in shaders) {
-				GL.DetachShader(ID, shader_id);
-				GL.DeleteShader(shader_id);
-			}			
-			
-			Disable();
-			GL.DeleteProgram(ID);
-			
-			ID = GL.CreateProgram();
-			Enable();
-			
-			Create(shader_file);
-			
-			Disable();
-		}
+		public void Disable() => GL.UseProgram(0);
 
 		public void Enable() => GL.UseProgram(ID);
-
-		public void Disable() => GL.UseProgram(0);
 
 		public int GetAttributeLocation(string attribute) {
 			if (attribute_location_cache.ContainsKey(attribute))
@@ -95,8 +46,28 @@ namespace Client {
 			return location;
 		}
 
+		public void Reload() {
+			shader_file.Reload();
+
+			foreach (var shader_id in shaders) {
+				GL.DetachShader(ID, shader_id);
+				GL.DeleteShader(shader_id);
+			}
+
+			GL.UseProgram(0);
+			GL.DeleteProgram(ID);
+
+			ID = GL.CreateProgram();
+			GL.UseProgram(ID);
+
+			Create(shader_file);
+
+			GL.UseProgram(0);
+		}
+
 		public void Set<T>(string uniform, T data) {
-			Enable();
+			GL.UseProgram(ID);
+
 			switch (data) {
 				case Matrix2 m2:
 					GL.UniformMatrix2(GetUniformLocation(uniform), false, ref m2);
@@ -135,5 +106,32 @@ namespace Client {
 					throw new InvalidCastException();
 			}
 		}
+
+		void Create(ShaderFile file) => Create(file.Shaders);
+
+		void Create(Dictionary<ShaderType, string> shader_list) {
+			foreach (var (type, source) in shader_list) {
+				var shader_id = GL.CreateShader(type);
+				GL.ShaderSource(shader_id, source);
+				GL.CompileShader(shader_id);
+
+				var shader_info = GL.GetShaderInfoLog(shader_id);
+				if (!string.IsNullOrEmpty(shader_info)) {
+					Log.Panic($"[{type.ToString()}] Shader compile error: {shader_info}");
+				}
+
+				shaders.Add(shader_id);
+
+				GL.AttachShader(ID, shader_id);
+			}
+
+			GL.LinkProgram(ID);
+			var program_info = GL.GetProgramInfoLog(ID);
+			if (!string.IsNullOrEmpty(program_info)) {
+				Log.Panic($"Shader program error: {program_info}");
+			}
+		}
+
+		public int this[string attr] => GetAttributeLocation(attr);
 	}
 }

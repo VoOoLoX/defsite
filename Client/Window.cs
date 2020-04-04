@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using Defsite;
 using OpenTK;
@@ -10,10 +13,22 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 
 namespace Client {
-	public class Window : GameWindow {
-		AudioContext AudioContext;
 
+	public class Window : GameWindow {
+		AudioContext audio_context;
+		Shader color_shader;
+		VertexArray gizmo_vao;
+		IndexBuffer index_buffer;
 		Scene main_scene;
+		Process proc;
+
+		public static new int Height { get; private set; }
+
+		public static new int Width { get; private set; }
+
+		public static new int X { get; private set; }
+
+		public static new int Y { get; private set; }
 
 		public Window(
 			int width,
@@ -55,8 +70,8 @@ namespace Client {
 			Log.Info($"IsPrimary: {device.IsPrimary}");
 			Log.Unindent();
 
-			AudioContext = new AudioContext();
-			if (AudioContext == null)
+			audio_context = new AudioContext();
+			if (audio_context == null)
 				Log.Panic("Invalid audio context");
 
 			Log.Info("OpenAL Info:");
@@ -84,65 +99,144 @@ namespace Client {
 			SoundListener.Init();
 		}
 
-		public new static int X { get; private set; }
-		public new static int Y { get; private set; }
-		public new static int Width { get; private set; }
-		public new static int Height { get; private set; }
 
-		void UpdateClientRect() {
-			Width = (this as NativeWindow).Width;
-			Height = (this as NativeWindow).Height;
-			X = (this as NativeWindow).X;
-			Y = (this as NativeWindow).Y;
-		}
 
 		protected override void OnLoad(EventArgs e) {
 			Assets.LoadAssets("Assets.toml");
 
 			main_scene = new MainScene();
 
-//			button.OnClick += b => {
-//				b.Color = Color.Tomato;
-//				ss.Play(sb);
-//				rtest.RotateRect((float)-Math.PI / 256,0, 0);
-//			};
+			//			button.OnClick += b => {
+			//				b.Color = Color.Tomato;
+			//				ss.Play(sb);
+			//				rtest.RotateRect((float)-Math.PI / 256,0, 0);
+			//			};
 
-//			button.OnHover += b => { 
-//				b.Color = Color.IndianRed;
-//				rtest.RotateRect(0,(float)Math.PI / 512, 0);
-//			};
+			//			button.OnHover += b => {
+			//				b.Color = Color.IndianRed;
+			//				rtest.RotateRect(0,(float)Math.PI / 512, 0);
+			//			};
 
-//			button.OnUpdate += b => { button.Color = Color.Goldenrod;  };
-//
-//			panel.OnLeftClick += p => {
-//				text_glow = !text_glow;
-//				mouse_info.Glow = text_glow;
-//				
-//			};
-//
-//			panel2.OnDrag += (p, delta) => {
-//				p.X += delta.X;
-//				p.Y += delta.Y;
-//				panel.X = p.X;
-//				panel.Y = p.Y;
-//				button.X = panel.X + panel.Width - button.Width;
-//				button.Y = panel.Y;
-//			};
+			//			button.OnUpdate += b => { button.Color = Color.Goldenrod;  };
+			//
+			//			panel.OnLeftClick += p => {
+			//				text_glow = !text_glow;
+			//				mouse_info.Glow = text_glow;
+			//
+			//			};
+			//
+			//			panel2.OnDrag += (p, delta) => {
+			//				p.X += delta.X;
+			//				p.Y += delta.Y;
+			//				panel.X = p.X;
+			//				panel.Y = p.Y;
+			//				button.X = panel.X + panel.Width - button.Width;
+			//				button.Y = panel.Y;
+			//			};
+			gizmo_vao = new VertexArray();
+
+			color_shader = Assets.Get<Shader>("ColorShader");
+			//var gizmo = new Vertex[]
+			//{
+			//	new Vertex
+			//	{
+			//		Position = new Vector3(-.5f, 0, 0),
+			//		Color = new Vector4(1, 1, 1, 1)
+			//	},
+			//	new Vertex
+			//	{
+			//		Position = new Vector3(.5f, 0, 0),
+			//		Color = new Vector4(1, 0, 0, 1)
+			//	},
+
+			//	new Vertex
+			//	{
+			//		Position = new Vector3(0, -.5f, 0),
+			//		Color = new Vector4(1, 1, 1, 1)
+			//	},
+			//	new Vertex
+			//	{
+			//		Position = new Vector3(0, .5f, 0),
+			//		Color = new Vector4(0, 1, 0, 1)
+			//	},
+
+			//	new Vertex
+			//	{
+			//		Position = new Vector3(0, 0, -.5f),
+			//		Color = new Vector4(1, 1, 1, 1)
+			//	},
+			//	new Vertex
+			//	{
+			//		Position = new Vector3(0, 0, .5f),
+			//		Color = new Vector4(0, 0, 1, 1)
+			//	},
+			//};
+
+			var layout = new BufferLayout(new List<VertexAttribute>{
+				new VertexAttribute(0, "Position", VertexAttributeType.Vector3),
+				new VertexAttribute(1, "Color", VertexAttributeType.Vector4),
+				new VertexAttribute(2, "TextureCoordinates", VertexAttributeType.Vector2),
+				new VertexAttribute(3, "Normal", VertexAttributeType.Vector3)
+			});
+
+			//var vbo = new VertexBuffer(gizmo) {
+			//	Layout = layout
+			//};
+
+			Vertex[] quads = new Vertex[40008];
+
+			var ix = 0;
+
+			var q = 50;
+
+			index_buffer = new IndexBuffer(Enumerable.Range(0, q * q * 4).ToArray());
+
+			for (var y = 1; y < q; y++) {
+				for (var x = 1; x < q; x++) {
+					//var quad = Primitives.CreateQuad(new Vector3(x, y, 0), (x + y) % 2 == 0 ? Color.Red : Color.Blue);
+
+					var quad = Primitives.CreateQuad(new Vector3(x, y, 0), Color.Red.Blerp(Color.Blue, 1f / x, 1f / y));
+					Array.Copy(quad, 0, quads, ix += quad.Length, quad.Length);
+				}
+			}
+
+			var qvbo = new VertexBuffer(quads) {
+				Layout = layout
+			};
+
+			//gizmo_vao.AddVertexBuffer(vbo);
+			gizmo_vao.AddVertexBuffer(qvbo);
 		}
-
 		protected override void OnKeyDown(KeyboardKeyEventArgs e) => Input.Set(e.Key, true);
 
 		protected override void OnKeyUp(KeyboardKeyEventArgs e) => Input.Set(e.Key, false);
 
-		protected override void OnMouseMove(MouseMoveEventArgs e) => Input.Set(new Point(e.X, e.Y));
-
-		protected override void OnMouseWheel(MouseWheelEventArgs e) => Input.Set(e.Delta);
-
 		protected override void OnMouseDown(MouseButtonEventArgs e) => Input.Set(e.Button, true);
+
+		protected override void OnMouseMove(MouseMoveEventArgs e) => Input.Set(new Point(e.X, e.Y));
 
 		protected override void OnMouseUp(MouseButtonEventArgs e) => Input.Set(e.Button, false);
 
+		protected override void OnMouseWheel(MouseWheelEventArgs e) => Input.Set(e.Delta);
+
+		protected override void OnUnload(EventArgs e) => audio_context.Suspend();
+
+		protected override void OnClosed(EventArgs e) => audio_context.Dispose();
+
 		protected override void OnClosing(CancelEventArgs e) => DisplayDevice.Default.RestoreResolution();
+
+		protected override void OnFocusedChanged(EventArgs e) {
+			base.OnFocusedChanged(e);
+
+			if (Defsite.Utils.IsDebug) {
+				foreach (var shader in Assets.GetAll<Shader>(AssetType.Shader))
+					shader.Reload();
+				Log.Info("Shaders reloaded.");
+			}
+
+			if (Focused)
+				WindowState = WindowState.Normal;
+		}
 
 		protected override void OnResize(EventArgs e) {
 			UpdateClientRect();
@@ -157,58 +251,45 @@ namespace Client {
 			if (Input.IsActive(Key.Escape))
 				Close();
 
-			Update((float) e.Time);
-		}
+			main_scene.Update((float)e.Time);
 
-		protected override void OnFocusedChanged(EventArgs e) {
-			base.OnFocusedChanged(e);
-			
 			if (Defsite.Utils.IsDebug) {
-				foreach (var shader in Assets.GetAll<Shader>(AssetType.Shader))
-					shader.Reload();
-				Log.Info("Shaders reloaded.");
+				proc = Process.GetCurrentProcess();
+				var mb_ram_used = proc.PrivateMemorySize64 / 1024 / 1024;
+				if (mb_ram_used > 500) {
+					throw new Exception("High RAM usage. Exiting to prevent system lag. (Known memory leak)");
+				}
 			}
-			
-			if (Focused)
-				WindowState = WindowState.Normal;
-		}
-
-		void Update(float delta_time) {
-//			if (Input.IsActive(MouseButton.Left) && !down) {
-//				down = true;
-//				mouse_old = Input.MousePos;
-//			}
-//
-//			if (down) {
-//				var dx = Input.MousePos.X - mouse_old.X;
-//				var dy = Input.MousePos.Y - mouse_old.Y;
-//				
-//				cube.GetComponent<Transform>().RotateBy(dy * delta_time,dx * delta_time,0);
-//			}
-//
-//			if (!Input.IsActive(MouseButton.Left)) down = false;
-//
-//			light_cube.GetComponent<Transform>().Matrix *= Matrix4.CreateRotationY((MathF.PI / 4.0f) * delta_time);
-//			cube.GetComponent<Mesh>().Shader.Set("light_position", light_cube.GetComponent<Transform>().Position);
-
-			main_scene.Update(delta_time);
 		}
 
 		protected override void OnRenderFrame(FrameEventArgs e) {
 			base.OnRenderFrame(e);
 			if (WindowState == WindowState.Minimized) return;
+			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-			main_scene.Render((float) e.Time);
+			main_scene.Render((float)e.Time);
+
+			color_shader.Enable();
+
+			color_shader.Set("projection", main_scene.Camera.ProjectionMatrix);
+
+			color_shader.Set("view", main_scene.Camera.GetComponent<Transform>().Matrix);
+
+			color_shader.Set("model", new Transform().Matrix);
+
+			gizmo_vao.Enable();
+			index_buffer.Enable();
+
+			GL.DrawElements(PrimitiveType.Quads, index_buffer.Count, DrawElementsType.UnsignedInt, 0);
 
 			SwapBuffers();
 		}
 
-		protected override void OnUnload(EventArgs e) {
-			AudioContext.Suspend();
-		}
-
-		protected override void OnClosed(EventArgs e) {
-			AudioContext.Dispose();
+		void UpdateClientRect() {
+			Width = (this as NativeWindow).Width;
+			Height = (this as NativeWindow).Height;
+			X = (this as NativeWindow).X;
+			Y = (this as NativeWindow).Y;
 		}
 	}
 }

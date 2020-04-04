@@ -4,34 +4,47 @@ using System.Linq;
 using Defsite;
 
 namespace Client {
+
 	public struct CharInfo {
-		public CharInfo(int x, int y, int width, int height, int xOffset, int yOffset, int xAdvance) {
+
+		public int Height { get; }
+
+		public int Width { get; }
+
+		public int X { get; }
+
+		public int XAdvance { get; }
+
+		public int XOffset { get; }
+
+		public int Y { get; }
+
+		public int YOffset { get; }
+
+		public CharInfo(int x, int y, int width, int height, int x_offset, int y_offset, int x_advance) {
 			X = x;
 			Y = y;
 			Width = width;
 			Height = height;
-			XOffset = xOffset;
-			YOffset = yOffset;
-			XAdvance = xAdvance;
+			XOffset = x_offset;
+			YOffset = y_offset;
+			XAdvance = x_advance;
 		}
-
-		public int X { get; }
-		public int Y { get; }
-		public int Width { get; }
-		public int Height { get; }
-		public int XOffset { get; }
-		public int YOffset { get; }
-		public int XAdvance { get; }
-
 		public override string ToString() => $"{X} {Y} {Width} {Height} {XOffset} {YOffset} {XAdvance}";
 	}
 
 	public class FontFile {
+
+		public Dictionary<char, CharInfo> Layout { get; }
+
+		public Texture Texture { get; }
+
 		public FontFile(string file_path) {
 			var path = File.Exists(file_path) ? file_path : string.Empty;
-			if (path == string.Empty) Log.Error($"Invalid font file path: {path}");
 
-			var reader = new BinaryReader(File.OpenRead(path));
+			if (string.IsNullOrEmpty(path)) Log.Error($"Invalid font file path: {path}");
+
+			using var reader = new BinaryReader(File.OpenRead(path));
 
 			var vff = new string(reader.ReadChars(3));
 
@@ -46,13 +59,13 @@ namespace Client {
 				Texture = new Texture();
 				Layout = new Dictionary<char, CharInfo>();
 
-				var data_bytes = reader.ReadBytes((int) reader.BaseStream.Length - (int) position);
-				var vif_index = data_bytes.Index(new[] {(byte) 'V', (byte) 'I', (byte) 'F'}).First();
+				var data_bytes = reader.ReadBytes((int)reader.BaseStream.Length - (int)position);
+				var vif_index = data_bytes.Index(new[] { (byte)'V', (byte)'I', (byte)'F' }).First();
 
 				reader.BaseStream.Position = position;
 
 				var font_bytes = reader.ReadBytes(vif_index);
-				var data_stream = compressed > 0 ? new BinaryReader(new MemoryStream(font_bytes.Decompress())) : new BinaryReader(new MemoryStream(font_bytes));
+				using var data_stream = compressed > 0 ? new BinaryReader(new MemoryStream(font_bytes.Decompress())) : new BinaryReader(new MemoryStream(font_bytes));
 
 				for (var i = 0; i < count; i++) {
 					var ch = data_stream.ReadChar();
@@ -66,14 +79,10 @@ namespace Client {
 					Layout[ch] = new CharInfo(x, y, width, height, x_offset, y_offset, x_advance);
 				}
 
-				var image_stream = new MemoryStream(reader.ReadBytes((int) reader.BaseStream.Length - (int) reader.BaseStream.Position));
+				using var image_stream = new MemoryStream(reader.ReadBytes((int)reader.BaseStream.Length - (int)reader.BaseStream.Position));
 
 				Texture = new Texture(new TextureFile(image_stream));
 			}
 		}
-
-		public Texture Texture { get; }
-
-		public Dictionary<char, CharInfo> Layout { get; }
 	}
 }

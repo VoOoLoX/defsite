@@ -1,48 +1,49 @@
-using System.Collections.Generic;
 using OpenTK.Graphics.OpenGL;
 
 namespace Client {
+
 	public class VertexArray {
-		List<IVertexBuffer> vertex_buffers = new List<IVertexBuffer>();
-
-		public VertexArray() {
-			ID = GL.GenVertexArray();
-		}
-
 		public int ID { get; }
+		public IndexBuffer IndexBuffer { get; private set; }
 
-		public void AddVertexBuffer<T>(VertexBuffer<T> buffer, int id, int stride = 0, int offset = 0) {
-			Enable();
+		public VertexArray() => ID = GL.GenVertexArray();
+
+		public void AddVertexBuffer(VertexBuffer buffer) {
+			GL.BindVertexArray(ID);
 			buffer.Enable();
 
-			vertex_buffers.Add(buffer);
+			foreach (var attribute in buffer.Layout.Attributes) {
+				GL.EnableVertexAttribArray(attribute.ID);
+				GL.VertexAttribPointer(attribute.ID, attribute.ComponentCount, attribute.GetVertexAttribPointerType(), attribute.Normalized, buffer.Layout.Stride, attribute.Offset);
+			}
 
-			EnableAttributeArray(id);
+			GL.EnableVertexAttribArray(0);
+
+			buffer.Disable();
+			GL.BindVertexArray(0);
+		}
+
+		public void AddVertexBuffer<T>(VertexBuffer<T> buffer, int id, int stride = 0, int offset = 0) {
+			GL.BindVertexArray(ID);
+			buffer.Enable();
+
+			GL.EnableVertexAttribArray(id);
 
 			if (stride != 0)
 				GL.VertexAttribPointer(id, buffer.Dimensions(), VertexAttribPointerType.Float, false, stride * sizeof(float), offset);
 			else
 				GL.VertexAttribPointer(id, buffer.Dimensions(), VertexAttribPointerType.Float, false, buffer.Dimensions() * sizeof(float), offset);
 
-			DisableAttributeArray();
-			buffer.Disable();
-			Disable();
-		}
-
-		void EnableAttributeArray(int id = 0) {
-			GL.EnableVertexAttribArray(id);
-		}
-
-		void DisableAttributeArray() {
 			GL.EnableVertexAttribArray(0);
-		}
 
-		public void Enable() {
-			GL.BindVertexArray(ID);
-		}
-
-		public void Disable() {
+			buffer.Disable();
 			GL.BindVertexArray(0);
 		}
+
+		public void Disable() => GL.BindVertexArray(0);
+
+		public void Enable() => GL.BindVertexArray(ID);
+
+		public void SetIndexBuffer(IndexBuffer buffer) => IndexBuffer = buffer;
 	}
 }

@@ -1,14 +1,27 @@
 using OpenTK;
 
 namespace Client {
+
 	public class Sprite : Component {
 		public Color GlowColor = Color.Black;
 		public float GlowIntensity = 1.0f;
-
 		public int GlowIterations = 10;
 		public float GlowSize = 0.5f;
 
-		public Sprite() { }
+		public bool Billboard { get; set; } = false;
+
+		public Color Color { get; set; } = Color.Transparent;
+
+		public bool Glow { get; set; } = false;
+
+		public IndexBuffer IndexBuffer { get; }
+
+		public Texture Texture { get; }
+
+		public VertexArray VertexArray { get; }
+
+		public Sprite() {
+		}
 
 		public Sprite(Texture texture) {
 			Texture = texture;
@@ -32,13 +45,5 @@ namespace Client {
 
 			IndexBuffer = index_buffer;
 		}
-
-		public Texture Texture { get; }
-		public VertexArray VertexArray { get; }
-		public IndexBuffer IndexBuffer { get; }
-
-		public Color Color { get; set; } = Color.Transparent;
-		public bool Glow { get; set; } = false;
-		public bool Billboard { get; set; } = false;
 	}
 }

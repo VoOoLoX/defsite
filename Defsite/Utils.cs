@@ -5,7 +5,7 @@ namespace Defsite {
 #if DEBUG
 		public static bool IsDebug = true;
 #else
-        public static bool IsDebug = false;
+		public static bool IsDebug = false;
 #endif
 
 		public static bool IsWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);

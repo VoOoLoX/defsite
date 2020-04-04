@@ -4,7 +4,9 @@ using OpenTK;
 using OpenTK.Graphics;
 
 namespace Client {
+
 	internal static class Program {
+
 		static void Main(string[] args) {
 			GameWindow window;
 

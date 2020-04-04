@@ -2,7 +2,11 @@ using System.IO;
 using OpenTK.Audio.OpenAL;
 
 namespace Client {
+
 	public class SoundBuffer {
+
+		public int ID { get; }
+
 		public SoundBuffer(string path) {
 			ID = AL.GenBuffer();
 
@@ -18,7 +22,5 @@ namespace Client {
 			ID = AL.GenBuffer();
 			AL.BufferData(ID, format, data, data.Length, sample_rate);
 		}
-
-		public int ID { get; }
 	}
 }

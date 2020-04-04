@@ -2,8 +2,21 @@ using OpenTK;
 using OpenTK.Audio.OpenAL;
 
 namespace Client {
+
 	public class SoundSource {
-		public SoundSource(string path) : this(path, Vector3.Zero) { }
+
+		public int ID { get; }
+
+		public Vector3 Position {
+			get {
+				AL.GetSource(ID, ALSource3f.Position, out var vec);
+				return vec;
+			}
+			set => AL.Source(ID, ALSource3f.Position, value.X, value.Y, value.Z);
+		}
+
+		public SoundSource(string path) : this(path, Vector3.Zero) {
+		}
 
 		public SoundSource(string path, Vector3 position) {
 			var buffer = new SoundBuffer(path);
@@ -18,25 +31,13 @@ namespace Client {
 			AL.Source(ID, ALSourcef.ReferenceDistance, 1f);
 			AL.Source(ID, ALSourcef.MaxDistance, 10);
 		}
-
-		public int ID { get; }
-
-		public Vector3 Position {
-			get {
-				AL.GetSource(ID, ALSource3f.Position, out var vec);
-				return vec;
-			}
-			set => AL.Source(ID, ALSource3f.Position, value.X, value.Y, value.Z);
+		public void Pause() {
+			AL.SourcePause(ID);
 		}
 
 		public void Play() {
 			AL.SourcePlay(ID);
 		}
-
-		public void Pause() {
-			AL.SourcePause(ID);
-		}
-
 		public void Rewind() {
 			AL.SourceRewind(ID);
 		}

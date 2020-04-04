@@ -2,7 +2,9 @@ using OpenTK;
 using OpenTK.Audio.OpenAL;
 
 namespace Client {
+
 	public static class SoundListener {
+
 		public static Vector3 Position {
 			get {
 				AL.GetListener(ALListener3f.Position, out var vec);
