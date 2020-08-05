@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
 	  <OutputType>exe</OutputType>
-	  <TargetFramework>netcoreapp3.0</TargetFramework>
-    <RuntimeIdentifiers>linux-x64;win-x64;win-x86;</RuntimeIdentifiers>
+	  <TargetFramework>net5.0</TargetFramework>
+    <RuntimeIdentifiers>linux-x64;win-x64;</RuntimeIdentifiers>
     <AssemblyVersion>$([System.DateTime]::Now.ToString(`y\.d\.H\.m`))</AssemblyVersion>
     <FileVersion>$([System.DateTime]::Now.ToString(`y\.d\.H\.m`))</FileVersion>
 	  <LangVersion>latest</LangVersion>

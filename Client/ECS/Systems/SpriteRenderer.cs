@@ -15,7 +15,7 @@ namespace Client {
 			GL.ClearColor(new Color(20, 20, 20, 255));
 			GL.Enable(EnableCap.Blend);
 			GL.Enable(EnableCap.Texture2D);
-			GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+			GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 		}
 
 		public void Render(IEnumerable<Entity> entities) {

@@ -9,7 +9,7 @@ namespace Client {
 
 		public Matrix4 ProjectionMatrix { get; private set; }
 
-		public PerspectiveCamera(Vector3 position, Quaternion rotation, float fov = 50, float z_near = 0.01f, float z_far = 100f) {
+		public PerspectiveCamera(Vector3 position, Quaternion rotation, float fov = 50, float z_near = 0.001f, float z_far = 100f) {
 			var transform = new Transform {
 				Position = position,
 				Rotation = rotation
@@ -23,7 +23,7 @@ namespace Client {
 			GetComponent<Transform>().SetMatrix(
 				Matrix4.LookAt(
 					position,
-					new Vector3(0, 0, -1),
+					new Vector3(0, 0, 0),
 					new Vector3(0, 1, 0)
 				)
 			);

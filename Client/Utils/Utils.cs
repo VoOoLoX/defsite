@@ -62,7 +62,7 @@ namespace Client {
 			return new Vector4(r, g, b, 1);
 		}
 
-		public static Vector4 ToVector(this Color color) => new Vector4(color.R / 255, color.G / 255, color.B / 255, color.A / 255);
+		public static Vector4 ToVector(this Color color) => new Vector4(color.R / 255f, color.G / 255f, color.B / 255f, color.A / 255f);
 
 		public static float Blerp(float start_x, float end_x, float start_y, float end_y, float amount_x, float amount_y) => Lerp(Lerp(start_x, end_x, amount_x), Lerp(start_y, end_y, amount_x), amount_y);
 

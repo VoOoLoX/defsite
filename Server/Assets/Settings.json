@@ -1,0 +1,9 @@
+{
+    "settings": {
+        "name": "eu",
+        "ip": "127.0.0.1",
+        "port": 1337,
+        "tps": 30,
+        "max_players": 50
+    }
+}

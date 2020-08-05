@@ -34,5 +34,34 @@ namespace Client {
 				};
 			}
 		}
+
+		public override bool Equals(object obj) {
+			if (!(obj is Vertex)) {
+				return false;
+			}
+			return Equals((Vertex)obj);
+		}
+
+		bool Equals(Vertex other) {
+			if (Position == other.Position && Color == other.Color && TextureCoordinates == other.TextureCoordinates && Normal == other.Normal)
+				return true;
+			return false;
+		}
+
+		public override int GetHashCode() {
+			return base.GetHashCode();
+		}
+
+		public override string ToString() {
+			return base.ToString();
+		}
+
+		public static bool operator ==(Vertex left, Vertex right) {
+			return left.Equals(right);
+		}
+
+		public static bool operator !=(Vertex left, Vertex right) {
+			return !(left == right);
+		}
 	}
 }

@@ -56,7 +56,6 @@ namespace Client {
 			var position = reader.BaseStream.Position;
 
 			if (count > 0) {
-				Texture = new Texture();
 				Layout = new Dictionary<char, CharInfo>();
 
 				var data_bytes = reader.ReadBytes((int)reader.BaseStream.Length - (int)position);

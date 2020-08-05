@@ -101,13 +101,11 @@ namespace Client {
 	public class VertexAttribute {
 		public int ComponentCount { get; set; }
 		public int ID { get; }
-		public string Name { get; }
 		public bool Normalized { get; private set; } = false;
 		public int Offset { get; set; }
 		public VertexAttributeType Type { get; set; }
-		public VertexAttribute(int id, string name, VertexAttributeType type, bool normalized = false) {
+		public VertexAttribute(int id, VertexAttributeType type, bool normalized = false) {
 			ID = id;
-			Name = name;
 			Type = type;
 			Normalized = normalized;
 		}
