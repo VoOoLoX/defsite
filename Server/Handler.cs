@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Defsite;
+using Common;
 
 namespace Server {
 	public abstract class Handler {
 		protected List<Client> Clients = new List<Client>();
-		long delta_update_time = 0;
 
-		long now = DateTime.Now.Ticks;
+		bool start_fixed_updates = true;
+
+		AutoResetEvent fixed_update_state = new AutoResetEvent(false);
 		object update_clients_lock = new object();
 
 		protected virtual int TPS => 20;
@@ -21,19 +22,21 @@ namespace Server {
 
 		protected virtual void Update() { }
 
-		protected virtual void FixedUpdate(long delta_time) { }
+		protected virtual void FixedUpdate(object state) { }
 
 		public void Run(bool fixed_time_step = false) {
 			UpdateClients(Server.GetClients());
 
-			if (fixed_time_step) {
-				now = DateTime.Now.Millisecond;
-				FixedUpdate(delta_update_time);
-				delta_update_time = DateTime.Now.Millisecond - now;
-				if (delta_update_time < 1000 / TPS) Thread.Sleep(1000 / TPS - (int) delta_update_time);
-			} else {
-				Update();
+			if (fixed_time_step && start_fixed_updates) {
+				start_fixed_updates = false;
+				var timer = new Timer(FixedUpdate, fixed_update_state, 0, 1000 / TPS);
+				// now = DateTime.Now.Millisecond;
+				// FixedUpdate(delta_update_time);
+				// delta_update_time = DateTime.Now.Millisecond - now;
+				// if (delta_update_time < 1000 / TPS) Thread.Sleep(1000 / TPS - (int)delta_update_time);
 			}
+			Update();
+
 		}
 	}
 }

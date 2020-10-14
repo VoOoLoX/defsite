@@ -8,7 +8,7 @@ namespace Server {
 
 		protected override int TPS => ticks_per_sec;
 
-		protected override void FixedUpdate(long dt) {
+		protected override void FixedUpdate(object state) {
 			//foreach (var client in Clients.ToArray()) {
 			//	if (client.IsConnected())
 			//		client.Recieve();

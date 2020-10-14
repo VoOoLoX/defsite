@@ -1,6 +1,6 @@
-Defsite:
+Common:
 	✔ Logging @done
-Client:
+Defsite:
 	✔ Basic OpenAL classes @done
 	✔ Basic WAV file reader @done
 	✔ General files classes for images, sounds, fonts, etc. @done

@@ -2,13 +2,13 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Debug Client",
+			"name": "Debug Defsite",
 			"type": "coreclr",
 			"request": "launch",
-			"preLaunchTask": "build_client",
-			"program": "${workspaceFolder}/Client/bin/Debug/Client.dll",
+			"preLaunchTask": "Build Defsite",
+			"program": "${workspaceFolder}/Defsite/bin/Debug/Defsite.dll",
 			"args": [],
-			"cwd": "${workspaceFolder}/Client/bin/Debug/",
+			"cwd": "${workspaceFolder}/Defsite/bin/Debug/",
 			"console": "internalConsole",
 			"logging": {
 				"moduleLoad": false
@@ -20,7 +20,7 @@
 			"name": "Debug Server",
 			"type": "coreclr",
 			"request": "launch",
-			"preLaunchTask": "build_server",
+			"preLaunchTask": "Build Server",
 			"program": "${workspaceFolder}/Server/bin/Debug/Server.dll",
 			"args": [],
 			"cwd": "${workspaceFolder}/Server/bin/Debug/",

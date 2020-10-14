@@ -1,0 +1,29 @@
+{
+	"Assets": [
+		{
+			"Type": "Texture",
+			"Name": "Ground",
+			"Path": "Textures/Ground.vif"
+		},
+		{
+			"Type": "Font",
+			"Name": "Monogram",
+			"Path": "Fonts/Monogram.vff"
+		},
+		{
+			"Type": "Shader",
+			"Name": "ColorShader",
+			"Path": "Shaders/Color.glsl"
+		},
+		{
+			"Type": "Shader",
+			"Name": "TextureShader",
+			"Path": "Shaders/Texture.glsl"
+		},
+		{
+			"Type": "Sound",
+			"Name": "Fireplace",
+			"Path": "Sounds/Fireplace.vsf"
+		}
+	]
+}

@@ -5,7 +5,7 @@ namespace Server {
 
 		protected override int TPS => 1000;
 
-		protected override void FixedUpdate(long dt) {
+		protected override void FixedUpdate(object state) {
 			//Console.WriteLine("DatabaseHandler update");
 		}
 	}

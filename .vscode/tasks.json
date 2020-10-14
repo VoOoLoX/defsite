@@ -2,34 +2,24 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "run_client",
+			"label": "Run Defsite",
 			"command": "dotnet",
 			"type": "process",
 			"options": {
-				"cwd": "${workspaceFolder}/Client/bin/Debug/"
+				"cwd": "${workspaceFolder}/Defsite/bin/Debug/"
 			},
 			"args": [
 				"run",
 				"--project",
-				"${workspaceFolder}/Client/Client.csproj"
+				"${workspaceFolder}/Defsite/Defsite.csproj"
 			],
 			"problemMatcher": "$msCompile",
 			"dependsOn": [
-				"buiild_client"
+				"Build Defsite"
 			]
 		},
 		{
-			"label": "build_client",
-			"command": "dotnet",
-			"type": "process",
-			"args": [
-				"build",
-				"${workspaceFolder}/Client/Client.csproj"
-			],
-			"problemMatcher": "$msCompile"
-		},
-		{
-			"label": "build_defsite",
+			"label": "Build Defsite",
 			"command": "dotnet",
 			"type": "process",
 			"args": [
@@ -39,7 +29,34 @@
 			"problemMatcher": "$msCompile"
 		},
 		{
-			"label": "build_server",
+			"label": "Build Common",
+			"command": "dotnet",
+			"type": "process",
+			"args": [
+				"build",
+				"${workspaceFolder}/Common/Common.csproj"
+			],
+			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "Run Server",
+			"command": "dotnet",
+			"type": "process",
+			"options": {
+				"cwd": "${workspaceFolder}/Server/bin/Debug/"
+			},
+			"args": [
+				"run",
+				"--project",
+				"${workspaceFolder}/Server/Server.csproj"
+			],
+			"problemMatcher": "$msCompile",
+			"dependsOn": [
+				"Build Server"
+			]
+		},
+		{
+			"label": "Build Server",
 			"command": "dotnet",
 			"type": "process",
 			"args": [

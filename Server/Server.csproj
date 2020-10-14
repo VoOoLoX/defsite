@@ -22,11 +22,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Defsite\Defsite.csproj" />
+    <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-	  <Content Include="Assets\Settings.toml">
+	  <Content Include="Assets\Settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
