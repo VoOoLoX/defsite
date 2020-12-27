@@ -1,11 +1,19 @@
-using OpenTK;
+using System;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Mathematics;
 
 namespace Defsite {
 
 	public class VertexBuffer {
 		public int ID { get; }
 		public BufferLayout Layout { get; set; }
+
+		public VertexBuffer(int size) {
+			ID = GL.GenBuffer();
+			GL.BindBuffer(BufferTarget.ArrayBuffer, ID);
+			SetData(size);
+			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+		}
 
 		public VertexBuffer(Vertex[] data) {
 			ID = GL.GenBuffer();
@@ -17,6 +25,23 @@ namespace Defsite {
 		public void Disable() => GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 
 		public void Enable() => GL.BindBuffer(BufferTarget.ArrayBuffer, ID);
+
+		public void SetSubData(int size, IntPtr data, int offset = 0) {
+			GL.BindBuffer(BufferTarget.ArrayBuffer, ID);
+
+			GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, size, data);
+			//GL.BufferData(BufferTarget.ArrayBuffer, size, data, BufferUsageHint.DynamicDraw);
+
+			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+		}
+
+		public void SetData(int size) {
+			GL.BindBuffer(BufferTarget.ArrayBuffer, ID);
+
+			GL.BufferData(BufferTarget.ArrayBuffer, size, IntPtr.Zero, BufferUsageHint.DynamicDraw);
+
+			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+		}
 
 		public void SetData(Vertex[] data) {
 			GL.BindBuffer(BufferTarget.ArrayBuffer, ID);

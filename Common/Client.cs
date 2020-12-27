@@ -3,7 +3,7 @@ using System.Net.Sockets;
 
 namespace Common {
 	public class Client {
-		public TcpClient Socket = new TcpClient();
+		public TcpClient Socket = new();
 
 
 		public Client() {

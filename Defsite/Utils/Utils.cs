@@ -1,18 +1,22 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using OpenTK;
+using Common;
+using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
 
 namespace Defsite {
 
 	public static class Utils {
 
 		public static async Task<byte[]> CompressAsync(this byte[] byte_array) {
-			using var result = new MemoryStream();
-			using var g_zip_stream = new GZipStream(result, CompressionMode.Compress);
+			await using var result = new MemoryStream();
+			await using var g_zip_stream = new GZipStream(result, CompressionMode.Compress);
 
 			await g_zip_stream.WriteAsync(byte_array, 0, byte_array.Length);
 			g_zip_stream.Close();
@@ -20,9 +24,9 @@ namespace Defsite {
 		}
 
 		public static async Task<byte[]> DecompressAsync(this byte[] byte_array) {
-			using var stream = new MemoryStream(byte_array);
-			using var g_zip_stream = new GZipStream(stream, CompressionMode.Decompress);
-			using var result = new MemoryStream();
+			await using var stream = new MemoryStream(byte_array);
+			await using var g_zip_stream = new GZipStream(stream, CompressionMode.Decompress);
+			await using var result = new MemoryStream();
 
 			await g_zip_stream.CopyToAsync(result);
 			return result.ToArray();
@@ -36,6 +40,14 @@ namespace Defsite {
 			return index;
 		}
 
+		public static void CheckGLError([CallerFilePath] string file = "", [CallerLineNumber] int line_number = 0) {
+			var error = GL.GetError();
+			if (error != ErrorCode.NoError) {
+				var file_info = new FileInfo(file);
+				Log.Error($"<{file_info.Name.Split('.')[0]}:{line_number}> {error}");
+			}
+		}
+
 		public static float Lerp(float start, float end, float amount) => start + end - start * amount;
 
 		public static Color Lerp(this Color color, Color to, float amount) {
@@ -43,26 +55,29 @@ namespace Defsite {
 
 			byte er = to.R, eg = to.G, eb = to.B;
 
-			byte r = Convert.ToByte(Lerp(sr, er, amount));
-			byte g = Convert.ToByte(Lerp(sg, eg, amount));
-			byte b = Convert.ToByte(Lerp(sb, eb, amount));
+			var r = Convert.ToByte(Lerp(sr, er, amount));
+			var g = Convert.ToByte(Lerp(sg, eg, amount));
+			var b = Convert.ToByte(Lerp(sb, eb, amount));
 
 			return Color.FromArgb(255, r, g, b);
 		}
 
 		public static Vector4 Lerp(this Vector4 color, Vector4 to, float amount) {
-			float sr = color.X, sg = color.Y, sb = color.Z;
+			var (sr, sg, sb, sa) = color;
 
-			float er = to.X, eg = to.Y, eb = to.Z;
+			var (er, eg, eb, ea) = to;
 
-			float r = Lerp(sr, er, amount);
-			float g = Lerp(sg, eg, amount);
-			float b = Lerp(sb, eb, amount);
+			var r = Lerp(sr, er, amount);
+			var g = Lerp(sg, eg, amount);
+			var b = Lerp(sb, eb, amount);
+			var a = Lerp(sa, ea, amount);
 
-			return new Vector4(r, g, b, 1);
+			return new Vector4(r, g, b, a);
 		}
 
-		public static Vector4 ToVector(this Color color) => new Vector4(color.R / 255f, color.G / 255f, color.B / 255f, color.A / 255f);
+		public static Vector4 ToVector(this Color color) => new(color.R / 255f, color.G / 255f, color.B / 255f, color.A / 255f);
+
+		public static Vector2 ToVector(this Point point) => new(point.X, point.Y);
 
 		public static float Blerp(float start_x, float end_x, float start_y, float end_y, float amount_x, float amount_y) => Lerp(Lerp(start_x, end_x, amount_x), Lerp(start_y, end_y, amount_x), amount_y);
 
@@ -71,9 +86,9 @@ namespace Defsite {
 
 			byte er = to.R, eg = to.G, eb = to.B;
 
-			byte r = Convert.ToByte(Blerp(sr, er, sr, er, amount_x, amount_y));
-			byte g = Convert.ToByte(Blerp(sg, eg, sg, eg, amount_x, amount_y));
-			byte b = Convert.ToByte(Blerp(sb, eb, sb, eb, amount_x, amount_y));
+			var r = Convert.ToByte(Blerp(sr, er, sr, er, amount_x, amount_y));
+			var g = Convert.ToByte(Blerp(sg, eg, sg, eg, amount_x, amount_y));
+			var b = Convert.ToByte(Blerp(sb, eb, sb, eb, amount_x, amount_y));
 
 			return Color.FromArgb(255, r, g, b);
 		}

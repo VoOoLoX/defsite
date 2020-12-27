@@ -6,34 +6,33 @@ using Common;
 
 namespace Server {
 	public class Server {
-		static object remove_client_lock = new object();
-		static object update_clients_lock = new object();
-		static object get_clients_lock = new object();
-		static object add_clients_lock = new object();
+		static object remove_client_lock = new();
+		static object update_clients_lock = new();
+		static object get_clients_lock = new();
+		static object add_clients_lock = new();
 
-		static List<Client> clients = new List<Client>();
+		static List<Client> clients = new();
 
 		public DatabaseHandler DatabaseHandler;
 		public GameHandler GameHandler;
-		IPAddress ip;
-		string name;
 		public NetworkHandler NetworkHandler;
-		int port = 0;
 
 		public bool Running = true;
 
 		public Server(string ip, int port, string name, int max_players, int tps) {
-			this.ip = IPAddress.Parse(ip);
-			this.port = port;
-			this.name = name;
+			IP = IPAddress.Parse(ip);
+			Port = port;
+			Name = name;
 			DatabaseHandler = new DatabaseHandler();
 			GameHandler = new GameHandler(max_players, tps);
 			NetworkHandler = new NetworkHandler();
 		}
 
-		public IPAddress IP => ip;
-		public string Name => name;
-		public int Port => port;
+		public IPAddress IP { get; }
+
+		public string Name { get; }
+
+		public int Port { get; }
 
 		public static List<Client> GetClients() {
 			lock (get_clients_lock) {
@@ -54,7 +53,7 @@ namespace Server {
 		}
 
 		public void Run() {
-			var server = new TcpListener(ip, port);
+			var server = new TcpListener(IP, Port);
 
 			server.Start();
 			Log.Info("Server started");
@@ -69,7 +68,7 @@ namespace Server {
 					Log.Info($"Added client: {client_socket.Client.RemoteEndPoint}");
 				}
 
-			Log.Info($"Stopping server: {name}");
+			Log.Info($"Stopping server: {Name}");
 			Running = false;
 			server.Stop();
 		}

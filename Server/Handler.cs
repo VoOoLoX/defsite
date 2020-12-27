@@ -1,16 +1,15 @@
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using Common;
 
 namespace Server {
 	public abstract class Handler {
-		protected List<Client> Clients = new List<Client>();
+		protected List<Client> Clients = new();
 
 		bool start_fixed_updates = true;
 
-		AutoResetEvent fixed_update_state = new AutoResetEvent(false);
-		object update_clients_lock = new object();
+		AutoResetEvent fixed_update_state = new(false);
+		object update_clients_lock = new();
 
 		protected virtual int TPS => 20;
 
@@ -29,7 +28,7 @@ namespace Server {
 
 			if (fixed_time_step && start_fixed_updates) {
 				start_fixed_updates = false;
-				var timer = new Timer(FixedUpdate, fixed_update_state, 0, 1000 / TPS);
+				var _ = new Timer(FixedUpdate, fixed_update_state, 0, 1000 / TPS);
 				// now = DateTime.Now.Millisecond;
 				// FixedUpdate(delta_update_time);
 				// delta_update_time = DateTime.Now.Millisecond - now;

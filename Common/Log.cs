@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 namespace Common {
 	public static class Log {
 		const short tab_size = 4;
-		static short indent_level = 0;
+		static short indent_level;
 
 		public static void Indent() {
 			indent_level++;

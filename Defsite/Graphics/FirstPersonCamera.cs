@@ -1,6 +1,5 @@
 using System;
-using OpenTK;
-using OpenTK.Input;
+using OpenTK.Mathematics;
 
 namespace Defsite {
 	public class FirstPersonCamera {
@@ -72,7 +71,7 @@ namespace Defsite {
 		}
 
 		public void Update() {
-			var mouse = Mouse.GetState();
+			var mouse = Input.MousePos;
 
 			if (move) {
 				old_x = mouse.X;

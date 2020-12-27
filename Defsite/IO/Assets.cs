@@ -26,9 +26,9 @@ namespace Defsite {
 	}
 
 	public static class Assets {
-		static Dictionary<string, (AssetType type, object obj)> assets = new Dictionary<string, (AssetType, object)>();
+		static Dictionary<string, (AssetType type, object obj)> assets = new();
 
-		static AssetsSettings settings = default;
+		static AssetsSettings settings;
 
 		static string assets_root = "Assets";
 
@@ -40,9 +40,9 @@ namespace Defsite {
 
 		public static List<T> GetAll<T>(AssetType type) {
 			var result = new List<T>();
-			foreach (var asset in assets) {
-				if (asset.Value.type == type)
-					result.Add((T)Convert.ChangeType(asset.Value.obj, typeof(T)));
+			foreach (var (_, value) in assets) {
+				if (value.type == type)
+					result.Add((T)Convert.ChangeType(value.obj, typeof(T)));
 			}
 
 			return result;

@@ -10,7 +10,7 @@ namespace Defsite {
 
 	public class ShaderFile {
 
-		public static ShaderFile Default = new ShaderFile(new MemoryStream(Encoding.ASCII.GetBytes(@"
+		public static ShaderFile Default = new(new MemoryStream(Encoding.ASCII.GetBytes(@"
 			#type vertex
 			#version 130
 
@@ -34,9 +34,9 @@ namespace Defsite {
 			}"
 		)));
 
-		bool from_file = false;
+		bool from_file;
 
-		bool from_stream = false;
+		bool from_stream;
 
 		FileInfo shader_file_info;
 

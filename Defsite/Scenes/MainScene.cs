@@ -1,7 +1,3 @@
-using System;
-using OpenTK;
-using OpenTK.Input;
-
 namespace Defsite {
 
 	public class MainScene : Scene {

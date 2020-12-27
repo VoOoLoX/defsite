@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using Common;
@@ -7,11 +6,11 @@ namespace Server {
 	public class NetworkHandler : Handler {
 		const int max_message_size = 4096;
 
-		MessageManager message_manager = new MessageManager();
+		MessageManager message_manager = new();
 
 		static bool IsConnected(Client client) {
 			try {
-				if (client.Socket != null && client.Socket.Client != null && client.Socket.Client.Connected)
+				if (client.Socket?.Client != null && client.Socket.Client.Connected)
 					return !(client.Socket.Client.Poll(0, SelectMode.SelectRead) && client.Socket.Client.Available == 0);
 				return false;
 			} catch (SocketException) {
@@ -23,14 +22,14 @@ namespace Server {
 			if (IsConnected(client)) client.Socket.Client.Disconnect(true);
 		}
 
-		async void Recieve(Client client) {
+		async void Receive(Client client) {
 			if (IsConnected(client)) {
-				byte[] data = new byte[max_message_size];
+				var data = new byte[max_message_size];
 				var stream = client.Socket.GetStream();
 				if (stream.DataAvailable) {
 					var message_length = 0;
 					while ((message_length = await stream.ReadAsync(data, 0, data.Length)) != 0)
-						message_manager.Recieve(client, data, message_length);
+						message_manager.Receive(client, data, message_length);
 				}
 			}
 		}
@@ -45,7 +44,7 @@ namespace Server {
 		protected override void Update() {
 			foreach (var client in Clients.ToArray())
 				if (IsConnected(client)) {
-					Recieve(client);
+					Receive(client);
 				} else {
 					Disconnect(client);
 					Server.RemoveClient(client);

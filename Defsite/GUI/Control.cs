@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using OpenTK;
+﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace Defsite {
 
@@ -9,7 +7,7 @@ namespace Defsite {
 		public string Name { get; protected set; }
 		public Rectangle Rectangle { get; protected set; }
 		public List<Vertex> Vertices { get; protected set; }
-		public Control Parent { get; protected set; } = null;
+		public Control Parent { get; protected set; }
 		public List<Control> Children { get; protected set; }
 
 		public void Add(Control control) {

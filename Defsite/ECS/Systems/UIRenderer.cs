@@ -1,31 +1,32 @@
 using System;
 using System.Collections.Generic;
-using OpenTK;
+using System.Drawing;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Mathematics;
 
 namespace Defsite {
 
 	public class UIRenderer : ISystem {
-		OrthographicCamera Camera;
+		OrthographicCamera camera;
 
-		Shader SpriteShader = Assets.Get<Shader>("SpriteShader");
+		Shader sprite_shader = Assets.Get<Shader>("SpriteShader");
 
 		public UIRenderer() {
-			Camera = new OrthographicCamera();
-			GL.ClearColor(new Color(20, 20, 20, 255));
+			camera = new OrthographicCamera();
+			GL.ClearColor(Color.FromArgb(20, 20, 20, 255));
 			GL.Enable(EnableCap.Blend);
 			GL.Enable(EnableCap.Texture2D);
 			GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 		}
 
 		public void Render(IEnumerable<EntityOLD> entities) {
-			Camera.UpdateProjection();
+			camera.UpdateProjection();
 
-			SpriteShader.Enable();
+			sprite_shader.Enable();
 
-			SpriteShader.Set("projection", Camera.ProjectionMatrix);
+			sprite_shader.Set("projection", camera.ProjectionMatrix);
 
-			SpriteShader.Set("view", Matrix4.Identity);
+			sprite_shader.Set("view", Matrix4.Identity);
 
 			foreach (var entity in entities) {
 				if (!entity.HasComponent<SpriteComponent>() || !entity.HasComponent<Transform>()) continue;
@@ -36,23 +37,23 @@ namespace Defsite {
 				sprite.IndexBuffer.Enable();
 				sprite.Texture.Enable();
 
-				SpriteShader.Set("model", entity.GetComponent<Transform>().Matrix);
+				sprite_shader.Set("model", entity.GetComponent<Transform>().Matrix);
 
-				SpriteShader.Set("override_color", sprite.Color != Color.Transparent);
+				sprite_shader.Set("override_color", sprite.Color != Color.Transparent);
 
-				SpriteShader.Set("color", sprite.Color);
+				sprite_shader.Set("color", sprite.Color);
 
-				SpriteShader.Set("billboard", sprite.Billboard);
+				sprite_shader.Set("billboard", sprite.Billboard);
 
-				SpriteShader.Set("glow", sprite.GlowColor != Color.Black || sprite.GlowIterations != 10 || Math.Abs(sprite.GlowSize - 0.5f) > 0.05 || Math.Abs(sprite.GlowIntensity - 1.0f) > 0.05 || sprite.Glow);
+				sprite_shader.Set("glow", sprite.GlowColor != Color.Black || sprite.GlowIterations != 10 || Math.Abs(sprite.GlowSize - 0.5f) > 0.05 || Math.Abs(sprite.GlowIntensity - 1.0f) > 0.05 || sprite.Glow);
 
-				SpriteShader.Set("glow_iterations", sprite.GlowIterations);
+				sprite_shader.Set("glow_iterations", sprite.GlowIterations);
 
-				SpriteShader.Set("glow_color", sprite.GlowColor);
+				sprite_shader.Set("glow_color", sprite.GlowColor);
 
-				SpriteShader.Set("glow_size", sprite.GlowSize);
+				sprite_shader.Set("glow_size", sprite.GlowSize);
 
-				SpriteShader.Set("glow_intensity", sprite.GlowIntensity);
+				sprite_shader.Set("glow_intensity", sprite.GlowIntensity);
 
 				GL.DrawElements(PrimitiveType.Quads, sprite.IndexBuffer.Count, DrawElementsType.UnsignedInt, 0);
 			}

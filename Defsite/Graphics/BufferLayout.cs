@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 
 namespace Defsite {
 
@@ -10,6 +10,7 @@ namespace Defsite {
 		Vector2,
 		Vector3,
 		Vector4,
+		Vector4b,
 		Color,
 		Bool,
 		Int,
@@ -17,11 +18,11 @@ namespace Defsite {
 	}
 
 	public class BufferLayout {
-		public List<VertexAttribute> Attributes { get; private set; } = new List<VertexAttribute>();
-		public int Stride { get; private set; } = 0;
+		public List<VertexAttribute> Attributes { get; private set; } = new();
+		public int Stride { get; private set; }
 
 		public BufferLayout(List<VertexAttribute> attributes) {
-			int offset = 0;
+			var offset = 0;
 
 			foreach (var attribute in attributes) {
 				attribute.ComponentCount = GetComponentCount(attribute.Type);
@@ -34,74 +35,38 @@ namespace Defsite {
 		}
 
 		public int GetComponentCount(VertexAttributeType type) {
-			switch (type) {
-				case VertexAttributeType.Matrix2:
-					return 2 * 2;
-
-				case VertexAttributeType.Matrix3:
-					return 3 * 3;
-
-				case VertexAttributeType.Matrix4:
-					return 4 * 4;
-
-				case VertexAttributeType.Bool:
-				case VertexAttributeType.Int:
-				case VertexAttributeType.Float:
-					return 1;
-
-				case VertexAttributeType.Vector2:
-					return 2;
-
-				case VertexAttributeType.Vector3:
-					return 3;
-
-				case VertexAttributeType.Vector4:
-				case VertexAttributeType.Color:
-					return 4;
-
-				default:
-					return 0;
-			}
+			return type switch {
+				VertexAttributeType.Matrix2 => 2 * 2,
+				VertexAttributeType.Matrix3 => 3 * 3,
+				VertexAttributeType.Matrix4 => 4 * 4,
+				VertexAttributeType.Bool or VertexAttributeType.Int or VertexAttributeType.Float => 1,
+				VertexAttributeType.Vector2 => 2,
+				VertexAttributeType.Vector3 => 3,
+				VertexAttributeType.Vector4 or VertexAttributeType.Vector4b or VertexAttributeType.Color => 4,
+				_ => 0,
+			};
 		}
 
 		int GetComponentSize(VertexAttributeType type) {
-			switch (type) {
-				case VertexAttributeType.Matrix2:
-					return 2 * 2 * sizeof(float);
-
-				case VertexAttributeType.Matrix3:
-					return 3 * 3 * sizeof(float);
-
-				case VertexAttributeType.Matrix4:
-					return 4 * 4 * sizeof(float);
-
-				case VertexAttributeType.Bool:
-					return 1;
-
-				case VertexAttributeType.Int:
-				case VertexAttributeType.Float:
-					return sizeof(float);
-
-				case VertexAttributeType.Vector2:
-					return 2 * sizeof(float);
-
-				case VertexAttributeType.Vector3:
-					return 3 * sizeof(float);
-
-				case VertexAttributeType.Vector4:
-				case VertexAttributeType.Color:
-					return 4 * sizeof(float);
-
-				default:
-					return 0;
-			}
+			return type switch {
+				VertexAttributeType.Matrix2 => 2 * 2 * sizeof(float),
+				VertexAttributeType.Matrix3 => 3 * 3 * sizeof(float),
+				VertexAttributeType.Matrix4 => 4 * 4 * sizeof(float),
+				VertexAttributeType.Bool => 1,
+				VertexAttributeType.Int or VertexAttributeType.Float => sizeof(float),
+				VertexAttributeType.Vector2 => 2 * sizeof(float),
+				VertexAttributeType.Vector3 => 3 * sizeof(float),
+				VertexAttributeType.Vector4b => 4 * sizeof(byte),
+				VertexAttributeType.Vector4 or VertexAttributeType.Color => 4 * sizeof(float),
+				_ => 0,
+			};
 		}
 	}
 
 	public class VertexAttribute {
 		public int ComponentCount { get; set; }
 		public int ID { get; }
-		public bool Normalized { get; private set; } = false;
+		public bool Normalized { get; private set; }
 		public int Offset { get; set; }
 		public VertexAttributeType Type { get; set; }
 		public VertexAttribute(int id, VertexAttributeType type, bool normalized = false) {
@@ -111,24 +76,12 @@ namespace Defsite {
 		}
 
 		public VertexAttribPointerType GetVertexAttribPointerType() {
-			switch (Type) {
-				case VertexAttributeType.Matrix2:
-				case VertexAttributeType.Matrix3:
-				case VertexAttributeType.Matrix4:
-				case VertexAttributeType.Float:
-				case VertexAttributeType.Vector2:
-				case VertexAttributeType.Vector3:
-				case VertexAttributeType.Vector4:
-				case VertexAttributeType.Color:
-					return VertexAttribPointerType.Float;
-
-				case VertexAttributeType.Bool:
-				case VertexAttributeType.Int:
-					return VertexAttribPointerType.Int;
-
-				default:
-					return VertexAttribPointerType.Int;
-			}
+			return Type switch {
+				VertexAttributeType.Matrix2 or VertexAttributeType.Matrix3 or VertexAttributeType.Matrix4 or VertexAttributeType.Float or VertexAttributeType.Vector2 or VertexAttributeType.Vector3 or VertexAttributeType.Vector4 or VertexAttributeType.Color => VertexAttribPointerType.Float,
+				VertexAttributeType.Bool or VertexAttributeType.Int => VertexAttribPointerType.Int,
+				VertexAttributeType.Vector4b => VertexAttribPointerType.UnsignedByte,
+				_ => VertexAttribPointerType.Int,
+			};
 		}
 	}
 }

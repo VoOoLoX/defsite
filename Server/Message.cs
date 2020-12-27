@@ -7,10 +7,10 @@ using System.Text;
 namespace Server {
 	public abstract class Message {
 		int reader_index;
-		public abstract MessageType Type { get; }
-		public List<byte> Data { get; } = new List<byte>();
+		protected abstract MessageType Type { get; }
+		public List<byte> Data { get; } = new();
 
-		public Message(bool outgoing = false) => ResetIndex(outgoing);
+		protected Message(bool outgoing = false) => ResetIndex(outgoing);
 
 		protected void ResetIndex(bool outgoing = false) {
 			if (!outgoing)
@@ -18,7 +18,7 @@ namespace Server {
 			reader_index = 0;
 		}
 
-		public void WriteBytes<T>(T data) {
+		protected void WriteBytes<T>(T data) {
 			switch (data) {
 				case bool bool_value:
 					var b_value = BitConverter.GetBytes(bool_value);
@@ -58,7 +58,7 @@ namespace Server {
 			}
 		}
 
-		public T ReadBytes<T>(byte[] data) {
+		protected T ReadBytes<T>(byte[] data) {
 			if (typeof(T) == typeof(bool)) {
 				var b_value = BitConverter.ToBoolean(data.Skip(reader_index).ToArray());
 				reader_index += sizeof(bool);
@@ -110,27 +110,27 @@ namespace Server {
 
 	//Messages received from client
 	public class MessageUnknown : Message {
-		public override MessageType Type => MessageType.Unknown;
+		protected override MessageType Type => MessageType.Unknown;
 	}
 
 	public class MessageLogin : Message {
-		public MessageLogin(byte[] data) : base() {
+		public MessageLogin(byte[] data) {
 			Username = ReadBytes<string>(data);
 			Password = ReadBytes<string>(data);
 		}
 
-		public override MessageType Type => MessageType.Login;
+		protected override MessageType Type => MessageType.Login;
 
 		public string Username { get; private set; }
 		public string Password { get; private set; }
 	}
 
 	public class MessageBroadcast : Message {
-		public MessageBroadcast(byte[] data) : base() {
+		public MessageBroadcast(byte[] data) {
 			Message = ReadBytes<string>(data);
 		}
 
-		public override MessageType Type => MessageType.Broadcast;
+		protected override MessageType Type => MessageType.Broadcast;
 
 		public string Message { get; private set; }
 	}
@@ -141,6 +141,6 @@ namespace Server {
 			WriteBytes(text);
 		}
 
-		public override MessageType Type => MessageType.Text;
+		protected override MessageType Type => MessageType.Text;
 	}
 }

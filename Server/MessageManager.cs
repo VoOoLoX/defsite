@@ -1,11 +1,10 @@
 using System;
 using System.Linq;
-using System.Text;
 using Common;
 
 namespace Server {
 	public class MessageManager {
-		public void Recieve(Client client, byte[] data, int length) {
+		public void Receive(Client client, byte[] data, int length) {
 			if (data.Length < 1) // Disconnect client???
 				return;
 

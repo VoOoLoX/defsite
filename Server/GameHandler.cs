@@ -1,12 +1,10 @@
 namespace Server {
 	public class GameHandler : Handler {
-		int ticks_per_sec;
-
 		public GameHandler(int max_players, int tps) {
-			ticks_per_sec = tps;
+			TPS = tps;
 		}
 
-		protected override int TPS => ticks_per_sec;
+		protected override int TPS { get; }
 
 		protected override void FixedUpdate(object state) {
 			//foreach (var client in Clients.ToArray()) {

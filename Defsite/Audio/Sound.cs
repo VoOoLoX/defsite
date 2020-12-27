@@ -1,5 +1,5 @@
-using OpenTK;
 using OpenTK.Audio.OpenAL;
+using OpenTK.Mathematics;
 
 namespace Defsite {
 
@@ -23,7 +23,7 @@ namespace Defsite {
 			ID = AL.GenSource();
 			AL.Source(ID, ALSourcei.Buffer, buffer.ID);
 
-			AL.DistanceModel(ALDistanceModel.LinearDistance);
+			AL.DistanceModel(ALDistanceModel.ExponentDistance);
 			AL.Source(ID, ALSourcef.Gain, 1.0f);
 			AL.Source(ID, ALSourcef.Pitch, 1.0f);
 			AL.Source(ID, ALSource3f.Position, position.X, position.Y, position.Z);

@@ -12,9 +12,9 @@ namespace Defsite {
 			Sound = 0b0100
 		}
 
-		static uint start_id = 0;
+		static uint start_id;
 
-		List<Component> components = new List<Component>();
+		List<Component> components = new();
 
 		public uint ID { get; private set; }
 

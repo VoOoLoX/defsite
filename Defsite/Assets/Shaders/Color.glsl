@@ -1,25 +1,27 @@
 #type vertex
-#version 330
+#version 450
 
-layout(location = 0) in vec3 v_position;
-layout(location = 1) in vec4 v_color;
+in vec3 v_position;
+in vec4 v_color;
+
+out vec4 f_color;
 
 uniform mat4 u_projection;
 uniform mat4 u_view;
 uniform mat4 u_model;
 
-out vec4 f_color;
-
 void main() {
-	gl_Position = u_projection * u_view * u_model * vec4(v_position, 1.0);
 	f_color = v_color;
+	gl_Position = u_projection * u_view * u_model * vec4(v_position, 1.0);
 }
 
 #type pixel
-#version 330
+#version 450
 
 in vec4 f_color;
 
+out vec4 o_color;
+
 void main() {
-	gl_FragColor = f_color;
+	o_color = f_color;
 }

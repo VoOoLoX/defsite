@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using Common;
-using OpenTK;
 
 namespace Defsite {
 
@@ -34,7 +34,7 @@ namespace Defsite {
 	}
 
 	public class TextureFile {
-		public static TextureFile Default = new TextureFile(1, 1, new List<Pixel>() { new Pixel(Color.White), new Pixel(Color.White) });
+		public static readonly TextureFile Default = new(1, 1, new List<Pixel> { new(Color.White), new(Color.White) });
 
 		public byte[] Bytes {
 			get {
@@ -47,6 +47,12 @@ namespace Defsite {
 				}
 
 				return ret.ToArray();
+			}
+			private set {
+				var pixels = new List<Pixel>();
+				for (var i = 0; i < value.Length; i += 4)
+					pixels.Add(new Pixel(value[i + 0], value[i + 1], value[i + 2], value[i + 3]));
+				Pixels = pixels;
 			}
 		}
 
@@ -64,6 +70,19 @@ namespace Defsite {
 			Width = width;
 			Height = height;
 			Pixels = pixels;
+			Components = comps;
+		}
+
+		public TextureFile(ushort width, ushort height, IntPtr pixels, int size, byte comps = 4) {
+			Width = width;
+			Height = height;
+
+			var bytes = new byte[size];
+
+			Marshal.Copy(pixels, bytes, 0, size);
+
+			Bytes = bytes;
+
 			Components = comps;
 		}
 

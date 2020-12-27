@@ -1,26 +1,24 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Common;
-using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Mathematics;
 
 namespace Defsite {
 	public class Shader {
-		Dictionary<string, int> attribute_location_cache = new Dictionary<string, int>();
-		Dictionary<string, int> uniform_location_cache = new Dictionary<string, int>();
+		Dictionary<string, int> attribute_location_cache = new();
+		Dictionary<string, int> uniform_location_cache = new();
 
 		ShaderFile shader_file;
-		List<int> shaders = new List<int>();
+		List<int> shaders = new();
 		public int ID { get; private set; }
 
 		public Shader(string file_path) {
 			ID = GL.CreateProgram();
-			GL.UseProgram(ID);
 
 			shader_file = new ShaderFile(file_path);
 			Create(shader_file);
-
-			GL.UseProgram(0);
 		}
 		public void Disable() => GL.UseProgram(0);
 

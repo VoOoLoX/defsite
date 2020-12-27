@@ -1,4 +1,5 @@
-using OpenTK;
+using System.Drawing;
+using OpenTK.Mathematics;
 
 namespace Defsite {
 
@@ -16,73 +17,73 @@ namespace Defsite {
 			};
 
 			public static Vector3[] NormalsData = {
-				new Vector3(0, 0, 1),
-				new Vector3(0, 0, 1),
-				new Vector3(0, 0, 1),
-				new Vector3(0, 0, 1),
+				new(0, 0, 1),
+				new(0, 0, 1),
+				new(0, 0, 1),
+				new(0, 0, 1),
 
-				new Vector3(0, 1, 0),
-				new Vector3(0, 1, 0),
-				new Vector3(0, 1, 0),
-				new Vector3(0, 1, 0),
+				new(0, 1, 0),
+				new(0, 1, 0),
+				new(0, 1, 0),
+				new(0, 1, 0),
 
-				new Vector3(1, 0, 0),
-				new Vector3(1, 0, 0),
-				new Vector3(1, 0, 0),
-				new Vector3(1, 0, 0),
+				new(1, 0, 0),
+				new(1, 0, 0),
+				new(1, 0, 0),
+				new(1, 0, 0),
 
-				new Vector3(0, -1, 0),
-				new Vector3(0, -1, 0),
-				new Vector3(0, -1, 0),
-				new Vector3(0, -1, 0),
+				new(0, -1, 0),
+				new(0, -1, 0),
+				new(0, -1, 0),
+				new(0, -1, 0),
 
-				new Vector3(-1, 0, 0),
-				new Vector3(-1, 0, 0),
-				new Vector3(-1, 0, 0),
-				new Vector3(-1, 0, 0),
+				new(-1, 0, 0),
+				new(-1, 0, 0),
+				new(-1, 0, 0),
+				new(-1, 0, 0),
 
-				new Vector3(0, 0, -1),
-				new Vector3(0, 0, -1),
-				new Vector3(0, 0, -1),
-				new Vector3(0, 0, -1)
+				new(0, 0, -1),
+				new(0, 0, -1),
+				new(0, 0, -1),
+				new(0, 0, -1)
 			};
 
 			public static Vector3[] PositionData = {
 				//Front
-				new Vector3(-1, -1, 1),
-				new Vector3(1, -1, 1),
-				new Vector3(1, 1, 1),
-				new Vector3(-1, 1, 1),
+				new(-1, -1, 1),
+				new(1, -1, 1),
+				new(1, 1, 1),
+				new(-1, 1, 1),
 
 				//Top
-				new Vector3(-1, 1, 1),
-				new Vector3(-1, 1, -1),
-				new Vector3(1, 1, -1),
-				new Vector3(1, 1, 1),
+				new(-1, 1, 1),
+				new(-1, 1, -1),
+				new(1, 1, -1),
+				new(1, 1, 1),
 
 				//Right
-				new Vector3(1, 1, 1),
-				new Vector3(1, 1, -1),
-				new Vector3(1, -1, -1),
-				new Vector3(1, -1, 1),
+				new(1, 1, 1),
+				new(1, 1, -1),
+				new(1, -1, -1),
+				new(1, -1, 1),
 
 				//Bottom
-				new Vector3(1, -1, 1),
-				new Vector3(1, -1, -1),
-				new Vector3(-1, -1, -1),
-				new Vector3(-1, -1, 1),
+				new(1, -1, 1),
+				new(1, -1, -1),
+				new(-1, -1, -1),
+				new(-1, -1, 1),
 
 				//Left
-				new Vector3(-1, -1, 1),
-				new Vector3(-1, -1, -1),
-				new Vector3(-1, 1, -1),
-				new Vector3(-1, 1, 1),
+				new(-1, -1, 1),
+				new(-1, -1, -1),
+				new(-1, 1, -1),
+				new(-1, 1, 1),
 
 				//Back
-				new Vector3(-1, -1, -1),
-				new Vector3(1, -1, -1),
-				new Vector3(1, 1, -1),
-				new Vector3(-1, 1, -1),
+				new(-1, -1, -1),
+				new(1, -1, -1),
+				new(1, 1, -1),
+				new(-1, 1, -1),
 			};
 			/* How texture should look like
 			 *
@@ -94,40 +95,40 @@ namespace Defsite {
 
 			public static Vector2[] UVData = {
 				//Front
-				new Vector2(0.66f, 0.5f),
-				new Vector2(0.99f, 0.5f),
-				new Vector2(0.99f, 0.75f),
-				new Vector2(0.66f, 0.75f),
+				new(0.66f, 0.5f),
+				new(0.99f, 0.5f),
+				new(0.99f, 0.75f),
+				new(0.66f, 0.75f),
 
 				//Top
-				new Vector2(0.33f, 0.25f),
-				new Vector2(0.66f, 0.25f),
-				new Vector2(0.66f, 0.5f),
-				new Vector2(0.33f, 0.5f),
+				new(0.33f, 0.25f),
+				new(0.66f, 0.25f),
+				new(0.66f, 0.5f),
+				new(0.33f, 0.5f),
 
 				//Right
-				new Vector2(0.33f, 0.5f),
-				new Vector2(0.66f, 0.5f),
-				new Vector2(0.66f, 0.75f),
-				new Vector2(0.33f, 0.75f),
+				new(0.33f, 0.5f),
+				new(0.66f, 0.5f),
+				new(0.66f, 0.75f),
+				new(0.33f, 0.75f),
 
 				//Bottom
-				new Vector2(0.33f, 0.75f),
-				new Vector2(0.66f, 0.75f),
-				new Vector2(0.66f, 1),
-				new Vector2(0.33f, 1),
+				new(0.33f, 0.75f),
+				new(0.66f, 0.75f),
+				new(0.66f, 1),
+				new(0.33f, 1),
 
 				//Left
-				new Vector2(0.33f, 0),
-				new Vector2(0.66f, 0),
-				new Vector2(0.66f, 0.25f),
-				new Vector2(0.33f, 0.25f),
+				new(0.33f, 0),
+				new(0.66f, 0),
+				new(0.66f, 0.25f),
+				new(0.33f, 0.25f),
 
 				//Back
-				new Vector2(0, 0.5f),
-				new Vector2(0.33f, 0.5f),
-				new Vector2(0.33f, 0.75f),
-				new Vector2(0, 0.75f),
+				new(0, 0.5f),
+				new(0.33f, 0.5f),
+				new(0.33f, 0.75f),
+				new(0, 0.75f),
 			};
 		}
 
@@ -138,18 +139,18 @@ namespace Defsite {
 			};
 
 			public static Vector2[] PositionData = {
-				new Vector2(0, -1),
-				new Vector2(1, -1),
-				new Vector2(1, 0),
-				new Vector2(0, 0)
+				new(0, -1),
+				new(1, -1),
+				new(1, 0),
+				new(0, 0)
 			};
 
 			//"Flipped" (UVs have origin at 0,0 in the bottom left corner) because of OpenGLs coordinate system
 			public static Vector2[] UVData = {
-				new Vector2(0, 1),
-				new Vector2(1, 1),
-				new Vector2(1, 0),
-				new Vector2(0, 0)
+				new(0, 1),
+				new(1, 1),
+				new(1, 0),
+				new(0, 0)
 			};
 		}
 
@@ -160,40 +161,40 @@ namespace Defsite {
 			};
 
 			public static Vector2[] PositionData = {
-				new Vector2(-1f, -1f),
-				new Vector2(1f, -1f),
-				new Vector2(1f, 1f),
-				new Vector2(-1f, 1f)
+				new(-1f, -1f),
+				new(1f, -1f),
+				new(1f, 1f),
+				new(-1f, 1f)
 			};
 
 			//"Flipped" (UVs have origin at 0,0 in the bottom left corner) because of OpenGLs coordinate system
 			public static Vector2[] UVData = {
-				new Vector2(0, 1),
-				new Vector2(1, 1),
-				new Vector2(1, 0),
-				new Vector2(0, 0)
+				new(0, 1),
+				new(1, 1),
+				new(1, 0),
+				new(0, 0)
 			};
 		}
 
 		public static Vertex[] CreateQuad(Vector3 position, Color color) {
 			var color_vector = color.ToVector();
 			Vertex[] quad = {
-				new Vertex
+				new()
 				{
 					Position = new Vector3(position.X, position.Y, position.Z),
 					Color = color_vector,
 				},
-				new Vertex
+				new()
 				{
 					Position = new Vector3(position.X + 1, position.Y, position.Z),
 					Color = color_vector,
 				},
-				new Vertex
+				new()
 				{
 					Position = new Vector3(position.X + 1, position.Y + 1, position.Z),
 					Color = color_vector,
 				},
-				new Vertex
+				new()
 				{
 					Position = new Vector3(position.X, position.Y + 1, position.Z),
 					Color = color_vector,

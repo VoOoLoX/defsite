@@ -6,7 +6,7 @@ using OpenTK.Audio.OpenAL;
 namespace Defsite {
 
 	public class SoundFile {
-		public static SoundFile Default = new SoundFile(ALFormat.Mono8, 0, Array.Empty<byte>());
+		public static readonly SoundFile Default = new(ALFormat.Mono8, 0, Array.Empty<byte>());
 
 		public byte Compressed { get; private set; }
 

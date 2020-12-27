@@ -1,7 +1,7 @@
 using System;
 using Common;
-using OpenTK;
-using OpenTK.Graphics;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.Desktop;
 
 namespace Defsite {
 
@@ -9,20 +9,15 @@ namespace Defsite {
 
 		static void Main(string[] args) {
 			GameWindow window;
-
-			var device = DisplayDevice.GetDisplay(DisplayIndex.Primary);
+			Monitors.TryGetMonitorInfo(0, out var monitor_info);
 
 			if (Platform.IsDebug)
 				try {
 					window = new Window(
-						width: device.Width / 2,
-						height: device.Height / 2,
-						title: "Defsite - Debug",
-						mode: GraphicsMode.Default,
-						window_flags: GameWindowFlags.Default,
-						device: device,
-						major: 1, minor: 0,
-						context_flags: GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug);
+						monitor_info.HorizontalResolution / 2,
+						monitor_info.VerticalResolution / 2,
+						"Defsite - Debug",
+						ContextFlags.ForwardCompatible | ContextFlags.Debug);
 					window.Run();
 				} catch (Exception e) {
 					Log.Panic(e);
@@ -30,14 +25,10 @@ namespace Defsite {
 			else
 				try {
 					window = new Window(
-						width: device.Width,
-						height: device.Height,
-						title: "Defsite",
-						mode: GraphicsMode.Default,
-						window_flags: GameWindowFlags.Fullscreen,
-						device: device,
-						major: 1, minor: 0,
-						context_flags: GraphicsContextFlags.ForwardCompatible);
+						monitor_info.HorizontalResolution,
+						monitor_info.VerticalResolution,
+						"Defsite",
+						ContextFlags.ForwardCompatible);
 					window.Run();
 				} catch (Exception e) {
 					Log.Panic(e);

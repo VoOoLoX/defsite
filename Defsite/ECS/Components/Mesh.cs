@@ -1,4 +1,5 @@
-using OpenTK;
+using System.Drawing;
+using OpenTK.Mathematics;
 
 namespace Defsite {
 
@@ -11,7 +12,7 @@ namespace Defsite {
 
 		public Texture Texture { get; }
 
-		public VertexArray VertexArray { get; } = new VertexArray();
+		public VertexArray VertexArray { get; } = new();
 
 		public Mesh(Texture texture, Vector3[] data, Vector2[] uv_data, Vector3[] normals_data, uint[] ib_data) {
 			Texture = texture;

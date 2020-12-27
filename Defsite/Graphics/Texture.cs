@@ -5,7 +5,7 @@ using OpenTK.Graphics.OpenGL;
 namespace Defsite {
 
 	public class Texture {
-		public static Texture Default = new Texture(TextureFile.Default);
+		public static Texture Default = new(TextureFile.Default);
 		public int Height { get; private set; }
 
 		public int ID { get; private set; }
@@ -34,20 +34,21 @@ namespace Defsite {
 		}
 
 		void Create(TextureFile texture_file) {
-			ID = GL.GenTexture();
+			GL.CreateTextures(TextureTarget.Texture2D, 1, out int id);
 
-			//TODO:
-			//texture.Rotate180();
-			//texture.FlipHorizontal();
-			//UVs are inverted so there is no need proccess textures on the CPU
+			ID = id; 
 
 			Width = texture_file.Width;
 			Height = texture_file.Height;
 
 			Enable();
-			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
-			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
-			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, texture_file.Width, texture_file.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, texture_file.Bytes);
+			GL.TextureStorage2D(ID, 1, SizedInternalFormat.Rgba8, Width, Height);
+			GL.TextureSubImage2D(ID, 0, 0, 0, Width, Height, PixelFormat.Bgra, PixelType.UnsignedByte, texture_file.Bytes);
+			GL.GenerateTextureMipmap(ID);
+			GL.TextureParameter(ID, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+			GL.TextureParameter(ID, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+			GL.TextureParameter(ID, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
+			GL.TextureParameter(ID, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
 			Disable();
 		}
 	}

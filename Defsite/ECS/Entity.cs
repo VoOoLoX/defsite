@@ -9,7 +9,7 @@ namespace Defsite {
 
 		public string Name { get; set; }
 
-		List<Component> components = new List<Component>();
+		List<Component> components = new();
 
 		public Entity() {
 			ID = Guid.NewGuid();
