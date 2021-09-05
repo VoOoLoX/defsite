@@ -11,7 +11,7 @@ namespace Server {
 		AutoResetEvent fixed_update_state = new(false);
 		object update_clients_lock = new();
 
-		protected virtual int TPS => 20;
+		protected virtual int TicksPerSecond => 20;
 
 		void UpdateClients(List<Client> client_list) {
 			lock (update_clients_lock) {
@@ -28,7 +28,7 @@ namespace Server {
 
 			if (fixed_time_step && start_fixed_updates) {
 				start_fixed_updates = false;
-				var _ = new Timer(FixedUpdate, fixed_update_state, 0, 1000 / TPS);
+				var _ = new Timer(FixedUpdate, fixed_update_state, 0, 1000 / TicksPerSecond);
 				// now = DateTime.Now.Millisecond;
 				// FixedUpdate(delta_update_time);
 				// delta_update_time = DateTime.Now.Millisecond - now;

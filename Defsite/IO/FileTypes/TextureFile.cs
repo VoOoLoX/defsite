@@ -11,7 +11,7 @@ namespace Defsite {
 	[StructLayout(LayoutKind.Sequential)]
 	public struct Pixel {
 
-		public Pixel(byte r, byte g, byte b, byte a) {
+		public Pixel(byte r = byte.MaxValue, byte g = byte.MaxValue, byte b = byte.MaxValue, byte a = byte.MaxValue) {
 			R = r;
 			G = g;
 			B = b;
@@ -34,7 +34,7 @@ namespace Defsite {
 	}
 
 	public class TextureFile {
-		public static readonly TextureFile Default = new(1, 1, new List<Pixel> { new(Color.White), new(Color.White) });
+		public static readonly TextureFile Default = new(1, 1);
 
 		public byte[] Bytes {
 			get {
@@ -66,6 +66,13 @@ namespace Defsite {
 
 		public List<Pixel> Pixels { get; private set; }
 
+		public TextureFile(ushort width, ushort height) {
+			Width = width;
+			Height = height;
+			Pixels = new List<Pixel>(width * height);
+			Components = 4;
+		}
+		
 		public TextureFile(ushort width, ushort height, List<Pixel> pixels, byte comps = 4) {
 			Width = width;
 			Height = height;

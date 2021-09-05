@@ -6,6 +6,9 @@ namespace Defsite {
 
 	public class Texture {
 		public static Texture Default = new(TextureFile.Default);
+		
+		public TextureFile TextureFile { get; private set; }
+		
 		public int Height { get; private set; }
 
 		public int ID { get; private set; }
@@ -34,16 +37,18 @@ namespace Defsite {
 		}
 
 		void Create(TextureFile texture_file) {
+			TextureFile = texture_file;
+			
 			GL.CreateTextures(TextureTarget.Texture2D, 1, out int id);
 
 			ID = id; 
 
-			Width = texture_file.Width;
-			Height = texture_file.Height;
+			Width = TextureFile.Width;
+			Height = TextureFile.Height;
 
 			Enable();
 			GL.TextureStorage2D(ID, 1, SizedInternalFormat.Rgba8, Width, Height);
-			GL.TextureSubImage2D(ID, 0, 0, 0, Width, Height, PixelFormat.Bgra, PixelType.UnsignedByte, texture_file.Bytes);
+			GL.TextureSubImage2D(ID, 0, 0, 0, Width, Height, PixelFormat.Bgra, PixelType.UnsignedByte, TextureFile.Bytes);
 			GL.GenerateTextureMipmap(ID);
 			GL.TextureParameter(ID, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
 			GL.TextureParameter(ID, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);

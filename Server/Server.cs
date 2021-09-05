@@ -20,7 +20,7 @@ namespace Server {
 		public bool Running = true;
 
 		public Server(string ip, int port, string name, int max_players, int tps) {
-			IP = IPAddress.Parse(ip);
+			Address = IPAddress.Parse(ip);
 			Port = port;
 			Name = name;
 			DatabaseHandler = new DatabaseHandler();
@@ -28,7 +28,7 @@ namespace Server {
 			NetworkHandler = new NetworkHandler();
 		}
 
-		public IPAddress IP { get; }
+		public IPAddress Address { get; }
 
 		public string Name { get; }
 
@@ -53,12 +53,12 @@ namespace Server {
 		}
 
 		public void Run() {
-			var server = new TcpListener(IP, Port);
+			var server = new TcpListener(Address, Port);
 
 			server.Start();
 			Log.Info("Server started");
 
-			while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape))
+			while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape)) {
 				if (server.Pending()) {
 					var client_socket = server.AcceptTcpClient();
 					lock (add_clients_lock) {
@@ -67,6 +67,7 @@ namespace Server {
 
 					Log.Info($"Added client: {client_socket.Client.RemoteEndPoint}");
 				}
+			}
 
 			Log.Info($"Stopping server: {Name}");
 			Running = false;

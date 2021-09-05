@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "Server\Server.csproj", "{9CAF3AFD-A9FE-4B85-A49F-AED79E4322FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImGui.NET", "ImGui.NET\ImGui.NET.csproj", "{E27118B5-55EC-473A-B638-DF994639679E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImGuizmo.NET", "ImGuizmo.NET\ImGuizmo.NET.csproj", "{9AB3EAA1-FEDF-46D7-8701-521CB801CB8F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +34,14 @@ Global
 		{9CAF3AFD-A9FE-4B85-A49F-AED79E4322FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CAF3AFD-A9FE-4B85-A49F-AED79E4322FA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9CAF3AFD-A9FE-4B85-A49F-AED79E4322FA}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E27118B5-55EC-473A-B638-DF994639679E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E27118B5-55EC-473A-B638-DF994639679E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E27118B5-55EC-473A-B638-DF994639679E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E27118B5-55EC-473A-B638-DF994639679E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AB3EAA1-FEDF-46D7-8701-521CB801CB8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AB3EAA1-FEDF-46D7-8701-521CB801CB8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AB3EAA1-FEDF-46D7-8701-521CB801CB8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AB3EAA1-FEDF-46D7-8701-521CB801CB8F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

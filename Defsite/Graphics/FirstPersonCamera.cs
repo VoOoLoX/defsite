@@ -66,10 +66,10 @@ namespace Defsite {
 			return Matrix4.LookAt(Position, Position + Forward, Up);
 		}
 
-		public Matrix4 GetProjectionMatrix() {
-			return Matrix4.CreatePerspectiveFieldOfView(fov, (float)Window.Width / Window.Height, ZNear, ZFar);
-		}
+		public Matrix4 GetProjectionMatrix() => Matrix4.CreatePerspectiveFieldOfView(fov, (float)Game.GameWidth / Game.GameHeight, ZNear, ZFar);
 
+		
+		//TODO Make it so camera can be paused and resumed regardless of mouse movement when it's paused
 		public void Update() {
 			var mouse = Input.MousePos;
 

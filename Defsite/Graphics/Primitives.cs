@@ -191,12 +191,12 @@ namespace Defsite {
 				},
 				new()
 				{
-					Position = new Vector3(position.X + 1, position.Y + 1, position.Z),
+					Position = new Vector3(position.X + 1, position.Y, position.Z+ 1),
 					Color = color_vector,
 				},
 				new()
 				{
-					Position = new Vector3(position.X, position.Y + 1, position.Z),
+					Position = new Vector3(position.X, position.Y, position.Z+ 1),
 					Color = color_vector,
 				},
 			};

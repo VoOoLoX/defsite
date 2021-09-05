@@ -1,10 +1,15 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+
 using Common;
 
 namespace Defsite {
 
+	[Serializable]
+	[StructLayout(LayoutKind.Sequential)]
 	public struct CharInfo {
 
 		public int Height { get; }

@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace Common {
 	public static class Log {
-		const short tab_size = 4;
+		const short TabSize = 4;
 		static short indent_level;
 
 		public static void Indent() {
@@ -18,20 +18,22 @@ namespace Common {
 
 		public static void Info(object text, [CallerFilePath] string file = "", [CallerLineNumber] int line_number = 0) {
 			var file_info = new FileInfo(file);
-			Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] <{file_info.Name.Split('.')[0]}:{line_number}> {new string(' ', indent_level * tab_size) + text}");
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] <{file_info.Name.Split('.')[0]}:{line_number}> {new string(' ', indent_level * TabSize) + text}");
+			Console.ResetColor();
 		}
 
 		public static void Warning(object text, [CallerFilePath] string file = "", [CallerLineNumber] int line_number = 0) {
 			var file_info = new FileInfo(file);
 			Console.ForegroundColor = ConsoleColor.Yellow;
-			Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] <{file_info.Name.Split('.')[0]}:{line_number}> {new string(' ', indent_level * tab_size) + text}");
+			Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] <{file_info.Name.Split('.')[0]}:{line_number}> {new string(' ', indent_level * TabSize) + text}");
 			Console.ResetColor();
 		}
 
 		public static void Error(object text, [CallerFilePath] string file = "", [CallerLineNumber] int line_number = 0) {
 			var file_info = new FileInfo(file);
 			Console.ForegroundColor = ConsoleColor.Red;
-			Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] <{file_info.Name.Split('.')[0]}:{line_number}> {new string(' ', indent_level * tab_size) + text}");
+			Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] <{file_info.Name.Split('.')[0]}:{line_number}> {new string(' ', indent_level * TabSize) + text}");
 			Console.ResetColor();
 		}
 
@@ -39,7 +41,7 @@ namespace Common {
 			var file_info = new FileInfo(file);
 			Console.BackgroundColor = ConsoleColor.Red;
 			Console.ForegroundColor = ConsoleColor.Black;
-			Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] <{file_info.Name.Split('.')[0]}:{line_number}> {new string(' ', indent_level * tab_size) + text}");
+			Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] <{file_info.Name.Split('.')[0]}:{line_number}> {new string(' ', indent_level * TabSize) + text}");
 			Console.ResetColor();
 			Environment.Exit(1);
 		}

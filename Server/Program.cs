@@ -19,7 +19,7 @@ namespace Server {
 
 			var server = new Server(server_ip, server_port, server_name, server_max_players, server_tps);
 
-			Log.Info($"Server: [{server.Name}] [{server.IP}] [{server.Port}]");
+			Log.Info($"Server: [{server.Name}] [{server.Address}] [{server.Port}]");
 			new Thread(() => { server.Run(); }) { Name = "Server" }.Start();
 
 			new Thread(() => {
@@ -34,7 +34,7 @@ namespace Server {
 
 			new Thread(() => {
 				while (server.Running)
-					server.DatabaseHandler.Run();
+					server.DatabaseHandler.Run(true);
 			}) { Name = "DatabaseHandler" }.Start();
 		}
 	}

@@ -1,0 +1,8 @@
+{
+  "Title": "Defsite",
+  "Fullscreen": true,
+  "Width": 1280,
+  "Height": 720,
+  "VSync": true,
+  "GLVersion": "4.3"
+}

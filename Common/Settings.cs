@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 namespace Common {
 	public static class Settings<T> {
-
 		public static async Task<T> LoadAsync(string file_path) {
 			var path = File.Exists(file_path) ? file_path : string.Empty;
 

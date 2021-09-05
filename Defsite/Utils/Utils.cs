@@ -40,13 +40,7 @@ namespace Defsite {
 			return index;
 		}
 
-		public static void CheckGLError([CallerFilePath] string file = "", [CallerLineNumber] int line_number = 0) {
-			var error = GL.GetError();
-			if (error != ErrorCode.NoError) {
-				var file_info = new FileInfo(file);
-				Log.Error($"<{file_info.Name.Split('.')[0]}:{line_number}> {error}");
-			}
-		}
+		
 
 		public static float Lerp(float start, float end, float amount) => start + end - start * amount;
 
