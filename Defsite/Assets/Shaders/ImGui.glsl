@@ -8,10 +8,10 @@ in vec4 v_color;
 out vec2 f_texture_coordinates;
 out vec4 f_color;
 
-uniform mat4 u_projection_matrix;
+uniform mat4 u_projection;
 
 void main() {
-    gl_Position = u_projection_matrix * vec4(v_position, 0, 1);
+    gl_Position = u_projection * vec4(v_position, 0, 1);
     f_texture_coordinates = v_texture_coordinates;
     f_color = v_color;
 }

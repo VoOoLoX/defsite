@@ -4,35 +4,47 @@ using System.Threading.Tasks;
 
 using Common;
 
-using OpenTK.Mathematics;
-using OpenTK.Windowing.Common;
-using OpenTK.Windowing.Common.Input;
-using OpenTK.Windowing.Desktop;
+using Defsite.Core;
 
-namespace Defsite {
-	public class Program {
-		static async Task Main(string[] args) {
-			//TODO allow window settings as command line args
-			var settings_path = Path.Combine(Environment.CurrentDirectory, "Settings.json");
-			
-			var settings = await Settings<WindowSettings>.LoadAsync(settings_path);
+using NLog;
 
-			var native_window_settings = new NativeWindowSettings() {
-				Title = settings.Title,
-				Size = new Vector2i(settings.Width, settings.Height),
-				IsFullscreen = settings.Fullscreen,
-				APIVersion = new Version(settings.GLVersion),
-				Flags = ContextFlags.Debug,
-				AutoLoadBindings = true,
-				// NumberOfSamples = 8
-			};
-			
-			try {
-				var window = new Game(GameWindowSettings.Default, native_window_settings);
-				window.Run();
-			} catch (Exception e) {
-				Log.Panic(e);
-			}
-		}
+namespace Defsite;
+
+public class Program {
+	static async Task Main(string[] args) {
+		//TODO(@VoOoLoX): allow settings as command line args
+
+		ConfigureLogger();
+
+		var settings_path = Path.Combine(Environment.CurrentDirectory, "Settings.json");
+
+		var settings = await Settings<ApplicationSettings>.LoadAsync(settings_path);
+
+		//await Settings<ApplicationSettings>.SaveAsync(Path.Combine(Environment.CurrentDirectory, "test.json"), settings);
+
+		var application = new Application(settings, new MainScene());
+
+		application.Run();
+	}
+
+	static void ConfigureLogger() {
+		var config = new NLog.Config.LoggingConfiguration();
+
+		var layout = "${level:uppercase=true:padding=-5} [${longdate}] ${message}";
+
+		var log_file = new NLog.Targets.FileTarget("log") {
+			FileName = $"logs/{DateTime.Now:yyyy_MM_dd_HH_mm_ss}.log",
+			Layout = layout,
+			CreateDirs = true
+		};
+
+		var log_console = new NLog.Targets.ColoredConsoleTarget("log") {
+			Layout = layout
+		};
+
+		config.AddRule(LogLevel.Info, LogLevel.Fatal, log_console);
+		config.AddRule(LogLevel.Trace, LogLevel.Fatal, log_file);
+
+		LogManager.Configuration = config;
 	}
 }

@@ -2,56 +2,55 @@ using System;
 using System.Linq;
 using Common;
 
-namespace Server {
-	public class MessageManager {
-		public void Receive(Client client, byte[] data, int length) {
-			if (data.Length < 1) // Disconnect client???
-				return;
+namespace Server;
 
-			var message_type = MessageType.Unknown;
-			if (Enum.IsDefined(typeof(MessageType), data[0]))
-				message_type = (MessageType)data[0];
+public class MessageManager {
+	public void Receive(Client client, byte[] data, int length) {
+		if(data.Length < 1) // Disconnect client???
+			return;
 
-			// Skips first byte (type of message) of the recived data
-			var message_data = data.Skip(1).ToArray();
+		var message_type = MessageType.Unknown;
+		if(Enum.IsDefined(typeof(MessageType), data[0]))
+			message_type = (MessageType)data[0];
 
-			Parse(message_type, message_data);
-		}
+		// Skips first byte (type of message) of the recived data
+		var message_data = data.Skip(1).ToArray();
 
-		async void Send(Client client, Message msg) {
-			// Log.Info(Encoding.ASCII.GetString(msg.Data.ToArray()));
-			await NetworkHandler.Send(client, msg.Data.ToArray());
-		}
+		Parse(message_type, message_data);
+	}
 
-		void Parse(MessageType type, byte[] data) {
-			Message msg;
-			switch (type) {
-				case MessageType.Unknown:
-					break;
-				case MessageType.Init:
-					break;
-				case MessageType.Login:
-					msg = new MessageLogin(data);
-					Log.Info((msg as MessageLogin).Username + " - " + (msg as MessageLogin).Password);
+	async void Send(Client client, Message msg) =>
+		// Log.Info(Encoding.ASCII.GetString(msg.Data.ToArray()));
+		await NetworkHandler.Send(client, msg.Data.ToArray());
 
-					var login_text = new MessageText($"{(msg as MessageLogin).Username} logged in.");
+	void Parse(MessageType type, byte[] data) {
+		Message msg;
+		switch(type) {
+			case MessageType.Unknown:
+				break;
+			case MessageType.Init:
+				break;
+			case MessageType.Login:
+				msg = new MessageLogin(data);
+				Log.Info((msg as MessageLogin).Username + " - " + (msg as MessageLogin).Password);
 
-					foreach (var client in Server.GetClients())
-						Send(client, login_text);
-					break;
-				case MessageType.Broadcast:
-					msg = new MessageBroadcast(data);
-					var broadcast_text = new MessageText((msg as MessageBroadcast).Message);
+				var login_text = new MessageText($"{(msg as MessageLogin).Username} logged in.");
 
-					Log.Info((msg as MessageBroadcast).Message);
-					foreach (var client in Server.GetClients())
-						Send(client, broadcast_text);
-					break;
-				case MessageType.Text:
-					break;
-				default:
-					throw new ArgumentOutOfRangeException(nameof(type), type, null);
-			}
+				foreach(var client in Server.GetClients())
+					Send(client, login_text);
+				break;
+			case MessageType.Broadcast:
+				msg = new MessageBroadcast(data);
+				var broadcast_text = new MessageText((msg as MessageBroadcast).Message);
+
+				Log.Info((msg as MessageBroadcast).Message);
+				foreach(var client in Server.GetClients())
+					Send(client, broadcast_text);
+				break;
+			case MessageType.Text:
+				break;
+			default:
+				throw new ArgumentOutOfRangeException(nameof(type), type, null);
 		}
 	}
 }

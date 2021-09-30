@@ -1,15 +1,13 @@
-namespace Server
-{
-    public enum MessageType : byte
-    {
-        Unknown = 0x00,
+namespace Server;
 
-        //Incoming
-        Init = 0x41,
-        Login,
-        Broadcast,
+public enum MessageType : byte {
+	Unknown = 0x00,
 
-        //Outgoing
-        Text
-    }
+	//Incoming
+	Init = 0x41,
+	Login,
+	Broadcast,
+
+	//Outgoing
+	Text
 }

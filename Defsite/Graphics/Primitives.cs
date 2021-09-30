@@ -1,13 +1,16 @@
 using System.Drawing;
+
+using Defsite.Utils;
+
 using OpenTK.Mathematics;
 
-namespace Defsite {
+namespace Defsite.Graphics;
 
-	public static class Primitives {
+public static class Primitives {
 
-		public static class CubeCentered {
+	public static class CubeCentered {
 
-			public static uint[] IndexBufferData = {
+		public static uint[] IndexBufferData = {
 				0, 1, 2, 3,
 				4, 5, 6, 7,
 				8, 9, 10, 11,
@@ -16,7 +19,7 @@ namespace Defsite {
 				20, 21, 22, 23
 			};
 
-			public static Vector3[] NormalsData = {
+		public static Vector3[] NormalsData = {
 				new(0, 0, 1),
 				new(0, 0, 1),
 				new(0, 0, 1),
@@ -48,7 +51,7 @@ namespace Defsite {
 				new(0, 0, -1)
 			};
 
-			public static Vector3[] PositionData = {
+		public static Vector3[] PositionData = {
 				//Front
 				new(-1, -1, 1),
 				new(1, -1, 1),
@@ -85,15 +88,15 @@ namespace Defsite {
 				new(1, 1, -1),
 				new(-1, 1, -1),
 			};
-			/* How texture should look like
-			 *
-			 *   #			|B|
-			 *  ###		BACK|R|FRONT
-			 *   #			|T|
-			 *   #			|L|
-			 */
+		/* How texture should look like
+		 *
+		 *   #			|B|
+		 *  ###		BACK|R|FRONT
+		 *   #			|T|
+		 *   #			|L|
+		 */
 
-			public static Vector2[] UVData = {
+		public static Vector2[] UVData = {
 				//Front
 				new(0.66f, 0.5f),
 				new(0.99f, 0.5f),
@@ -130,55 +133,55 @@ namespace Defsite {
 				new(0.33f, 0.75f),
 				new(0, 0.75f),
 			};
-		}
+	}
 
-		public static class Quad {
+	public static class Quad {
 
-			public static uint[] IndexBufferData = {
+		public static uint[] IndexBufferData = {
 				0, 1, 2, 3
 			};
 
-			public static Vector2[] PositionData = {
+		public static Vector2[] PositionData = {
 				new(0, -1),
 				new(1, -1),
 				new(1, 0),
 				new(0, 0)
 			};
 
-			//"Flipped" (UVs have origin at 0,0 in the bottom left corner) because of OpenGLs coordinate system
-			public static Vector2[] UVData = {
+		//"Flipped" (UVs have origin at 0,0 in the bottom left corner) because of OpenGLs coordinate system
+		public static Vector2[] UVData = {
 				new(0, 1),
 				new(1, 1),
 				new(1, 0),
 				new(0, 0)
 			};
-		}
+	}
 
-		public static class QuadCentered {
+	public static class QuadCentered {
 
-			public static uint[] IndexBufferData = {
+		public static uint[] IndexBufferData = {
 				0, 1, 2, 3
 			};
 
-			public static Vector2[] PositionData = {
+		public static Vector2[] PositionData = {
 				new(-1f, -1f),
 				new(1f, -1f),
 				new(1f, 1f),
 				new(-1f, 1f)
 			};
 
-			//"Flipped" (UVs have origin at 0,0 in the bottom left corner) because of OpenGLs coordinate system
-			public static Vector2[] UVData = {
+		//"Flipped" (UVs have origin at 0,0 in the bottom left corner) because of OpenGLs coordinate system
+		public static Vector2[] UVData = {
 				new(0, 1),
 				new(1, 1),
 				new(1, 0),
 				new(0, 0)
 			};
-		}
+	}
 
-		public static Vertex[] CreateQuad(Vector3 position, Color color) {
-			var color_vector = color.ToVector();
-			Vertex[] quad = {
+	public static ColoredVertex[] CreateQuad(Vector3 position, Color color) {
+		var color_vector = color.ToVector();
+		ColoredVertex[] quad = {
 				new()
 				{
 					Position = new Vector3(position.X, position.Y, position.Z),
@@ -201,36 +204,94 @@ namespace Defsite {
 				},
 			};
 
+		return quad;
+	}
 
-			return quad;
-		}
+	public static ColoredVertex[] CreateTileCentered(Vector3 position, Color color, float size = 1f) {
+		var color_vector = color.ToVector();
+		ColoredVertex[] quad = {
+				new()
+				{
+					Position = new Vector3(position.X - size / 2f, position.Y, position.Z - size / 2f),
+					Color = color_vector,
+				},
+				new()
+				{
+					Position = new Vector3(position.X + size / 2f, position.Y, position.Z - size / 2f),
+					Color = color_vector,
+				},
+				new()
+				{
+					Position = new Vector3(position.X + size / 2f, position.Y, position.Z + size / 2f),
+					Color = color_vector,
+				},
+				new()
+				{
+					Position = new Vector3(position.X - size / 2f, position.Y, position.Z + size / 2f),
+					Color = color_vector,
+				},
+			};
 
-		//public static Vertex[] CreateQuad(Vector3 position, Texture texture) {
-		//	var color_vector = color.ToVector();
-		//	Vertex[] quad = {
-		//		new Vertex
-		//		{
-		//			Position = new Vector3(position.X, position.Y, position.Z),
-		//			Color = color_vector,
-		//		},
-		//		new Vertex
-		//		{
-		//			Position = new Vector3(position.X + 1, position.Y, position.Z),
-		//			Color = color_vector,
-		//		},
-		//		new Vertex
-		//		{
-		//			Position = new Vector3(position.X + 1, position.Y + 1, position.Z),
-		//			Color = color_vector,
-		//		},
-		//		new Vertex
-		//		{
-		//			Position = new Vector3(position.X, position.Y + 1, position.Z),
-		//			Color = color_vector,
-		//		},
-		//	};
+		return quad;
+	}
 
-		//	return quad;
-		//}
+	public static ColoredVertex[] CreateQuadCentered(Vector3 position, Color color, float size = 1f) {
+		var color_vector = color.ToVector();
+		ColoredVertex[] quad = {
+				new()
+				{
+					Position = new Vector3(position.X - size / 2f, position.Y - size / 2f, position.Z),
+					Color = color_vector,
+				},
+				new()
+				{
+					Position = new Vector3(position.X + size / 2f, position.Y - size / 2f, position.Z),
+					Color = color_vector,
+				},
+				new()
+				{
+					Position = new Vector3(position.X + size / 2f, position.Y + size / 2f, position.Z),
+					Color = color_vector,
+				},
+				new()
+				{
+					Position = new Vector3(position.X - size / 2f, position.Y + size / 2f, position.Z),
+					Color = color_vector,
+				},
+			};
+
+		return quad;
+	}
+
+	public static TexturedVertex[] CreateQuad(Vector3 position, Color color, Vector2[] texture_coordinates) {
+		var color_vector = color.ToVector();
+		TexturedVertex[] quad = {
+				new()
+				{
+					Position = new Vector3(position.X, position.Y, position.Z),
+					Color = color_vector,
+					TextureCoordinates = texture_coordinates[0]
+				},
+				new()
+				{
+					Position = new Vector3(position.X + 1, position.Y, position.Z),
+					Color = color_vector,
+					TextureCoordinates = texture_coordinates[1]
+				},
+				new()
+				{
+					Position = new Vector3(position.X + 1, position.Y + 1, position.Z),
+					Color = color_vector,
+					TextureCoordinates = texture_coordinates[2]
+				},
+				new()
+				{
+					Position = new Vector3(position.X, position.Y + 1, position.Z),
+					Color = color_vector,
+					TextureCoordinates = texture_coordinates[3]
+				},
+			};
+
+		return quad;
 	}
 }

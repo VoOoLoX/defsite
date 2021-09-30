@@ -1,42 +1,50 @@
-<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<OutputType>exe</OutputType>
-		<TargetFramework>net5.0</TargetFramework>
-		<RuntimeIdentifiers>linux-x64;win-x64;</RuntimeIdentifiers>
-		<AssemblyVersion>$([System.DateTime]::Now.ToString(`y\.d\.H\.m`))</AssemblyVersion>
-		<FileVersion>$([System.DateTime]::Now.ToString(`y\.d\.H\.m`))</FileVersion>
-		<ApplicationIcon>Assets/icon.ico</ApplicationIcon>
-		<IsPackable>false</IsPackable>
-		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-	</PropertyGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+	<OutputType>exe</OutputType>
+	<TargetFramework>net6.0</TargetFramework>
+	<RuntimeIdentifiers>win-x64;</RuntimeIdentifiers>
+	<AssemblyVersion>$([System.DateTime]::Now.ToString(`y\.MM\.d`))</AssemblyVersion>
+	<FileVersion>$([System.DateTime]::Now.ToString(`y\.MM\.d`))</FileVersion>
+	<ApplicationIcon>Assets/Icon.ico</ApplicationIcon>
+	<IsPackable>false</IsPackable>
+	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	<NoWin32Manifest>true</NoWin32Manifest>
+	<Platforms>AnyCPU;x64</Platforms>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)'=='Release'">
-		<DefineConstants>RELEASE;</DefineConstants>
-		<DebugType>none</DebugType>
-		<Optimize>true</Optimize>
-		<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-	</PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+	<OutputType>winexe</OutputType>
+	<DefineConstants>RELEASE;</DefineConstants>
+	<DebugType>none</DebugType>
+	<Optimize>true</Optimize>
+	<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+	<EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+	<TrimmerSingleWarn>false</TrimmerSingleWarn>
+	<TrimMode>copyused</TrimMode>
+	<PublishTrimmed>true</PublishTrimmed>
+  </PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)'=='Debug'">
-		<DefineConstants>TRACE;DEBUG</DefineConstants>
-		<DebugType>portable</DebugType>
-	</PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+	<DefineConstants>TRACE;DEBUG</DefineConstants>
+	<DebugType>portable</DebugType>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\Common\Common.csproj" />
-		<ProjectReference Include="..\ImGui.NET\ImGui.NET.csproj" />
-		<ProjectReference Include="..\ImGuizmo.NET\ImGuizmo.NET.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+	<ProjectReference Include="..\Common\Common.csproj" />
+	<ProjectReference Include="..\ImGui\ImGui.NET\ImGui.NET.csproj" />
+	<ProjectReference Include="..\ImGui\ImGuizmo.NET\ImGuizmo.NET.csproj" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<PackageReference Include="OpenTK" Version="4.6.4" />
-	</ItemGroup>
+  <ItemGroup>
+	<PackageReference Include="NLog" Version="5.0.0-preview.1" />
+	<PackageReference Include="OpenTK" Version="4.6.7" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<EmbeddedResource Include="Assets/*/*.*" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
-		<EmbeddedResource Include="Assets/*.*" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
-		<EmbeddedResource Include="Settings.json" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
-	</ItemGroup>
+  <ItemGroup>
+	<EmbeddedResource Include="Assets/*/*.*" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+	<EmbeddedResource Include="Assets/*.*" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+	<EmbeddedResource Include="Settings.json" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
 
 </Project>

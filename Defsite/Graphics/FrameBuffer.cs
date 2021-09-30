@@ -1,36 +1,33 @@
-using System;
 using OpenTK.Graphics.OpenGL;
-using OpenTK.Mathematics;
 
-namespace Defsite {
+namespace Defsite.Graphics;
 
-	public class FrameBuffer {
-		public int ID { get; }
-		public Texture Texture { get; private set; }
+public class FrameBuffer {
+	public int ID { get; }
+	public Texture Texture { get; private set; }
 
-		public FrameBuffer(Texture texture) {
-			ID = GL.GenFramebuffer();
-			GL.BindFramebuffer(FramebufferTarget.Framebuffer, ID);
-			SetData(texture);
-			GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
-		}
+	public FrameBuffer(Texture texture) {
+		ID = GL.GenFramebuffer();
+		GL.BindFramebuffer(FramebufferTarget.Framebuffer, ID);
+		SetData(texture);
+		GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+	}
 
-		public void Disable() => GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+	public void Disable() => GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
 
-		public void Enable() => GL.BindFramebuffer(FramebufferTarget.Framebuffer, ID);
+	public void Enable() => GL.BindFramebuffer(FramebufferTarget.Framebuffer, ID);
 
-		public void SetData(Texture texture) {
-			Texture = texture;
-			
-			GL.BindFramebuffer(FramebufferTarget.Framebuffer, ID);
+	public void SetData(Texture texture) {
+		Texture = texture;
 
-			Texture.Enable();
+		GL.BindFramebuffer(FramebufferTarget.Framebuffer, ID);
 
-			GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, Texture.ID, 0);
-			
-			Texture.Disable();
+		Texture.Enable();
 
-			GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
-		}
+		GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, Texture.ID, 0);
+
+		Texture.Disable();
+
+		GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
 	}
 }

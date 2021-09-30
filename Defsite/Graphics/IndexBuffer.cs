@@ -1,73 +1,79 @@
 using System;
+
 using OpenTK.Graphics.OpenGL4;
 
-namespace Defsite {
+namespace Defsite.Graphics;
 
-	public class IndexBuffer {
+public class IndexBuffer : IDisposable {
+	public int ID { get; }
 
-		public int Count { get; private set; }
-
-		public int ID { get; }
-
-		public IndexBuffer(int size) {
-			ID = GL.GenBuffer();
-			Enable();
-			SetData(size);
-			Disable();
+	int size = 0;
+	public int Size {
+		get => size;
+		set {
+			size = value;
+			Resize(value);
 		}
+	}
 
-		public IndexBuffer(uint[] data) {
-			ID = GL.GenBuffer();
-			Enable();
-			SetData(data);
-			Disable();
-		}
+	public int Count { get; private set; }
 
-		public IndexBuffer(int[] data) {
-			ID = GL.GenBuffer();
-			Enable();
-			SetData(data);
-			Disable();
-		}
-		public void Disable() => GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
+	public IndexBuffer() => ID = GL.GenBuffer();
 
-		public void Dispose() => GL.DeleteBuffer(ID);
+	public IndexBuffer(uint[] data) {
+		ID = GL.GenBuffer();
+		Enable();
+		SetData(data);
+		Disable();
+	}
 
-		public void Enable() => GL.BindBuffer(BufferTarget.ElementArrayBuffer, ID);
+	public IndexBuffer(int[] data) {
+		ID = GL.GenBuffer();
+		Enable();
+		SetData(data);
+		Disable();
+	}
 
-		public void SetSubData(int size, IntPtr data, int offset = 0) {
-			GL.BindBuffer(BufferTarget.ElementArrayBuffer, ID);
+	public void SetData(uint[] data) {
+		Enable();
 
-			GL.BufferSubData(BufferTarget.ElementArrayBuffer, (IntPtr)offset, size, data);
-			//GL.BufferData(BufferTarget.ElementArrayBuffer, size, data, BufferUsageHint.DynamicDraw);
+		Count = data.Length;
+		GL.BufferData(BufferTarget.ElementArrayBuffer, data.Length * sizeof(uint), data, BufferUsageHint.DynamicDraw);
 
-			GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
-		}
+		Disable();
+	}
 
-		public void SetData(int size) {
-			GL.BindBuffer(BufferTarget.ElementArrayBuffer, ID);
+	public void SetData(int[] data) {
+		Enable();
 
-			GL.BufferData(BufferTarget.ElementArrayBuffer, size, IntPtr.Zero, BufferUsageHint.DynamicDraw);
+		Count = data.Length;
+		GL.BufferData(BufferTarget.ElementArrayBuffer, data.Length * sizeof(int), data, BufferUsageHint.DynamicDraw);
 
-			GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
-		}
+		Disable();
+	}
 
-		public void SetData(uint[] data) {
-			GL.BindBuffer(BufferTarget.ElementArrayBuffer, ID);
+	public void UpdateData(int size, IntPtr data, int offset = 0) {
+		Enable();
 
-			Count = data.Length;
-			GL.BufferData(BufferTarget.ElementArrayBuffer, data.Length * sizeof(uint), data, BufferUsageHint.DynamicDraw);
+		GL.BufferSubData(BufferTarget.ElementArrayBuffer, (IntPtr)offset, size, data);
 
-			GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
-		}
+		Disable();
+	}
 
-		public void SetData(int[] data) {
-			GL.BindBuffer(BufferTarget.ElementArrayBuffer, ID);
+	void Resize(int size) {
+		Enable();
 
-			Count = data.Length;
-			GL.BufferData(BufferTarget.ElementArrayBuffer, data.Length * sizeof(int), data, BufferUsageHint.DynamicDraw);
+		GL.BufferData(BufferTarget.ElementArrayBuffer, size, IntPtr.Zero, BufferUsageHint.DynamicDraw);
 
-			GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
-		}
+		Disable();
+	}
+
+	public void Enable() => GL.BindBuffer(BufferTarget.ElementArrayBuffer, ID);
+
+	static void Disable() => GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
+
+	public void Dispose() {
+		GL.DeleteBuffer(ID);
+		GC.SuppressFinalize(this);
 	}
 }

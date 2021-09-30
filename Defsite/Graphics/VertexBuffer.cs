@@ -1,99 +1,90 @@
 using System;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Mathematics;
 
-namespace Defsite {
+using OpenTK.Graphics.OpenGL4;
 
-	public class VertexBuffer {
-		public int ID { get; }
-		public BufferLayout Layout { get; set; }
+namespace Defsite.Graphics;
 
-		public VertexBuffer(int size) {
-			ID = GL.GenBuffer();
-			GL.BindBuffer(BufferTarget.ArrayBuffer, ID);
-			SetData(size);
-			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-		}
+public class VertexBuffer : IDisposable {
+	public int ID { get; }
 
-		public VertexBuffer(Vertex[] data) {
-			ID = GL.GenBuffer();
-			GL.BindBuffer(BufferTarget.ArrayBuffer, ID);
-			SetData(data);
-			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-		}
-
-		public void Disable() => GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-
-		public void Enable() => GL.BindBuffer(BufferTarget.ArrayBuffer, ID);
-
-		public void SetSubData(int size, IntPtr data, int offset = 0) {
-			GL.BindBuffer(BufferTarget.ArrayBuffer, ID);
-
-			GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, size, data);
-			//GL.BufferData(BufferTarget.ArrayBuffer, size, data, BufferUsageHint.DynamicDraw);
-
-			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-		}
-
-		public void SetData(int size) {
-			GL.BindBuffer(BufferTarget.ArrayBuffer, ID);
-
-			GL.BufferData(BufferTarget.ArrayBuffer, size, IntPtr.Zero, BufferUsageHint.DynamicDraw);
-
-			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-		}
-
-		public void SetData(Vertex[] data) {
-			GL.BindBuffer(BufferTarget.ArrayBuffer, ID);
-
-			GL.BufferData(BufferTarget.ArrayBuffer, data.Length * Vertex.SizeInBytes, data, BufferUsageHint.DynamicDraw);
-
-			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+	int size = 0;
+	public int Size {
+		get => size;
+		set {
+			size = value;
+			Resize(value);
 		}
 	}
 
-	public class VertexBuffer<T> {
-		public int ID { get; }
+	public BufferLayout Layout { get; set; }
 
-		public VertexBuffer(T[] data) {
-			ID = GL.GenBuffer();
-			GL.BindBuffer(BufferTarget.ArrayBuffer, ID);
-			SetData(data);
-			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+	public VertexBuffer() => ID = GL.GenBuffer();
+
+	public void SetData<T>(T[] data) where T : IVertex {
+		Enable();
+
+		switch(data) {
+			case ColoredVertex[] colored_vertices:
+				GL.BufferData(BufferTarget.ArrayBuffer, data.Length * colored_vertices[0].SizeInBytes, colored_vertices, BufferUsageHint.DynamicDraw);
+				break;
+
+			case TexturedVertex[] textured_vertices:
+				GL.BufferData(BufferTarget.ArrayBuffer, data.Length * textured_vertices[0].SizeInBytes, textured_vertices, BufferUsageHint.DynamicDraw);
+				break;
+
+			default:
+				break;
 		}
 
-		public int Dimensions => (this) switch
-		{
-			VertexBuffer<Vector2> _ => 2,
-			VertexBuffer<Vector3> _ => 3,
-			VertexBuffer<Vector4> _ => 4,
-			_ => 0,
-		};
+		Disable();
+	}
 
-		public void Disable() => GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+	public void UpdateData<T>(T[] data, int offset = 0) where T : IVertex {
+		Enable();
 
-		public void Dispose() => GL.DeleteBuffer(ID);
-
-		public void Enable() => GL.BindBuffer(BufferTarget.ArrayBuffer, ID);
-
-		public void SetData(T[] data) {
-			GL.BindBuffer(BufferTarget.ArrayBuffer, ID);
-
-			switch (data) {
-				case Vector2[] vec2:
-					GL.BufferData(BufferTarget.ArrayBuffer, data.Length * Vector2.SizeInBytes, vec2, BufferUsageHint.DynamicDraw);
-					break;
-
-				case Vector3[] vec3:
-					GL.BufferData(BufferTarget.ArrayBuffer, data.Length * Vector3.SizeInBytes, vec3, BufferUsageHint.DynamicDraw);
-					break;
-
-				case Vector4[] vec4:
-					GL.BufferData(BufferTarget.ArrayBuffer, data.Length * Vector4.SizeInBytes, vec4, BufferUsageHint.DynamicDraw);
-					break;
-			}
-
-			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+		var data_size = data.Length * data[0].SizeInBytes;
+		if(data_size < size) {
+			Resize(data_size);
 		}
+
+		switch(data) {
+			case ColoredVertex[] colored_vertices:
+				GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, data.Length * colored_vertices[0].SizeInBytes, colored_vertices);
+				break;
+
+			case TexturedVertex[] textured_vertices:
+				GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, data.Length * textured_vertices[0].SizeInBytes, textured_vertices);
+				break;
+
+			default:
+				break;
+		}
+
+		Disable();
+	}
+
+	public void UpdateData(int size, IntPtr data, int offset = 0) {
+		Enable();
+
+		GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, size, data);
+
+		Disable();
+	}
+
+	void Resize(int size_in_bytes) {
+		Enable();
+
+		GL.BufferData(BufferTarget.ArrayBuffer, size_in_bytes, IntPtr.Zero, BufferUsageHint.DynamicDraw);
+
+		Disable();
+	}
+
+	public void Enable() => GL.BindBuffer(BufferTarget.ArrayBuffer, ID);
+
+	static void Disable() => GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+
+	public void Dispose() {
+		GL.DeleteBuffer(ID);
+		GC.SuppressFinalize(this);
 	}
 }

@@ -2,21 +2,21 @@
 
 using Raven.Client.Documents;
 
-namespace Server.Database {
-	public class DocumentStoreHolder {
-		static Lazy<IDocumentStore> store = new Lazy<IDocumentStore>(CreateStore);
+namespace Server.Database;
 
-		public static IDocumentStore Store => store.Value;
+public class DocumentStoreHolder {
+	static Lazy<IDocumentStore> store = new Lazy<IDocumentStore>(CreateStore);
 
-		static IDocumentStore CreateStore() {
-			var document_store = new DocumentStore() {
-				Urls = new[] {
+	public static IDocumentStore Store => store.Value;
+
+	static IDocumentStore CreateStore() {
+		var document_store = new DocumentStore() {
+			Urls = new[] {
 					"http://127.0.0.1:8080",
 				},
-				Database = "defsite",
-			}.Initialize();
+			Database = "defsite",
+		}.Initialize();
 
-			return document_store;
-		}
+		return document_store;
 	}
 }

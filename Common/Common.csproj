@@ -1,9 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>library</OutputType>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
 		<LangVersion>latest</LangVersion>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AssemblyVersion>$([System.DateTime]::Now.ToString(`y\.MM\.d`))</AssemblyVersion>
+		<FileVersion>$([System.DateTime]::Now.ToString(`y\.MM\.d`))</FileVersion>
+		<Platforms>AnyCPU;x64</Platforms>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)'=='Release'">

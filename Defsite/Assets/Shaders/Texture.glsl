@@ -2,8 +2,8 @@
 #version 450
 
 in vec3 v_position;
-in vec2 v_texture_coordinates;
 in vec4 v_color;
+in vec2 v_texture_coordinates;
 
 out vec2 f_texture_coordinates;
 out vec4 f_color;

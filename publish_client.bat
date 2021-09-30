@@ -1,16 +1,14 @@
 @echo off
 
-dotnet publish Defsite/Defsite.csproj -p:PublishSingleFile=true;PublishTrimmed=true -r win-x64 -c Release --self-contained true
+dotnet publish Defsite/Defsite.csproj -p:PublishSingleFile=true -r win-x64 -c Release --self-contained true
 
-echo "Copying files to the final directory."
-xcopy Defsite\bin\Release\win-x64\publish\Defsite.exe Defsite\bin\Defsite\ /I /Y
-xcopy Defsite\bin\Release\win-x64\Assets\ Defsite\bin\Defsite\Assets\ /S /I /Y
+echo "Copying files to the final directory"
+xcopy Defsite\bin\Release\win-x64\publish\ Defsite\bin\Defsite\ /S /I /Y
 
-rem Copy essential DLLs (this might not be needed in the final release of .net 5)
-xcopy Defsite\bin\Release\win-x64\coreclr.dll Defsite\bin\Defsite\ /I /Y
-xcopy Defsite\bin\Release\win-x64\clrjit.dll Defsite\bin\Defsite\ /I /Y
-xcopy Defsite\bin\Release\win-x64\clrcompression.dll Defsite\bin\Defsite\ /I /Y
-xcopy Defsite\bin\Release\win-x64\mscordaccore.dll Defsite\bin\Defsite\ /I /Y
+echo "Making .dlls hidden"
+attrib +h Defsite\bin\Defsite\cimgui.dll
+attrib +h Defsite\bin\Defsite\cimguizmo.dll
+attrib +h Defsite\bin\Defsite\glfw3.dll
 
 rem Should copy redistributables and also maybe generate the installer
 

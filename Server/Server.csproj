@@ -1,12 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
 	  <OutputType>exe</OutputType>
-	  <TargetFramework>net5.0</TargetFramework>
+	  <TargetFramework>net6.0</TargetFramework>
     <RuntimeIdentifiers>linux-x64;win-x64;</RuntimeIdentifiers>
-    <AssemblyVersion>$([System.DateTime]::Now.ToString(`y\.d\.H\.m`))</AssemblyVersion>
-    <FileVersion>$([System.DateTime]::Now.ToString(`y\.d\.H\.m`))</FileVersion>
+    <AssemblyVersion>$([System.DateTime]::Now.ToString(`y\.MM\.d`))</AssemblyVersion>
+    <FileVersion>$([System.DateTime]::Now.ToString(`y\.MM\.d`))</FileVersion>
 	  <LangVersion>latest</LangVersion>
 	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	  <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">

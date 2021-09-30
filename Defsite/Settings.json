@@ -1,8 +1,23 @@
 {
   "Title": "Defsite",
-  "Fullscreen": true,
-  "Width": 1280,
-  "Height": 720,
+  "Size": {
+	"X": 800,
+	"Y": 600
+  },
+  "Position": {
+	"X": -1,
+	"Y": -1
+  },
   "VSync": true,
-  "GLVersion": "4.3"
+  "GLVersion": "4.6",
+  "IsMultiThreaded": false,
+  "UpdateFrequency": 0,
+  "RenderFrequency": 0,
+  "NumberOfSamples": 0,
+  "Icon": "Assets/Icon.vif",
+  "WindowBorder": "Resizable",
+  "WindowState": "Normal",
+  "Flags": "Debug",
+  "StartFocused": true,
+  "StartVisible": true
 }
