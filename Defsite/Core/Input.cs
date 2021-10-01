@@ -1,46 +1,50 @@
 using System;
+using System.Collections.Generic;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace Defsite.Core;
-public static class Input {
-	static readonly bool[] active_buttons = new bool[(int)MouseButton.Last];
-	static readonly bool[] active_keys = new bool[(int)Keys.LastKey];
-	static float scroll_wheel;
 
-	public static Vector2 MousePos { get; private set; }
+public class Input {
+	public static MouseState MouseState { get; protected set; }
+	public static KeyboardState KeyboardState { get; protected set; }
+	public static IReadOnlyList<JoystickState> JoystickStates { get; protected set; }
 
-	public static float ScrollWheel {
-		get {
-			try {
-				return scroll_wheel;
-			} finally {
-				scroll_wheel = 0;
-			}
-		}
-	}
+	public static Vector2 MousePosition => MouseState.Position;
+	public static Vector2 MouseScroll => MouseState.Scroll;
+	public static Vector2 MouseScrollDelta => MouseState.ScrollDelta;
 
-	public static void KeyDown(Keys key, Action callback) {
-		if(IsActive(key)) {
+	public static void OnKeyPress(Keys key, Action callback) {
+		if(KeyboardState.IsKeyPressed(key)) {
 			callback.Invoke();
 		}
 	}
 
-	public static void KeyUp(Keys key, Action callback) {
-		if(!IsActive(key)) {
+	public static void OnKeyRelease(Keys key, Action callback) {
+		if(KeyboardState.IsKeyReleased(key)) {
 			callback.Invoke();
 		}
 	}
 
-	public static bool IsActive(Keys key) => active_keys[(int)key];
+	public static bool KeyDown(Keys key) => KeyboardState.IsKeyDown(key);
 
-	public static bool IsActive(MouseButton button) => active_buttons[(int)button];
+	public static void OnButtonPress(MouseButton button, Action callback) {
+		if(MouseState.WasButtonDown(button) == false && MouseState.IsButtonDown(button)) {
+			callback.Invoke();
+		}
+	}
 
-	public static void Set(Keys key, bool value) => active_keys[(int)key] = value;
+	public static void OnButtonRelease(MouseButton button, Action callback) {
+		if(MouseState.WasButtonDown(button) && MouseState.IsButtonDown(button) == false) {
+			callback.Invoke();
+		}
+	}
 
-	public static void Set(MouseButton button, bool value) => active_buttons[(int)button] = value;
+	public static bool ButtonDown(MouseButton button) => MouseState.IsButtonDown(button);
+}
 
-	public static void Set(Vector2 position) => MousePos = position;
-
-	public static void Set(float value) => scroll_wheel = value;
+public class InputController : Input {
+	public void SetState(MouseState state) => MouseState = state;
+	public void SetState(KeyboardState state) => KeyboardState = state;
+	public void SetState(IReadOnlyList<JoystickState> states) => JoystickStates = states;
 }

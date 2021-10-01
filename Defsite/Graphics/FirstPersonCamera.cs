@@ -73,7 +73,7 @@ public class FirstPersonCamera {
 
 	//TODO Make it so camera can be paused and resumed regardless of mouse movement when it's paused
 	public void Update() {
-		var mouse = Input.MousePos;
+		var mouse = Input.MousePosition;
 
 		if(move) {
 			old_x = mouse.X;

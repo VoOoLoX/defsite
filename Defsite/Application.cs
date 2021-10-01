@@ -111,7 +111,7 @@ public class Application {
 		Window.MouseUp += (MouseButtonEventArgs mouse_button_event) => {
 		};
 		Window.MouseMove += (MouseMoveEventArgs mouse_move_event) => {
-			Input.Set(mouse_move_event.Position);
+			//Input.Set(mouse_move_event.Position);
 		};
 		Window.MouseWheel += (MouseWheelEventArgs mouse_wheel_event) => {
 		};

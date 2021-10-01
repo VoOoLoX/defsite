@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 using Common;
@@ -11,14 +9,6 @@ namespace Defsite.Utils;
 public static class GLUtils {
 	static readonly DebugProc debug_proc_callback = DebugCallback;
 	static GCHandle debug_proc_callback_handle;
-
-	public static void CheckGLError([CallerFilePath] string file = "", [CallerLineNumber] int line_number = 0) {
-		var error = GL.GetError();
-		if(error != ErrorCode.NoError) {
-			var file_info = new FileInfo(file);
-			Log.Error($"<{file_info.Name.Split('.')[0]}:{line_number}> {error}");
-		}
-	}
 
 	static void DebugCallback(DebugSource source, DebugType type, int id, DebugSeverity severity, int length, IntPtr message, IntPtr user_param) {
 		var message_string = Marshal.PtrToStringAnsi(message, length);

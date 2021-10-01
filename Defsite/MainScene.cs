@@ -50,8 +50,8 @@ class MainScene : Scene {
 		camera.Position = new Vector3(1, 5, 1);
 		//camera.RotationZ = 0;
 		var pv = Matrix4.Invert(Matrix4.LookAt(camera.Position, Vector3.Zero, new Vector3(0, 1, 0)) * camera.ProjectionMatrix);
-		var nx = Utils.Utils.Map(Input.MousePos.X, 0, WindowProperties.ClientWidth, -1f, 1f);
-		var ny = Utils.Utils.Map(Input.MousePos.Y, 0, WindowProperties.ClientHeight, 1f, -1f);
+		var nx = Utils.Utils.Map(Input.MousePosition.X, 0, WindowProperties.ClientWidth, -1f, 1f);
+		var ny = Utils.Utils.Map(Input.MousePosition.Y, 0, WindowProperties.ClientHeight, 1f, -1f);
 		var nz = Utils.Utils.Map(0, -1000, 1000, -1, 1);
 		var c = new Vector4(nx, ny, nz, 1.0f);
 		var q = c * pv;
