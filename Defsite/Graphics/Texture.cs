@@ -1,12 +1,12 @@
-
 using System.IO;
 using Common;
 
 using Defsite.IO.DataFormats;
 
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 
 namespace Defsite.Graphics;
+
 public enum TextureFilter {
 	Nearest = TextureMinFilter.Nearest,
 	Linear = TextureMinFilter.Linear
@@ -17,7 +17,7 @@ public class Texture {
 
 	public TextureData TextureData { get; private set; }
 
-	public TextureFilter TextureFilter { get; init; } = TextureFilter.Linear;
+	public TextureFilter TextureFilter { get; init; } = TextureFilter.Nearest;
 
 	public int Width { get; private set; }
 
@@ -33,9 +33,9 @@ public class Texture {
 		}
 	}
 
-	public Texture(TextureData texture_data, TextureFilter texture_filter = TextureFilter.Linear) => Create(texture_data);
+	public Texture(TextureData texture_data, TextureFilter texture_filter = TextureFilter.Nearest) => Create(texture_data);
 
-	public Texture(int width, int height, TextureFilter texture_filter = TextureFilter.Linear) => Create(new TextureData(width, height));
+	public Texture(int width, int height, TextureFilter texture_filter = TextureFilter.Nearest) => Create(new TextureData(width, height));
 
 	public void Enable() => GL.BindTexture(TextureTarget.Texture2D, ID);
 
@@ -51,9 +51,7 @@ public class Texture {
 		Height = TextureData.Height;
 
 		Enable();
-		GL.TextureStorage2D(ID, 1, SizedInternalFormat.Rgba8, Width, Height);
-		GL.TextureSubImage2D(ID, 0, 0, 0, Width, Height, PixelFormat.Bgra, PixelType.UnsignedByte, TextureData.Bytes);
-		GL.GenerateTextureMipmap(ID);
+		GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, TextureData.Bytes);
 		GL.TextureParameter(ID, TextureParameterName.TextureMinFilter, (int)TextureFilter);
 		GL.TextureParameter(ID, TextureParameterName.TextureMagFilter, (int)TextureFilter);
 		GL.TextureParameter(ID, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
@@ -68,9 +66,7 @@ public class Texture {
 		Height = TextureData.Height;
 
 		Enable();
-		GL.TextureStorage2D(ID, 1, SizedInternalFormat.Rgba8, Width, Height);
-		GL.TextureSubImage2D(ID, 0, 0, 0, Width, Height, PixelFormat.Bgra, PixelType.UnsignedByte, TextureData.Bytes);
-		GL.GenerateTextureMipmap(ID);
+		GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, TextureData.Bytes);
 		GL.TextureParameter(ID, TextureParameterName.TextureMinFilter, (int)(TextureMinFilter)TextureFilter);
 		GL.TextureParameter(ID, TextureParameterName.TextureMagFilter, (int)(TextureMagFilter)TextureFilter);
 		GL.TextureParameter(ID, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);

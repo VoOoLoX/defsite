@@ -17,7 +17,7 @@ public class FirstPersonCamera {
 	float old_x, old_y;
 	float delta_x, delta_y;
 
-	public FirstPersonCamera(Vector3 position, float sensitivity = 0.2f, float fov = 45, float z_near = 0.05f, float z_far = 100f) {
+	public FirstPersonCamera(Vector3 position, float sensitivity = 0.2f, float fov = 45, float z_near = 0.001f, float z_far = 100f) {
 		Position = position;
 		Fov = fov;
 		ZNear = z_near;

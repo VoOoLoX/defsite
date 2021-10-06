@@ -9,6 +9,7 @@ using Common;
 using Defsite.Utils;
 
 namespace Defsite.IO.DataFormats;
+
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
 public struct Pixel {

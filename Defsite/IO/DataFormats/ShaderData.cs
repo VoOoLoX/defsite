@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-using Common;
+using NLog;
 
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 
 namespace Defsite.IO.DataFormats;
 
@@ -35,12 +35,15 @@ public class ShaderData {
 				gl_FragColor = color;
 			}"
 	)));
-	readonly bool from_file;
-	readonly bool from_stream;
 
 	FileInfo shader_file_info;
 
 	Stream shader_stream;
+
+	readonly bool from_file;
+	readonly bool from_stream;
+
+	static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 	public Dictionary<ShaderType, string> Shaders { get; private set; }
 
@@ -61,14 +64,15 @@ public class ShaderData {
 		} else if(from_stream) {
 			Reload(shader_stream);
 		} else {
-			Log.Panic("Can't reload shader.");
+			log.Error("Can't reload shader.");
 		}
 	}
 
 	void Load(string file_path) {
 		var file_info = File.Exists(file_path) ? new FileInfo(file_path) : null;
 		if(file_info == null) {
-			Log.Panic($"Invalid shader file path: {file_path}");
+			log.Error($"Invalid shader file path: {file_path}");
+			return;
 		}
 
 		shader_file_info = file_info;
@@ -87,7 +91,8 @@ public class ShaderData {
 
 		foreach(var shader in shaders) {
 			if(shader.Length < 1) {
-				Log.Panic("Invalid shader");
+				log.Error("Invalid shader");
+				continue;
 			}
 
 			var source_lines = shader.Split(new[] { "\r\n", "\r", "\n", "\t" }, StringSplitOptions.RemoveEmptyEntries);
@@ -114,7 +119,7 @@ public class ShaderData {
 					break;
 
 				default:
-					Log.Panic($"Invalid shader type: {type}");
+					log.Error($"Invalid shader type: {type}");
 					break;
 			}
 

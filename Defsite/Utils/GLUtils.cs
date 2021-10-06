@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-using Common;
+using NLog;
 
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 
 namespace Defsite.Utils;
 public static class GLUtils {
-	static readonly DebugProc debug_proc_callback = DebugCallback;
 	static GCHandle debug_proc_callback_handle;
+
+	static readonly DebugProc debug_proc_callback = DebugCallback;
+
+	static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 	static void DebugCallback(DebugSource source, DebugType type, int id, DebugSeverity severity, int length, IntPtr message, IntPtr user_param) {
 		var message_string = Marshal.PtrToStringAnsi(message, length);
 
 		if(type == DebugType.DebugTypeError) {
-			Log.Error($"{severity} {type} | {message_string}");
+			log.Error($"{message_string}");
 		} else {
-			Log.Info($"{severity} {type} | {message_string}");
+			log.Info($"{message_string}");
 		}
 	}
 

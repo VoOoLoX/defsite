@@ -27,8 +27,8 @@ public class ImGuiRenderer {
 	int vertex_buffer_size;
 	int index_buffer_size;
 
-	int window_height;
-	int window_width;
+	int game_width;
+	int game_height;
 
 	bool run;
 
@@ -36,8 +36,8 @@ public class ImGuiRenderer {
 	readonly ImGuiIOPtr io;
 
 	public ImGuiRenderer(int width, int height) {
-		window_width = width;
-		window_height = height;
+		game_width = width;
+		game_height = height;
 
 		var context = ImGui.CreateContext();
 
@@ -67,13 +67,15 @@ public class ImGuiRenderer {
 	}
 
 	public void Update(float delta_time) {
-		io.DisplaySize.X = window_width;
-		io.DisplaySize.Y = window_height;
+		io.DisplaySize.X = game_width;
+		io.DisplaySize.Y = game_height;
 		io.DeltaTime = delta_time;
 
 		UpdateInputs();
 
 		ImGui.NewFrame();
+		ImGuizmo.BeginFrame();
+		ImGuizmo.SetRect(0, 0, io.DisplaySize.X, io.DisplaySize.Y);
 
 		run = true;
 	}
@@ -81,8 +83,8 @@ public class ImGuiRenderer {
 	public void PressChar(char char_key) => pressed_characters.Add(char_key);
 
 	public void WindowResized(int width, int height) {
-		window_width = width;
-		window_height = height;
+		game_width = width;
+		game_height = height;
 	}
 
 	void CreateResources() {
@@ -244,7 +246,7 @@ public class ImGuiRenderer {
 				GL.BindTexture(TextureTarget.Texture2D, (int)p_cmd.TextureId);
 
 				var clip = p_cmd.ClipRect;
-				GL.Scissor((int)clip.X, window_height - (int)clip.W, (int)(clip.Z - clip.X), (int)(clip.W - clip.Y));
+				GL.Scissor((int)clip.X, game_height - (int)clip.W, (int)(clip.Z - clip.X), (int)(clip.W - clip.Y));
 
 				index_buffer.Enable();
 

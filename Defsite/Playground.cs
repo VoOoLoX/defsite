@@ -1,12 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
-
-using Common;
 
 using Defsite.Audio;
 using Defsite.Core;
@@ -18,6 +14,8 @@ using ImGuiNET;
 
 using ImGuizmoNET;
 
+using NLog;
+
 using OpenTK.Audio.OpenAL;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
@@ -26,6 +24,7 @@ using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace Defsite;
+
 public class Playground : GameWindow {
 	ALContext audio_context;
 
@@ -35,28 +34,37 @@ public class Playground : GameWindow {
 
 	Shader color_shader, texture_shader;
 
-	BufferLayout color_shader_layout;
+	BufferLayout color_shader_layout, texture_shader_layout;
 
-	IndexBuffer axis_index_buffer, quads_index_buffer, camera_index_buffer;
+	IndexBuffer axis_ibo, quads_ibo, camera_ibo, crosshair_ibo;
 
-	VertexArray axis_vao, quads_vao, camera_vao;
+	VertexArray axis_vao, quads_vao, camera_vao, crosshair_vao;
 
-	VertexBuffer axis_vbo, quads_vbo, camera_vbo;
+	VertexBuffer axis_vbo, quads_vbo, camera_vbo, crosshair_vbo;
 
 	ImGuiRenderer imgui_controller;
 
-	Process process;
-
 	InputController input_controller;
+
+	Texture ground_texture;
 
 	bool jump = false;
 
 	int quads_count = 20;
 	float axis_lenght = 10;
+	float crosshair_lenght = 20;
 	bool show_grid = false;
 
 	Matrix4 test_cube = Matrix4.Identity;
+	Matrix4 delta_test_cube = Matrix4.Identity;
+	Vector3 snap = Vector3.Zero;
+
+	TransformOperation transform_operation = TransformOperation.Translate;
+	TransformMode transform_mode = TransformMode.World;
+
 	Matrix4 camera_rot = Matrix4.Identity;
+
+	static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 	public Playground(GameWindowSettings game_window_settings, NativeWindowSettings native_window_settings) : base(game_window_settings, native_window_settings) {
 	}
@@ -72,6 +80,24 @@ public class Playground : GameWindow {
 	protected override void OnLoad() {
 		base.OnLoad();
 
+		try {
+			var devices = ALC.GetStringList(GetEnumerationStringList.DeviceSpecifier);
+			var devices_list = devices.ToList();
+			log.Info($"Devices: {string.Join(", ", devices_list)}");
+
+			var device_name = ALC.GetString(ALDevice.Null, AlcGetString.DefaultDeviceSpecifier);
+
+			foreach(var d in devices_list.Where(d => d.Contains("OpenAL Soft"))) {
+				device_name = d;
+			}
+
+			var device = ALC.OpenDevice(device_name);
+			audio_context = ALC.CreateContext(device, (int[])null);
+			ALC.MakeContextCurrent(audio_context);
+		} catch {
+			log.Fatal("Could not load 'openal32.dll'. Try installing OpenAL.");
+		}
+
 #if DEBUG
 		GLUtils.InitDebugCallback();
 #endif
@@ -80,7 +106,7 @@ public class Playground : GameWindow {
 
 		Assets.LoadAssets("Assets/Assets.json");
 
-		// SoundListener.Init();
+		SoundListener.Init();
 
 		input_controller = new InputController();
 
@@ -110,21 +136,29 @@ public class Playground : GameWindow {
 		style.WindowPadding = new Vector2(5);
 
 		camera = new FirstPersonCamera(new Vector3(0, 0, 3));
-		active_camera = camera;
 		camera2 = new FirstPersonCamera(new Vector3(-3, 2, -3));
+		active_camera = camera;
 
 		color_shader = Assets.Get<Shader>("ColorShader");
 		texture_shader = Assets.Get<Shader>("TextureShader");
 
+		ground_texture = Assets.Get<Texture>("Ground");
+
 		color_shader_layout = new BufferLayout(new List<VertexAttribute> {
-				new(color_shader.GetAttributeLocation("v_position"), VertexAttributeType.Vector3),
-				new(color_shader.GetAttributeLocation("v_color"), VertexAttributeType.Vector4)
-			});
+			new(color_shader["v_position"], VertexAttributeType.Vector3),
+			new(color_shader["v_color"], VertexAttributeType.Vector4)
+		});
+
+		texture_shader_layout = new BufferLayout(new List<VertexAttribute> {
+			new(texture_shader["v_position"], VertexAttributeType.Vector3),
+			new(texture_shader["v_color"], VertexAttributeType.Vector4),
+			new(texture_shader["v_texture_coordinates"], VertexAttributeType.Vector2)
+		});
 
 		#region Axis
 
 		axis_vao = new VertexArray();
-		axis_index_buffer = new IndexBuffer();
+		axis_ibo = new IndexBuffer();
 		axis_vbo = new VertexBuffer() {
 			Layout = color_shader_layout
 		};
@@ -138,12 +172,12 @@ public class Playground : GameWindow {
 		#region Quads
 
 		quads_vao = new VertexArray();
-		quads_index_buffer = new IndexBuffer();
+		quads_ibo = new IndexBuffer();
 		quads_vbo = new VertexBuffer() {
-			Layout = color_shader_layout
+			Layout = texture_shader_layout
 		};
 
-		GenerateCheckerTiles();
+		GenerateTexturedTiles();
 
 		quads_vao.AddVertexBuffer(quads_vbo);
 
@@ -153,7 +187,7 @@ public class Playground : GameWindow {
 
 		camera_vao = new VertexArray();
 
-		camera_index_buffer = new IndexBuffer(new[] { 0, 1, 2, 2, 3, 0, 4, 5, 6, 6, 7, 4 });
+		camera_ibo = new IndexBuffer(new[] { 0, 1, 2, 2, 3, 0, 4, 5, 6, 6, 7, 4 });
 
 		camera_vbo = new VertexBuffer() {
 			Layout = color_shader_layout
@@ -161,6 +195,18 @@ public class Playground : GameWindow {
 
 		camera_vao.AddVertexBuffer(camera_vbo);
 
+		#endregion
+
+		#region Crosshair
+		crosshair_vao = new VertexArray();
+		crosshair_ibo = new IndexBuffer();
+		crosshair_vbo = new VertexBuffer() {
+			Layout = color_shader_layout
+		};
+
+		GenerateCrosshair();
+
+		crosshair_vao.AddVertexBuffer(crosshair_vbo);
 		#endregion
 
 		frame_buffer = new FrameBuffer(new Texture(GameWidth, GameHeight));
@@ -176,15 +222,6 @@ public class Playground : GameWindow {
 
 		if(WindowState == WindowState.Minimized || !IsFocused) {
 			Thread.Sleep(1000 / 10);
-		}
-
-		if(Platform.IsDebug) {
-			process = Process.GetCurrentProcess();
-			var mb_ram_used = process.PrivateMemorySize64 / 1024 / 1024;
-
-			if(mb_ram_used > 500) {
-				throw new Exception("High RAM usage. Exiting to prevent system lag. (Known memory leak)");
-			}
 		}
 
 		Input.OnKeyPress(Keys.Tab, () => active_camera = active_camera == camera ? camera2 : camera);
@@ -211,7 +248,30 @@ public class Playground : GameWindow {
 				active_camera.Position -= active_camera.Right * speed * (float)e.Time;
 			}
 
+
+
 			Input.OnKeyPress(Keys.Space, () => jump = true);
+		}
+
+		if(Input.KeyDown(Keys.D1)) {
+			transform_operation = TransformOperation.Translate;
+			transform_mode = TransformMode.World;
+		}
+
+		if(Input.KeyDown(Keys.D2)) {
+			transform_operation = TransformOperation.Rotate;
+			transform_mode = TransformMode.World;
+		}
+
+		if(Input.KeyDown(Keys.D3)) {
+			transform_operation = TransformOperation.Scale;
+			transform_mode = TransformMode.Local;
+		}
+
+		snap = Vector3.Zero;
+
+		if(Input.KeyDown(Keys.LeftShift)) {
+			snap = transform_operation == TransformOperation.Rotate ? new Vector3(5) : Vector3.One;
 		}
 
 		Input.OnKeyPress(Keys.GraveAccent, () => CursorGrabbed = !CursorGrabbed);
@@ -260,21 +320,35 @@ public class Playground : GameWindow {
 			return;
 		}
 
-		ImGuizmo.BeginFrame();
-		ImGuizmo.SetRect(0, 0, GameWidth, GameHeight);
-
 		GL.ClearColor(new Color4(255, 255, 255, 255));
 		GL.Clear(ClearBufferMask.ColorBufferBit);
 
 		frame_buffer.Enable();
+		GL.ClearDepth(1000.0);
 		GL.ClearColor(new Color4(20, 20, 20, 255));
 		GL.Enable(EnableCap.DepthTest);
+		//GL.Enable(EnableCap.Blend);
 		GL.DepthFunc(DepthFunction.Lequal);
+		//GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 		GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
 		var view_matrix = active_camera.GetViewMatrix();
 		var projection_matrix = active_camera.GetProjectionMatrix();
 		var identity = Matrix4.Identity;
+
+		texture_shader.Enable();
+		texture_shader.Set("u_projection", projection_matrix);
+		texture_shader.Set("u_view", view_matrix);
+		texture_shader.Set("u_model", identity);
+
+		{
+			quads_vao.Enable();
+			quads_ibo.Enable();
+			ground_texture.Enable();
+			GL.DrawElements(PrimitiveType.Triangles, quads_ibo.Count, DrawElementsType.UnsignedInt, 0);
+		}
+
+		texture_shader.Disable();
 
 		color_shader.Enable();
 		color_shader.Set("u_projection", projection_matrix);
@@ -282,34 +356,41 @@ public class Playground : GameWindow {
 		color_shader.Set("u_model", identity);
 
 		{
-			quads_vao.Enable();
-			quads_index_buffer.Enable();
-			GL.DrawElements(PrimitiveType.Triangles, quads_index_buffer.Count, DrawElementsType.UnsignedInt, 0);
+			axis_vao.Enable();
+			axis_ibo.Enable();
+			GL.LineWidth(10f);
+			GL.DrawElements(PrimitiveType.Lines, axis_ibo.Count, DrawElementsType.UnsignedInt, 0);
 		}
 
 		{
 			color_shader.Set("u_model", Matrix4.CreateTranslation(-camera2.Position) * camera_rot.Inverted() * Matrix4.CreateTranslation(camera2.Position));
 
 			camera_vao.Enable();
-			camera_index_buffer.Enable();
-			GL.DrawElements(PrimitiveType.Triangles, camera_index_buffer.Count, DrawElementsType.UnsignedInt, 0);
+			camera_ibo.Enable();
+			GL.DrawElements(PrimitiveType.Triangles, camera_ibo.Count, DrawElementsType.UnsignedInt, 0);
 
 			color_shader.Set("u_model", identity);
 		}
 
 		{
-			axis_vao.Enable();
-			axis_index_buffer.Enable();
-			GL.LineWidth(10f);
-			GL.DrawElements(PrimitiveType.Lines, axis_index_buffer.Count, DrawElementsType.UnsignedInt, 0);
+			color_shader.Set("u_projection", Matrix4.CreateOrthographic(GameWidth, GameHeight, -1000, 1000f));
+			color_shader.Set("u_view", identity);
+
+			crosshair_vao.Enable();
+			crosshair_ibo.Enable();
+			GL.LineWidth(1f);
+			GL.DrawElements(PrimitiveType.Lines, crosshair_ibo.Count, DrawElementsType.UnsignedInt, 0);
+
+			//color_shader.Set("u_projection", projection_matrix);
+			color_shader.Set("u_view", view_matrix);
 		}
 
 		{
 			if(show_grid) {
-				ImGuizmo.DrawGrid(ref view_matrix.Row0.X, ref projection_matrix.Row0.X, ref identity.Row0.X, 200f);
+				ImGuizmo.DrawGrid(ref view_matrix, ref projection_matrix, ref identity, 200f);
 			}
-			ImGuizmo.DrawCubes(ref view_matrix.Row0.X, ref projection_matrix.Row0.X, ref test_cube.Row0.X, 1);
-			ImGuizmo.Manipulate(ref view_matrix.Row0.X, ref projection_matrix.Row0.X, TransformOperation.Translate, TransformMode.World, ref test_cube.Row0.X);
+			ImGuizmo.DrawCubes(ref view_matrix, ref projection_matrix, ref test_cube, 1);
+			ImGuizmo.Manipulate(ref view_matrix, ref projection_matrix, transform_operation, transform_mode, ref test_cube, ref delta_test_cube, ref snap);
 		}
 
 		color_shader.Disable();
@@ -319,7 +400,7 @@ public class Playground : GameWindow {
 
 		{
 			GL.ClearColor(new Color4(255, 255, 255, 255));
-			GL.Disable(EnableCap.DepthTest);
+			//GL.Disable(EnableCap.DepthTest);
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
 			GL.BindFramebuffer(FramebufferTarget.ReadFramebuffer, frame_buffer.ID);
@@ -331,14 +412,20 @@ public class Playground : GameWindow {
 
 		ImGui.Begin("Sidebar");
 		{
-			if(ImGui.SliderInt("Quads", ref quads_count, 2, 100)) {
-				GenerateCheckerTiles();
+			if(ImGui.SliderInt("Quads", ref quads_count, 2, 500)) {
+				GenerateTexturedTiles();
 			}
 
 			ImGui.Separator();
 
 			if(ImGui.SliderFloat("Axis", ref axis_lenght, 0, 50)) {
 				GenerateAxis();
+			}
+
+			ImGui.Separator();
+
+			if(ImGui.SliderFloat("Crosshair", ref crosshair_lenght, 0, 50)) {
+				GenerateCrosshair();
 			}
 
 			ImGui.Separator();
@@ -356,7 +443,7 @@ public class Playground : GameWindow {
 		ImGui.SetNextWindowBgAlpha(0.35f);
 		ImGui.Begin("Overlay", ImGuiWindowFlags.NoDecoration | ImGuiWindowFlags.NoInputs);
 		{
-			ImGui.SetWindowSize(new Vector2(250, 150));
+			ImGui.SetWindowSize(new Vector2(250, 225));
 
 			ImGui.Text($"FPS: {1 / e.Time:00} | FT: {e.Time * 1000:N}");
 			ImGui.Separator();
@@ -370,18 +457,51 @@ public class Playground : GameWindow {
 			ImGui.Separator();
 			ImGui.Text($"Controls:");
 			ImGui.Text($"WASD - move");
+			ImGui.Text($"Space - jump");
+			ImGui.Text($"LShift - sneak");
 			ImGui.Text($"Tab - toggle camera");
 			ImGui.Text($"~ - toggle focus");
+			ImGui.Text($"1 - translate");
+			ImGui.Text($"2 - rotate");
+			ImGui.Text($"3 - scale");
 
 		}
 
 		ImGui.End();
+
+		ImGui.ShowDemoWindow();
 
 		imgui_controller.Render();
 
 		#endregion
 
 		SwapBuffers();
+	}
+
+	void GenerateCrosshair() {
+		var crosshair_vertices = new ColoredVertex[] {
+			new() {
+				Position = new Vector3(-crosshair_lenght / 2, 0, -.1f),
+				Color = new Vector4(1, 1, 1, 1)
+			},
+			new() {
+				Position = new Vector3(crosshair_lenght / 2, 0, -.1f),
+				Color = new Vector4(1, 1, 1, 1)
+			},
+
+			new() {
+				Position = new Vector3(0, -crosshair_lenght / 2, -.1f),
+				Color = new Vector4(1, 1, 1, 1)
+			},
+			new() {
+				Position = new Vector3(0, crosshair_lenght / 2, -.1f),
+				Color = new Vector4(1, 1, 1, 1)
+			}
+		};
+
+		crosshair_ibo.SetData(Enumerable.Range(0, 4).ToArray());
+
+		crosshair_vbo.SetData(crosshair_vertices);
 	}
 
 	void GenerateAxis() {
@@ -414,7 +534,7 @@ public class Playground : GameWindow {
 			}
 		};
 
-		axis_index_buffer.SetData(Enumerable.Range(0, 6).ToArray());
+		axis_ibo.SetData(Enumerable.Range(0, 6).ToArray());
 
 		axis_vbo.SetData(axis_vertices);
 	}
@@ -439,11 +559,44 @@ public class Playground : GameWindow {
 			ind_ix += 4;
 		}
 
-		quads_index_buffer.SetData(indices);
+		quads_ibo.SetData(indices);
 
 		for(var y = -quads_count / 2; y < quads_count / 2; y++) {
 			for(var x = -quads_count / 2; x < quads_count / 2; x++) {
-				var quad = Primitives.CreateQuad(new Vector3(x, 0, y), (x + y) % 2 == 0 ? Color.FromArgb(42, 45, 52) : Color.FromArgb(0, 157, 220));
+				var quad = Primitives.CreateTile(new Vector3(x, 0, y), (x + y) % 2 == 0 ? Color.FromArgb(42, 45, 52) : Color.FromArgb(0, 157, 220));
+				Array.Copy(quad, 0, quads_vertices, ix, quad.Length);
+				ix += quad.Length;
+			}
+		}
+
+		quads_vbo.SetData(quads_vertices);
+	}
+
+	void GenerateTexturedTiles() {
+		var ix = 0;
+		var grid_count = quads_count * quads_count;
+
+		var quads_vertices = new TexturedVertex[grid_count * 4];
+
+		var indices = new int[grid_count * 6];
+		var ind_ix = 0;
+
+		for(var ind = 0; ind < indices.Length; ind += 6) {
+			indices[ind + 0] = ind_ix;
+			indices[ind + 1] = ind_ix + 1;
+			indices[ind + 2] = ind_ix + 2;
+
+			indices[ind + 3] = ind_ix + 2;
+			indices[ind + 4] = ind_ix + 3;
+			indices[ind + 5] = ind_ix;
+			ind_ix += 4;
+		}
+
+		quads_ibo.SetData(indices);
+
+		for(var y = -quads_count / 2; y < quads_count / 2; y++) {
+			for(var x = -quads_count / 2; x < quads_count / 2; x++) {
+				var quad = Primitives.CreateTexturedTile(new Vector3(x, 0, y), Color.White);
 				Array.Copy(quad, 0, quads_vertices, ix, quad.Length);
 				ix += quad.Length;
 			}
@@ -461,24 +614,6 @@ public class Playground : GameWindow {
 
 	protected override void OnTextInput(TextInputEventArgs e) => imgui_controller.PressChar((char)e.Unicode);
 
-	protected override void OnMinimized(MinimizedEventArgs e) {
-		base.OnMinimized(e);
-		GL.Viewport(0, 0, ClientSize.X, ClientSize.Y);
-
-		imgui_controller.WindowResized(ClientSize.X, ClientSize.Y);
-
-		UpdateClientRect();
-	}
-
-	protected override void OnMaximized(MaximizedEventArgs e) {
-		base.OnMaximized(e);
-		GL.Viewport(0, 0, ClientSize.X, ClientSize.Y);
-
-		imgui_controller.WindowResized(ClientSize.X, ClientSize.Y);
-
-		UpdateClientRect();
-	}
-
 	protected override void OnResize(ResizeEventArgs e) {
 		base.OnResize(e);
 
@@ -488,7 +623,7 @@ public class Playground : GameWindow {
 
 		imgui_controller.WindowResized(GameWidth, GameHeight);
 
-		frame_buffer = new FrameBuffer(new Texture(GameWidth, GameHeight));
+		frame_buffer.Texture.Resize(GameWidth, GameHeight);
 	}
 
 	protected override void Dispose(bool disposing) {

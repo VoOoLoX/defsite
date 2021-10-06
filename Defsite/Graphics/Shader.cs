@@ -1,21 +1,23 @@
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 
-using Common;
-
 using Defsite.IO.DataFormats;
 
-using OpenTK.Graphics.OpenGL;
+using NLog;
+
+using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 
 namespace Defsite.Graphics;
 public class Shader {
+	public int ID { get; private set; }
+
 	readonly Dictionary<string, int> attribute_location_cache = new();
 	readonly Dictionary<string, int> uniform_location_cache = new();
 	readonly ShaderData shader_data;
 	readonly List<int> shaders = new();
-	public int ID { get; private set; }
+
+	static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 	public Shader(string file_path) {
 		ID = GL.CreateProgram();
@@ -70,43 +72,44 @@ public class Shader {
 
 	public void Set<T>(string uniform, T data) {
 		GL.UseProgram(ID);
-
+		var location = GetUniformLocation(uniform);
 		switch(data) {
 			case Matrix2 m2:
-				GL.UniformMatrix2(GetUniformLocation(uniform), false, ref m2);
+				GL.UniformMatrix2(location, false, ref m2);
 				break;
 			case Matrix3 m3:
-				GL.UniformMatrix3(GetUniformLocation(uniform), false, ref m3);
+				GL.UniformMatrix3(location, false, ref m3);
 				break;
 			case Matrix4 m4:
-				GL.UniformMatrix4(GetUniformLocation(uniform), false, ref m4);
+				GL.UniformMatrix4(location, false, ref m4);
 				break;
 			case bool b:
-				GL.Uniform1(GetUniformLocation(uniform), b ? 1 : 0);
+				GL.Uniform1(location, b ? 1 : 0);
 				break;
 			case int i:
-				GL.Uniform1(GetUniformLocation(uniform), i);
+				GL.Uniform1(location, i);
 				break;
 			case float f:
-				GL.Uniform1(GetUniformLocation(uniform), f);
+				GL.Uniform1(location, f);
 				break;
 			case double d:
-				GL.Uniform1(GetUniformLocation(uniform), d);
+				GL.Uniform1(location, d);
 				break;
 			case Vector2 v2:
-				GL.Uniform2(GetUniformLocation(uniform), v2);
+				GL.Uniform2(location, v2);
 				break;
 			case Vector3 v3:
-				GL.Uniform3(GetUniformLocation(uniform), v3);
+				GL.Uniform3(location, v3);
 				break;
 			case Vector4 v4:
-				GL.Uniform4(GetUniformLocation(uniform), v4);
+				GL.Uniform4(location, v4);
 				break;
 			case Color v4:
-				GL.Uniform4(GetUniformLocation(uniform), v4);
+				GL.Uniform4(location, v4);
 				break;
 			default:
-				throw new InvalidCastException();
+				log.Error("Invalid uniform data type");
+				break;
 		}
 	}
 
@@ -120,7 +123,7 @@ public class Shader {
 
 			var shader_info = GL.GetShaderInfoLog(shader_id);
 			if(!string.IsNullOrEmpty(shader_info)) {
-				Log.Panic($"[{type}] Shader compile error: {shader_info}");
+				log.Error($"[{type}] Shader compile error: {shader_info}");
 			}
 
 			shaders.Add(shader_id);
@@ -131,7 +134,7 @@ public class Shader {
 		GL.LinkProgram(ID);
 		var program_info = GL.GetProgramInfoLog(ID);
 		if(!string.IsNullOrEmpty(program_info)) {
-			Log.Panic($"Shader program error: {program_info}");
+			log.Error($"Shader program error: {program_info}");
 		}
 	}
 

@@ -20,6 +20,9 @@ public interface IWindowProperties {
 	public int Y { get; }
 	public int Width { get; }
 	public int Height { get; }
+	public bool IsFocused { get; }
+	public bool IsMinimized { get; }
+	public bool IsMaximized { get; }
 	public int ClientX { get; }
 	public int ClientY { get; }
 	public int ClientWidth { get; }
@@ -33,11 +36,15 @@ public class Application {
 		public int Y { get; set; }
 		public int Width { get; set; }
 		public int Height { get; set; }
+		public bool IsFocused { get; set; }
+		public bool IsMinimized { get; set; }
+		public bool IsMaximized { get; set; }
 		public int ClientX { get; set; }
 		public int ClientY { get; set; }
 		public int ClientWidth { get; set; }
 		public int ClientHeight { get; set; }
 	}
+
 
 	public GameWindow Window { get; private set; }
 
@@ -46,6 +53,8 @@ public class Application {
 	public Scene Scene { get; private set; }
 
 	public IEnumerable<MonitorInfo> MonitorList { get; private set; }
+
+	readonly InputController input_controller = new();
 
 	readonly WindowProperties window_properties = new();
 
@@ -78,20 +87,9 @@ public class Application {
 			window_properties.ClientHeight = Window.ClientSize.Y;
 		};
 
-
-		Window.Minimized += (MinimizedEventArgs minimized_event) => {
-		};
-		Window.Maximized += (MaximizedEventArgs maximized_event) => {
-		};
-
-		Window.FocusedChanged += (FocusedChangedEventArgs focused_changed_event) => {
-
-		};
-
-		Window.KeyDown += (KeyboardKeyEventArgs keyboard_key_event) => {
-		};
-		Window.KeyUp += (KeyboardKeyEventArgs keyboard_key_event) => {
-		};
+		Window.Minimized += (MinimizedEventArgs minimized_event) => window_properties.IsMinimized = minimized_event.IsMinimized;
+		Window.Maximized += (MaximizedEventArgs maximized_event) => window_properties.IsMaximized = maximized_event.IsMaximized;
+		Window.FocusedChanged += (FocusedChangedEventArgs focused_changed_event) => window_properties.IsFocused = focused_changed_event.IsFocused;
 
 		Window.TextInput += (TextInputEventArgs text_input_event) => {
 		};
@@ -106,29 +104,23 @@ public class Application {
 		//Window.MouseEnter += () => {
 		//};
 
-		Window.MouseDown += (MouseButtonEventArgs mouse_button_event) => {
-		};
-		Window.MouseUp += (MouseButtonEventArgs mouse_button_event) => {
-		};
-		Window.MouseMove += (MouseMoveEventArgs mouse_move_event) => {
-			//Input.Set(mouse_move_event.Position);
-		};
-		Window.MouseWheel += (MouseWheelEventArgs mouse_wheel_event) => {
-		};
-
 		//Window.FileDrop += (FileDropEventArgs file_drop_event) => {
 		//};
-
 
 		//Game window
 		Window.Load += () => {
 			Assets.LoadAssets("Assets/Assets.json");
+
 			Scene.WindowProperties = window_properties;
 
 			Scene.Start();
 		};
 
 		Window.UpdateFrame += (FrameEventArgs frame_event) => {
+			input_controller.SetState(Window.KeyboardState);
+			input_controller.SetState(Window.MouseState);
+			input_controller.SetState(Window.JoystickStates);
+
 			Scene.WindowProperties = window_properties;
 
 			Scene.Update(frame_event);
@@ -147,7 +139,6 @@ public class Application {
 		Window.Unload += () => {
 
 		};
-
 
 		Window.Closed += () => { };
 		//Window.RenderThreadStarted += () => {}; //Used if IsMultiThreaded == true
