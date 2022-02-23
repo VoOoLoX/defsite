@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using OpenTK.Mathematics;
 
@@ -27,6 +28,32 @@ public static class Utils {
 
 		await g_zip_stream.CopyToAsync(result);
 		return result.ToArray();
+	}
+
+	public static byte[] ToBytes<T>(this T structure) where T : struct {
+		var size = Marshal.SizeOf(structure);
+		var bytes = new byte[size];
+
+		var ptr = Marshal.AllocHGlobal(size);
+		Marshal.StructureToPtr(structure, ptr, true);
+		Marshal.Copy(ptr, bytes, 0, size);
+		Marshal.FreeHGlobal(ptr);
+
+		return bytes;
+	}
+
+	public static T FromBytes<T>(byte[] array) where T : new() {
+		var result = new T();
+
+		var size = Marshal.SizeOf(result);
+		var ptr = Marshal.AllocHGlobal(size);
+
+		Marshal.Copy(array, 0, ptr, size);
+
+		result = (T)Marshal.PtrToStructure(ptr, result.GetType());
+		Marshal.FreeHGlobal(ptr);
+
+		return result;
 	}
 
 	public static IEnumerable<int> Index(this byte[] x, byte[] y) {

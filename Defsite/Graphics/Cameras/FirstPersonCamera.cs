@@ -1,29 +1,29 @@
-
 using System;
 using Defsite.Core;
 
 using OpenTK.Mathematics;
 
-namespace Defsite.Graphics;
-public class FirstPersonCamera {
+namespace Defsite.Graphics.Cameras;
+public class FirstPersonCamera : ICamera {
 
 	float pitch;
-
 	float yaw = -MathHelper.PiOver2;
 	float fov = MathHelper.PiOver2;
-
-	bool move = true;
 
 	float old_x, old_y;
 	float delta_x, delta_y;
 
-	public FirstPersonCamera(Vector3 position, float sensitivity = 0.2f, float fov = 45, float z_near = 0.001f, float z_far = 100f) {
+	public FirstPersonCamera(Vector3 position, float client_width, float client_height, float sensitivity = 0.2f, float fov = 45, float z_near = 0.001f, float z_far = 100f) {
 		Position = position;
 		Fov = fov;
 		ZNear = z_near;
 		ZFar = z_far;
 		Sensitivity = sensitivity;
+		ClientWidth = client_width;
+		ClientHeight = client_height;
 	}
+
+	public bool FirstUpdate { get; set; } = true;
 
 	public Vector3 Position { get; set; }
 
@@ -38,6 +38,10 @@ public class FirstPersonCamera {
 	public float ZFar { get; set; }
 
 	public float ZNear { get; set; }
+
+	public float ClientWidth { get; set; }
+
+	public float ClientHeight { get; set; }
 
 	public float Fov {
 		get => MathHelper.RadiansToDegrees(fov);
@@ -64,21 +68,27 @@ public class FirstPersonCamera {
 		}
 	}
 
-	public Matrix4 GetViewMatrix() {
-		UpdateVectors();
-		return Matrix4.LookAt(Position, Position + Forward, Up);
+	public Matrix4 ProjectionMatrix => Matrix4.CreatePerspectiveFieldOfView(fov, ClientWidth / ClientHeight, ZNear, ZFar);
+
+	public Matrix4 ViewMatrix {
+		get {
+			UpdateVectors();
+			return Matrix4.LookAt(Position, Position + Forward, Up);
+		}
 	}
 
-	public Matrix4 GetProjectionMatrix() => Matrix4.CreatePerspectiveFieldOfView(fov, (float)Playground.GameWidth / Playground.GameHeight, ZNear, ZFar);
+	public void UpdateAspectRatio(float client_width, float client_height) {
+		ClientWidth = client_width;
+		ClientHeight = client_height;
+	}
 
-	//TODO Make it so camera can be paused and resumed regardless of mouse movement when it's paused
 	public void Update() {
 		var mouse = Input.MousePosition;
 
-		if(move) {
+		if(FirstUpdate) {
 			old_x = mouse.X;
 			old_y = mouse.Y;
-			move = false;
+			FirstUpdate = false;
 		} else {
 			delta_x += mouse.X - old_x;
 			delta_y += mouse.Y - old_y;

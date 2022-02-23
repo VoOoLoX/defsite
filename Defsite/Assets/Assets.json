@@ -16,11 +16,6 @@
 	  "Path": "Shaders/ImGui.glsl"
 	},
 	{
-	  "Type": "Sound",
-	  "Name": "Fireplace",
-	  "Path": "Sounds/Fireplace.vsf"
-	},
-	{
 	  "Type": "Texture",
 	  "Name": "Ground",
 	  "Path": "Textures/Ground.vif"

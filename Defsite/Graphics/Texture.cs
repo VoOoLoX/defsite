@@ -33,9 +33,9 @@ public class Texture {
 		}
 	}
 
-	public Texture(TextureData texture_data, TextureFilter texture_filter = TextureFilter.Nearest) => Create(texture_data);
+	public Texture(TextureData texture_data) => Create(texture_data);
 
-	public Texture(int width, int height, TextureFilter texture_filter = TextureFilter.Nearest) => Create(new TextureData(width, height));
+	public Texture(int width, int height, byte components = 4) => Create(new TextureData(width, height, components));
 
 	public void Enable() => GL.BindTexture(TextureTarget.Texture2D, ID);
 

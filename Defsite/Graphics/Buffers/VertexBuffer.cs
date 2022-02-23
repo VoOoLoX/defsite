@@ -39,6 +39,25 @@ public class VertexBuffer : IDisposable {
 		Disable();
 	}
 
+	public void SetData<T>(T[] data, int count) where T : IVertex {
+		Enable();
+
+		switch(data) {
+			case ColoredVertex[] colored_vertices:
+				GL.BufferData(BufferTarget.ArrayBuffer, count * colored_vertices[0].SizeInBytes, colored_vertices, BufferUsageHint.DynamicDraw);
+				break;
+
+			case TexturedVertex[] textured_vertices:
+				GL.BufferData(BufferTarget.ArrayBuffer, count * textured_vertices[0].SizeInBytes, textured_vertices, BufferUsageHint.DynamicDraw);
+				break;
+
+			default:
+				break;
+		}
+
+		Disable();
+	}
+
 	public void UpdateData<T>(T[] data, int offset = 0) where T : IVertex {
 		Enable();
 

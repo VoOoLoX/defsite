@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 using Common;
@@ -10,50 +10,50 @@ using Defsite.Utils;
 
 namespace Defsite.IO.DataFormats;
 
+public interface IPixel {
+	byte[] Bytes { get; }
+}
+
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
-public struct Pixel {
-	public Pixel(byte r = byte.MaxValue, byte g = byte.MaxValue, byte b = byte.MaxValue, byte a = byte.MaxValue) {
-		R = r;
-		G = g;
-		B = b;
-		A = a;
-	}
+public record struct Pixel4(byte R = byte.MaxValue, byte G = byte.MaxValue, byte B = byte.MaxValue, byte A = byte.MaxValue) : IPixel {
+	public byte[] Bytes => new[] { R, G, B, A };
+}
 
-	public Pixel(Color color) {
-		R = color.R;
-		G = color.G;
-		B = color.B;
-		A = color.A;
-	}
+[Serializable]
+[StructLayout(LayoutKind.Sequential)]
+public record struct Pixel3(byte R = byte.MaxValue, byte G = byte.MaxValue, byte B = byte.MaxValue) : IPixel {
+	public byte[] Bytes => new[] { R, G, B };
+}
 
-	public byte R { get; set; }
-	public byte G { get; set; }
-	public byte B { get; set; }
-	public byte A { get; set; }
+[Serializable]
+[StructLayout(LayoutKind.Sequential)]
+public record struct Pixel2(byte X = byte.MaxValue, byte Y = byte.MaxValue) : IPixel {
+	public byte[] Bytes => new[] { X, Y };
+}
 
-	public override string ToString() => $"({R} {G} {B} {A})";
+[Serializable]
+[StructLayout(LayoutKind.Sequential)]
+public record struct Pixel1(byte X = byte.MaxValue) : IPixel {
+	public byte[] Bytes => new[] { X };
 }
 
 public class TextureData {
-	public static readonly TextureData Default = new(1, 1);
+	public static readonly TextureData Default = new(1, 1, new byte[] { 255, 255, 255 }, 3);
 
 	public byte[] Bytes {
-		get {
-			var ret = new List<byte>();
-			foreach(var p in Pixels) {
-				ret.Add(p.R);
-				ret.Add(p.G);
-				ret.Add(p.B);
-				ret.Add(p.A);
-			}
-
-			return ret.ToArray();
-		}
+		get => Pixels.SelectMany(pixel => pixel.Bytes).ToArray();
 		private set {
-			var pixels = new List<Pixel>();
-			for(var i = 0; i < value.Length; i += 4) {
-				pixels.Add(new Pixel(value[i + 0], value[i + 1], value[i + 2], value[i + 3]));
+			var pixels = new List<IPixel>();
+			for(var i = 0; i < value?.Length; i += Components) {
+				IPixel pixel = Components switch {
+					4 => new Pixel4(value[i], value[i + 1], value[i + 2], value[i + 3]),
+					3 => new Pixel3(value[i], value[i + 1], value[i + 2]),
+					2 => new Pixel2(value[i], value[i + 1]),
+					1 => new Pixel1(value[i]),
+					_ => throw new NotImplementedException()
+				};
+				pixels.Add(pixel);
 			}
 
 			Pixels = pixels;
@@ -68,33 +68,32 @@ public class TextureData {
 
 	public int Height { get; private set; }
 
-	public List<Pixel> Pixels { get; private set; }
+	public List<IPixel> Pixels { get; private set; }
 
-	public TextureData(int width, int height) {
+	public TextureData(int width, int height, byte components = 4) {
 		Width = width;
 		Height = height;
-		Pixels = new List<Pixel>(width * height);
-		Components = 4;
+		Components = components;
+		Pixels = new List<IPixel>(width * height);
 	}
 
-	public TextureData(int width, int height, List<Pixel> pixels, byte comps = 4) {
+	public TextureData(int width, int height, IntPtr data, int size, byte components) {
 		Width = width;
 		Height = height;
-		Pixels = pixels;
-		Components = comps;
-	}
-
-	public TextureData(int width, int height, IntPtr pixels, int size, byte comps = 4) {
-		Width = width;
-		Height = height;
+		Components = components;
+		Pixels = new List<IPixel>(width * height);
 
 		var bytes = new byte[size];
-
-		Marshal.Copy(pixels, bytes, 0, size);
-
+		Marshal.Copy(data, bytes, 0, size);
 		Bytes = bytes;
+	}
 
-		Components = comps;
+	public TextureData(int width, int height, byte[] data, byte components) {
+		Width = width;
+		Height = height;
+		Components = components;
+		Pixels = new List<IPixel>(width * height);
+		Bytes = data;
 	}
 
 	public TextureData(string path) => Load(path);
@@ -141,35 +140,33 @@ public class TextureData {
 
 		var width = reader.ReadInt32();
 		var height = reader.ReadInt32();
-		var comps = reader.ReadByte();
+		var components = reader.ReadByte();
 		var compressed = reader.ReadByte();
 
-		if(width > 0 && height > 0 && comps > 0) {
+		if(width > 0 && height > 0 && components > 0) {
 			Width = width;
 			Height = height;
-			Components = comps;
+			Components = components;
 			Compressed = compressed;
-			Pixels = new List<Pixel>();
+			Pixels = new List<IPixel>(width * height);
 
 			var data_bytes = reader.ReadBytes((int)reader.BaseStream.Length - (int)reader.BaseStream.Position);
 			var data = compressed > 0 ? data_bytes.DecompressAsync().Result : data_bytes;
 
-			for(var i = 0; i < data.Length; i += comps) {
-				switch(comps) {
+			for(var i = 0; i < data.Length; i += components) {
+				switch(components) {
 					case 4:
-						Pixels.Add(new Pixel(data[i], data[i + 1], data[i + 2], data[i + 3]));
+						Pixels.Add(new Pixel4(data[i], data[i + 1], data[i + 2], data[i + 3]));
 						break;
-
 					case 3:
-						Pixels.Add(new Pixel(data[i], data[i + 1], data[i + 2]));
+						Pixels.Add(new Pixel3(data[i], data[i + 1], data[i + 2]));
 						break;
-
 					case 2:
+						Pixels.Add(new Pixel2(data[i], data[i + 1]));
 						break;
-
 					case 1:
+						Pixels.Add(new Pixel1(data[i]));
 						break;
-
 					default:
 						break;
 				}

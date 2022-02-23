@@ -1,9 +1,13 @@
-﻿using OpenTK.Windowing.Common;
+﻿using System.Drawing;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.Desktop;
 
 namespace Defsite.Core;
 
 public abstract class Scene {
-	public IWindowProperties WindowProperties;
+	public GameWindow Window { get; set; }
+
+	public abstract Color ClearColor { get; }
 
 	public abstract void Start();
 

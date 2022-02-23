@@ -7,39 +7,8 @@ using OpenTK.Mathematics;
 namespace Defsite.Graphics;
 
 public static class Primitives {
-	public static TexturedVertex[] CreateTexturedTile(Vector3 position, Color color) {
-		var color_vector = color.ToVector();
-		TexturedVertex[] quad = {
-				new()
-				{
-					Position = new Vector3(position.X, position.Y, position.Z),
-					TextureCoordinates = new Vector2(0, 0),
-					Color = color_vector,
-				},
-				new()
-				{
-					Position = new Vector3(position.X + 1, position.Y, position.Z),
-					TextureCoordinates = new Vector2(1, 0),
-					Color = color_vector,
-				},
-				new()
-				{
-					Position = new Vector3(position.X + 1, position.Y, position.Z+ 1),
-					TextureCoordinates = new Vector2(1, 1),
-					Color = color_vector,
-				},
-				new()
-				{
-					Position = new Vector3(position.X, position.Y, position.Z+ 1),
-					TextureCoordinates = new Vector2(0, 1),
-					Color = color_vector,
-				},
-			};
-
-		return quad;
-	}
-
-	public static ColoredVertex[] CreateTile(Vector3 position, Color color) {
+	#region Tiles
+	public static ColoredVertex[] CreateTile(Vector3 position, Color color, float size = 1f) {
 		var color_vector = color.ToVector();
 		ColoredVertex[] quad = {
 				new()
@@ -49,17 +18,17 @@ public static class Primitives {
 				},
 				new()
 				{
-					Position = new Vector3(position.X + 1, position.Y, position.Z),
+					Position = new Vector3(position.X + size, position.Y, position.Z),
 					Color = color_vector,
 				},
 				new()
 				{
-					Position = new Vector3(position.X + 1, position.Y, position.Z+ 1),
+					Position = new Vector3(position.X + size, position.Y, position.Z + size),
 					Color = color_vector,
 				},
 				new()
 				{
-					Position = new Vector3(position.X, position.Y, position.Z+ 1),
+					Position = new Vector3(position.X, position.Y, position.Z + size),
 					Color = color_vector,
 				},
 			};
@@ -95,6 +64,72 @@ public static class Primitives {
 		return quad;
 	}
 
+	public static TexturedVertex[] CreateTexturedTile(Vector3 position, Color color, float size = 1f) {
+		var color_vector = color.ToVector();
+		TexturedVertex[] quad = {
+				new()
+				{
+					Position = new Vector3(position.X, position.Y, position.Z),
+					TextureCoordinates = new Vector2(0, 0),
+					Color = color_vector,
+				},
+				new()
+				{
+					Position = new Vector3(position.X + size, position.Y, position.Z),
+					TextureCoordinates = new Vector2(1, 0),
+					Color = color_vector,
+				},
+				new()
+				{
+					Position = new Vector3(position.X + size, position.Y, position.Z + size),
+					TextureCoordinates = new Vector2(1, 1),
+					Color = color_vector,
+				},
+				new()
+				{
+					Position = new Vector3(position.X, position.Y, position.Z + size),
+					TextureCoordinates = new Vector2(0, 1),
+					Color = color_vector,
+				},
+			};
+
+		return quad;
+	}
+
+	public static TexturedVertex[] CreateTexturedTileCentered(Vector3 position, Color color, float size = 1f) {
+		var color_vector = color.ToVector();
+		TexturedVertex[] quad = {
+				new()
+				{
+					Position = new Vector3(position.X - size / 2f, position.Y, position.Z - size / 2f),
+					Color = color_vector,
+					TextureCoordinates = new Vector2(0, 0)
+				},
+				new()
+				{
+					Position = new Vector3(position.X + size / 2f, position.Y, position.Z - size / 2f),
+					Color = color_vector,
+					TextureCoordinates = new Vector2(1, 0)
+				},
+				new()
+				{
+					Position = new Vector3(position.X + size / 2f, position.Y, position.Z + size / 2f),
+					Color = color_vector,
+					TextureCoordinates = new Vector2(1, 1)
+				},
+				new()
+				{
+					Position = new Vector3(position.X - size / 2f, position.Y, position.Z + size / 2f),
+					Color = color_vector,
+					TextureCoordinates = new Vector2(0, 1)
+				},
+			};
+
+		return quad;
+	}
+	#endregion
+
+	#region Quads
 	public static ColoredVertex[] CreateQuad(Vector3 position, Color color, float size = 1f) {
 		var color_vector = color.ToVector();
 		ColoredVertex[] quad = {
@@ -214,4 +249,25 @@ public static class Primitives {
 
 		return quad;
 	}
+	#endregion
+
+	#region Line
+	public static ColoredVertex[] CreateLine(Vector3 start_position, Vector3 end_position, Color color) {
+		var color_vector = color.ToVector();
+		ColoredVertex[] line = {
+				new()
+				{
+					Position = new Vector3(start_position.X, start_position.Y, start_position.Z),
+					Color = color_vector,
+				},
+				new()
+				{
+					Position = new Vector3(end_position.X, end_position.Y, end_position.Z),
+					Color = color_vector,
+				},
+			};
+
+		return line;
+	}
+	#endregion
 }

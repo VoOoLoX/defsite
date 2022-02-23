@@ -2,6 +2,7 @@
 using System.Drawing;
 using Defsite.Core;
 using Defsite.Graphics;
+using Defsite.Graphics.Cameras;
 using Defsite.IO;
 using NLog;
 using OpenTK.Graphics.OpenGL4;
@@ -10,6 +11,7 @@ using OpenTK.Windowing.Common;
 
 namespace Defsite;
 class MainScene : Scene {
+
 	OrthographicCamera camera;
 	VertexArray vao;
 	VertexBuffer vbo;
@@ -18,8 +20,10 @@ class MainScene : Scene {
 
 	static readonly Logger log = LogManager.GetCurrentClassLogger();
 
+	public override Color ClearColor => Color.DimGray;
+
 	public override void Start() {
-		camera = new OrthographicCamera(0, WindowProperties.ClientWidth, WindowProperties.ClientHeight, 0);
+		camera = new OrthographicCamera(0, Window.ClientSize.X, Window.ClientSize.Y, 0);
 		vao = new VertexArray();
 
 		shader = Assets.Get<Shader>("ColorShader");
@@ -46,12 +50,12 @@ class MainScene : Scene {
 	}
 
 	public override void Update(FrameEventArgs frame_event) {
-		camera.UpdateProjection(0, WindowProperties.ClientWidth, WindowProperties.ClientHeight, 0);
+		camera.UpdateProjection(0, Window.ClientSize.X, Window.ClientSize.Y, 0);
 		camera.Position = new Vector3(1, 5, 1);
 		//camera.RotationZ = 0;
 		var pv = Matrix4.Invert(Matrix4.LookAt(camera.Position, Vector3.Zero, new Vector3(0, 1, 0)) * camera.ProjectionMatrix);
-		var nx = Utils.Utils.Map(Input.MousePosition.X, 0, WindowProperties.ClientWidth, -1f, 1f);
-		var ny = Utils.Utils.Map(Input.MousePosition.Y, 0, WindowProperties.ClientHeight, 1f, -1f);
+		var nx = Utils.Utils.Map(Input.MousePosition.X, 0, Window.ClientSize.X, -1f, 1f);
+		var ny = Utils.Utils.Map(Input.MousePosition.Y, 0, Window.ClientSize.Y, 1f, -1f);
 		var nz = Utils.Utils.Map(0, -1000, 1000, -1, 1);
 		var c = new Vector4(nx, ny, nz, 1.0f);
 		var q = c * pv;
@@ -62,7 +66,7 @@ class MainScene : Scene {
 
 		var pos = new Vector3(q.X, q.Y, q.Z);
 		//log.Info(pos);
-		var quad = Primitives.CreateTileCentered(pos, Color.Red, 200);
+		var quad = Primitives.CreateTileCentered(pos, Color.Cyan, 200);
 		vbo.UpdateData(quad);
 	}
 

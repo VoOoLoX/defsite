@@ -43,7 +43,13 @@ public class Input {
 	public static bool ButtonDown(MouseButton button) => MouseState.IsButtonDown(button);
 }
 
-public class InputController : Input {
+public sealed class InputController : Input {
+	static readonly Lazy<InputController> lazy_instance = new(() => new InputController());
+
+	public static InputController Instance => lazy_instance.Value;
+
+	InputController() { }
+
 	public void SetState(MouseState state) => MouseState = state;
 	public void SetState(KeyboardState state) => KeyboardState = state;
 	public void SetState(IReadOnlyList<JoystickState> states) => JoystickStates = states;

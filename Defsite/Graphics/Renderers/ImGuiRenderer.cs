@@ -27,8 +27,8 @@ public class ImGuiRenderer {
 	int vertex_buffer_size;
 	int index_buffer_size;
 
-	int game_width;
-	int game_height;
+	int client_width;
+	int client_height;
 
 	bool run;
 
@@ -36,8 +36,8 @@ public class ImGuiRenderer {
 	readonly ImGuiIOPtr io;
 
 	public ImGuiRenderer(int width, int height) {
-		game_width = width;
-		game_height = height;
+		client_width = width;
+		client_height = height;
 
 		var context = ImGui.CreateContext();
 
@@ -67,8 +67,8 @@ public class ImGuiRenderer {
 	}
 
 	public void Update(float delta_time) {
-		io.DisplaySize.X = game_width;
-		io.DisplaySize.Y = game_height;
+		io.DisplaySize.X = client_width;
+		io.DisplaySize.Y = client_height;
 		io.DeltaTime = delta_time;
 
 		UpdateInputs();
@@ -83,17 +83,17 @@ public class ImGuiRenderer {
 	public void PressChar(char char_key) => pressed_characters.Add(char_key);
 
 	public void WindowResized(int width, int height) {
-		game_width = width;
-		game_height = height;
+		client_width = width;
+		client_height = height;
 	}
 
 	void CreateResources() {
 		shader = Assets.Get<Shader>("ImGuiShader");
 
 		buffer_layout = new BufferLayout(new List<VertexAttribute> {
-			new(shader.GetAttributeLocation("v_position"), VertexAttributeType.Vector2),
-			new(shader.GetAttributeLocation("v_texture_coordinates"), VertexAttributeType.Vector2),
-			new(shader.GetAttributeLocation("v_color"), VertexAttributeType.Vector4b, true)
+			new(shader["v_position"], VertexAttributeType.Vector2),
+			new(shader["v_texture_coordinates"], VertexAttributeType.Vector2),
+			new(shader["v_color"], VertexAttributeType.Vector4b, true)
 		});
 
 		vertex_array = new VertexArray();
@@ -119,7 +119,7 @@ public class ImGuiRenderer {
 	void RecreateFontTexture() {
 		io.Fonts.GetTexDataAsRGBA32(out IntPtr pixels, out var width, out var height, out var bytes_per_pixel);
 
-		var texture_data = new TextureData((ushort)width, (ushort)height, pixels, width * height * bytes_per_pixel);
+		var texture_data = new TextureData(width, height, pixels, width * height * bytes_per_pixel, (byte)bytes_per_pixel);
 
 		font_texture = new Texture(texture_data);
 
@@ -177,6 +177,7 @@ public class ImGuiRenderer {
 		io.KeyMap[(int)ImGuiKey.Delete] = (int)Keys.Delete;
 		io.KeyMap[(int)ImGuiKey.Backspace] = (int)Keys.Backspace;
 		io.KeyMap[(int)ImGuiKey.Enter] = (int)Keys.Enter;
+		io.KeyMap[(int)ImGuiKey.KeyPadEnter] = (int)Keys.KeyPadEnter;
 		io.KeyMap[(int)ImGuiKey.Escape] = (int)Keys.Escape;
 		io.KeyMap[(int)ImGuiKey.Space] = (int)Keys.Space;
 		io.KeyMap[(int)ImGuiKey.A] = (int)Keys.A;
@@ -246,7 +247,7 @@ public class ImGuiRenderer {
 				GL.BindTexture(TextureTarget.Texture2D, (int)p_cmd.TextureId);
 
 				var clip = p_cmd.ClipRect;
-				GL.Scissor((int)clip.X, game_height - (int)clip.W, (int)(clip.Z - clip.X), (int)(clip.W - clip.Y));
+				GL.Scissor((int)clip.X, client_height - (int)clip.W, (int)(clip.Z - clip.X), (int)(clip.W - clip.Y));
 
 				index_buffer.Enable();
 

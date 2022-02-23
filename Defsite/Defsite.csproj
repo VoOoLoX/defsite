@@ -37,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+	<PackageReference Include="Delaunator" Version="1.0.8" />
 	<PackageReference Include="NLog" Version="5.0.0-preview.1" />
 	<PackageReference Include="OpenTK" Version="4.6.7" />
   </ItemGroup>

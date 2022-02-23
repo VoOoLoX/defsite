@@ -1,144 +1,94 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using Defsite.Core;
 using Defsite.IO;
 using Defsite.IO.DataFormats;
 
 using NLog;
-
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Common.Input;
 using OpenTK.Windowing.Desktop;
 
-namespace Defsite;
+namespace Defsite.Core;
 
-public interface IWindowProperties {
-	public int X { get; }
-	public int Y { get; }
-	public int Width { get; }
-	public int Height { get; }
-	public bool IsFocused { get; }
-	public bool IsMinimized { get; }
-	public bool IsMaximized { get; }
-	public int ClientX { get; }
-	public int ClientY { get; }
-	public int ClientWidth { get; }
-	public int ClientHeight { get; }
-}
-
-public class Application {
-
-	class WindowProperties : IWindowProperties {
-		public int X { get; set; }
-		public int Y { get; set; }
-		public int Width { get; set; }
-		public int Height { get; set; }
-		public bool IsFocused { get; set; }
-		public bool IsMinimized { get; set; }
-		public bool IsMaximized { get; set; }
-		public int ClientX { get; set; }
-		public int ClientY { get; set; }
-		public int ClientWidth { get; set; }
-		public int ClientHeight { get; set; }
-	}
-
+public partial class Application {
 
 	public GameWindow Window { get; private set; }
-
-	public IWindowProperties Properties => window_properties;
 
 	public Scene Scene { get; private set; }
 
 	public IEnumerable<MonitorInfo> MonitorList { get; private set; }
 
-	readonly InputController input_controller = new();
-
-	readonly WindowProperties window_properties = new();
-
 	static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 	public Application(ApplicationSettings settings, Scene scene) {
-		Scene = scene;
-		Scene.WindowProperties = new WindowProperties();
-
 		MonitorList = GetMonitors();
 		CreateWindow(settings);
+
+		Scene = scene;
+		Scene.Window = Window;
+
 		LogInfo();
-		//InitializeWindow();
+		InitializeWindow();
 		//InitializeScene();
 	}
 
 	void InitializeWindow() {
 		//Native window
-		Window.Move += (WindowPositionEventArgs position_event) => {
-			window_properties.X = position_event.X;
-			window_properties.Y = position_event.Y;
-			window_properties.ClientX = Window.ClientRectangle.Min.X;
-			window_properties.ClientY = Window.ClientRectangle.Min.Y;
-		};
+		//Window.Move += (position_event) => { };
 
-		Window.Resize += (ResizeEventArgs resize_event) => {
-			window_properties.Width = resize_event.Width;
-			window_properties.Height = resize_event.Height;
-			window_properties.ClientWidth = Window.ClientSize.X;
-			window_properties.ClientHeight = Window.ClientSize.Y;
-		};
+		//Window.Resize += (resize_event) => { };
 
-		Window.Minimized += (MinimizedEventArgs minimized_event) => window_properties.IsMinimized = minimized_event.IsMinimized;
-		Window.Maximized += (MaximizedEventArgs maximized_event) => window_properties.IsMaximized = maximized_event.IsMaximized;
-		Window.FocusedChanged += (FocusedChangedEventArgs focused_changed_event) => window_properties.IsFocused = focused_changed_event.IsFocused;
+		//Window.Minimized += (minimized_event) => { };
 
-		Window.TextInput += (TextInputEventArgs text_input_event) => {
-		};
+		//Window.Maximized += (maximized_event) => { };
 
-		//Window.MonitorConnected += (MonitorEventArgs monitor_event) => {
-		//};
-		//Window.JoystickConnected += (JoystickEventArgs joystick_event) => {
-		//};
+		//Window.FocusedChanged += (focused_changed_event) => { };
 
-		//Window.MouseLeave += () => {
-		//};
-		//Window.MouseEnter += () => {
-		//};
+		//Window.TextInput += (text_input_event) => { };
 
-		//Window.FileDrop += (FileDropEventArgs file_drop_event) => {
-		//};
+		//Window.MonitorConnected += (MonitorEventArgs monitor_event) => { };
+
+		//Window.JoystickConnected += (JoystickEventArgs joystick_event) => { };
+
+		//Window.MouseLeave += () => { };
+
+		//Window.MouseEnter += () => { };
+
+		//Window.FileDrop += (FileDropEventArgs file_drop_event) => { };
 
 		//Game window
 		Window.Load += () => {
+			//TODO(@VoOoLoX): make this more flexible
 			Assets.LoadAssets("Assets/Assets.json");
-
-			Scene.WindowProperties = window_properties;
 
 			Scene.Start();
 		};
 
-		Window.UpdateFrame += (FrameEventArgs frame_event) => {
-			input_controller.SetState(Window.KeyboardState);
-			input_controller.SetState(Window.MouseState);
-			input_controller.SetState(Window.JoystickStates);
-
-			Scene.WindowProperties = window_properties;
+		Window.UpdateFrame += (frame_event) => {
+			InputController.Instance.SetState(Window.KeyboardState);
+			InputController.Instance.SetState(Window.MouseState);
+			InputController.Instance.SetState(Window.JoystickStates);
 
 			Scene.Update(frame_event);
 		};
 
-		Window.RenderFrame += (FrameEventArgs frame_event) => {
+		Window.RenderFrame += (frame_event) => {
 			GL.Viewport(0, 0, Window.ClientSize.X, Window.ClientSize.Y);
-			GL.ClearColor(.1f, .1f, .1f, 1);
-			GL.Clear(ClearBufferMask.ColorBufferBit);
+			GL.ClearColor(Scene.ClearColor);
+			GL.ClearDepth(1000.0);
+			GL.Enable(EnableCap.DepthTest);
+			GL.DepthFunc(DepthFunction.Lequal);
+			GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
 			Scene.Render(frame_event);
 
 			Window.SwapBuffers();
 		};
 
-		Window.Unload += () => {
-
-		};
+		Window.Unload += () => { };
 
 		Window.Closed += () => { };
 		//Window.RenderThreadStarted += () => {}; //Used if IsMultiThreaded == true
@@ -187,8 +137,7 @@ public class Application {
 		};
 
 		try {
-			//Window = new GameWindow(game_window_settings, native_window_settings);
-			Window = new Playground(game_window_settings, native_window_settings);
+			Window = new GameWindow(game_window_settings, native_window_settings);
 		} catch(Exception e) {
 			log.Error(e);
 			log.Fatal($"Couldn't create a game window.");
@@ -224,7 +173,7 @@ public class Application {
 		//try {
 		//	var devices = ALC.GetStringList(GetEnumerationStringList.DeviceSpecifier);
 		//	var devices_list = devices.ToList();
-		//	Log.Info($"Devices: {string.Join(", ", devices_list)}");
+		//	log.Info($"Devices: {string.Join(", ", devices_list)}");
 
 		//	var device_name = ALC.GetString(ALDevice.Null, AlcGetString.DefaultDeviceSpecifier);
 
@@ -233,10 +182,10 @@ public class Application {
 		//	}
 
 		//	var device = ALC.OpenDevice(device_name);
-		//	audio_context = ALC.CreateContext(device, (int[])null);
+		//	var audio_context = ALC.CreateContext(device, (int[])null);
 		//	ALC.MakeContextCurrent(audio_context);
 		//} catch {
-		//	Log.Panic("Could not load 'openal32.dll'. Try installing OpenAL.");
+		//	log.Error("Could not load 'openal32.dll'. Try installing OpenAL.");
 		//}
 
 		//Log.Info("OpenAL Info:");

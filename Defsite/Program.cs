@@ -22,7 +22,7 @@ public class Program {
 
 		//await Settings<ApplicationSettings>.SaveAsync(Path.Combine(Environment.CurrentDirectory, "test.json"), settings);
 
-		var application = new Application(settings, new MainScene());
+		var application = new Application(settings, new Playground());
 
 		application.Run();
 	}

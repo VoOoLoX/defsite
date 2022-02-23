@@ -10,6 +10,8 @@ using Defsite.IO.DataFormats;
 
 namespace Defsite.IO;
 
+//TODO(@VoOoLoX): whole thing needs rework
+
 public class Asset {
 	public AssetType Type { get; set; }
 	public string Name { get; set; }

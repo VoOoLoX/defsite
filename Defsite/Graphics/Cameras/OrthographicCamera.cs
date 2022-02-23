@@ -1,12 +1,12 @@
 using OpenTK.Mathematics;
 
-namespace Defsite.Graphics;
+namespace Defsite.Graphics.Cameras;
 
-public class OrthographicCamera {
+public class OrthographicCamera : ICamera {
 
-	public Matrix4 ProjectionMatrix => Matrix4.CreateOrthographic(Right, Bottom, -1000, 1000f);
+	public Matrix4 ProjectionMatrix => Matrix4.CreateOrthographicOffCenter(Left, Right, Bottom, Top, -1000, 1000f);
 
-	public Matrix4 ViewMatrix => Matrix4.CreateTranslation(Position) * Matrix4.CreateRotationX(MathHelper.DegreesToRadians(RotationX)) * Matrix4.CreateRotationY(MathHelper.DegreesToRadians(RotationY)) * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(RotationZ));
+	public Matrix4 ViewMatrix => Matrix4.CreateTranslation(Position) * Matrix4.CreateFromQuaternion(Quaternion.FromEulerAngles(MathHelper.DegreesToRadians(RotationX), MathHelper.DegreesToRadians(RotationY), MathHelper.DegreesToRadians(RotationZ)));
 
 	public Vector3 Position { get; set; } = Vector3.Zero;
 
