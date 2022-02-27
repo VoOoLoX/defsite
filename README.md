@@ -1,3 +1,7 @@
-<h1 style="text-align:center">Defsite</h1>
+<h1 align="center">Defsite</h1>
 
-Game engine / game made in C# (.NET 5) using OpenGL with a game server
+Game engine/game in the making using C# and OpenGL
+
+<p align="center">
+  <img src="https://i.imgur.com/tpsy80V.png" />
+</p>
