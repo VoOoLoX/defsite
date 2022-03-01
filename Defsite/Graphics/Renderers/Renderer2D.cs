@@ -31,7 +31,14 @@ public static unsafe class Renderer2D {
 
 	static ICamera camera_data;
 
-	public static int DrawCalls = 0;
+	static float line_width = 1.0f;
+	public static float LineWidth {
+		get => line_width;
+		set {
+			line_width = value;
+			GL.LineWidth(value);
+		}
+	}
 
 	public static void Init() {
 		//Quads
@@ -43,7 +50,7 @@ public static unsafe class Renderer2D {
 			texture_shader = Assets.Get<Shader>("TextureShader");
 
 			quad_buffer_layout = new BufferLayout(new List<VertexAttribute> {
-				new(texture_shader["v_position"], VertexAttributeType.Vector3),
+				new(texture_shader["v_position"], VertexAttributeType.Vector4),
 				new(texture_shader["v_color"], VertexAttributeType.Vector4),
 				new(texture_shader["v_texture_coordinates"], VertexAttributeType.Vector2)
 			});
@@ -83,7 +90,7 @@ public static unsafe class Renderer2D {
 			color_shader = Assets.Get<Shader>("ColorShader");
 
 			line_buffer_layout = new BufferLayout(new List<VertexAttribute> {
-				new(color_shader["v_position"], VertexAttributeType.Vector3),
+				new(color_shader["v_position"], VertexAttributeType.Vector4),
 				new(color_shader["v_color"], VertexAttributeType.Vector4)
 			});
 
@@ -97,7 +104,6 @@ public static unsafe class Renderer2D {
 	}
 
 	public static void Begin(ICamera camera) {
-		DrawCalls = 0;
 		camera_data = camera;
 		StartBatch();
 	}
@@ -110,12 +116,12 @@ public static unsafe class Renderer2D {
 
 		Array.Clear(quad_vertices);
 		Array.Clear(line_vertices);
+
+		LineWidth = 1;
 	}
 
-	public static void DrawQuad(Vector3 position, bool centered = true) {
-		var data = centered ?
-			Primitives.CreateTexturedQuadCentered(position, Color.White) :
-			Primitives.CreateTexturedQuad(position, Color.White);
+	public static void DrawQuad(Vector3 position, Vector2 size = default, Color color = default, bool centered = true, Matrix4 transform = default) {
+		var data = Primitives.CreateTexturedQuad(position, size, color, centered, transform);
 
 		if(quad_vertices_count >= max_verticies) {
 			Flush();
@@ -129,10 +135,8 @@ public static unsafe class Renderer2D {
 		quad_indices_count += 6;
 	}
 
-	public static void DrawTile(Vector3 position, bool centered = true, float size = 1f, Color color = default) {
-		var data = centered ?
-			Primitives.CreateTexturedTileCentered(position, color == default ? Color.White : color, size) :
-			Primitives.CreateTexturedTile(position, color == default ? Color.White : color, size);
+	public static void DrawTile(Vector3 position, Vector2 size = default, Color color = default, bool centered = true, Matrix4 transform = default) {
+		var data = Primitives.CreateTexturedTile(position, size, color, centered, transform);
 
 		if(quad_vertices_count >= max_verticies) {
 			Flush();
@@ -147,7 +151,20 @@ public static unsafe class Renderer2D {
 	}
 
 	public static void DrawLine(Vector3 start_position, Vector3 end_position, Color color = default) {
-		var data = Primitives.CreateLine(start_position, end_position, color == default ? Color.White : color);
+		var data = Primitives.CreateLine(start_position, end_position, color);
+
+		if(line_vertices_count >= max_verticies) {
+			Flush();
+			StartBatch();
+		}
+
+		for(var i = 0; i < data.Length; i++) {
+			line_vertices[line_vertices_count++] = data[i];
+		}
+	}
+
+	public static void DrawLine(Vector3 start_position, Vector3 end_position, Color start_color = default, Color end_color = default) {
+		var data = Primitives.CreateLine(start_position, end_position, start_color, end_color);
 
 		if(line_vertices_count >= max_verticies) {
 			Flush();
@@ -176,7 +193,6 @@ public static unsafe class Renderer2D {
 			texture_shader.Set("u_model", Matrix4.Identity);
 
 			GL.DrawElements(PrimitiveType.Triangles, quad_indices_count, DrawElementsType.UnsignedInt, 0);
-			DrawCalls++;
 		}
 
 		if(line_vertices_count > 0) {
@@ -190,7 +206,6 @@ public static unsafe class Renderer2D {
 			color_shader.Set("u_model", Matrix4.Identity);
 
 			GL.DrawArrays(PrimitiveType.Lines, 0, line_vertices_count);
-			DrawCalls++;
 		}
 	}
 

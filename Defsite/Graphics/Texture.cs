@@ -19,6 +19,8 @@ public class Texture {
 
 	public TextureFilter TextureFilter { get; init; } = TextureFilter.Nearest;
 
+	public bool Multisampled { get; init; } = false;
+
 	public int Width { get; private set; }
 
 	public int Height { get; private set; }
@@ -37,25 +39,52 @@ public class Texture {
 
 	public Texture(int width, int height, byte components = 4) => Create(new TextureData(width, height, components));
 
-	public void Enable() => GL.BindTexture(TextureTarget.Texture2D, ID);
+	public void Enable() {
+		if(Multisampled) {
+			GL.BindTexture(TextureTarget.Texture2DMultisample, ID);
+		} else {
+			GL.BindTexture(TextureTarget.Texture2D, ID);
+		}
+	}
 
-	public void Disable() => GL.BindTexture(TextureTarget.Texture2D, 0);
+	public void Disable() {
+		if(Multisampled) {
+			GL.BindTexture(TextureTarget.Texture2DMultisample, 0);
+		} else {
+			GL.BindTexture(TextureTarget.Texture2D, 0);
+		}
+	}
 
 	void Create(TextureData texture_data) {
 		TextureData = texture_data;
 
-		GL.CreateTextures(TextureTarget.Texture2D, 1, out int id);
+		int id;
+
+		if(Multisampled) {
+			GL.CreateTextures(TextureTarget.Texture2DMultisample, 1, out id);
+		} else {
+			GL.CreateTextures(TextureTarget.Texture2D, 1, out id);
+		}
+
 
 		ID = id;
 		Width = TextureData.Width;
 		Height = TextureData.Height;
 
 		Enable();
-		GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, TextureData.Bytes);
-		GL.TextureParameter(ID, TextureParameterName.TextureMinFilter, (int)TextureFilter);
-		GL.TextureParameter(ID, TextureParameterName.TextureMagFilter, (int)TextureFilter);
-		GL.TextureParameter(ID, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
-		GL.TextureParameter(ID, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
+		if(Multisampled) {
+			GL.TexImage2DMultisample(TextureTargetMultisample.Texture2DMultisample, 8, PixelInternalFormat.Rgba, Width, Height, false);
+			GL.TextureParameter(ID, TextureParameterName.TextureMinFilter, (int)TextureFilter);
+			GL.TextureParameter(ID, TextureParameterName.TextureMagFilter, (int)TextureFilter);
+			GL.TextureParameter(ID, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
+			GL.TextureParameter(ID, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
+		} else {
+			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, TextureData.Bytes);
+			GL.TextureParameter(ID, TextureParameterName.TextureMinFilter, (int)TextureFilter);
+			GL.TextureParameter(ID, TextureParameterName.TextureMagFilter, (int)TextureFilter);
+			GL.TextureParameter(ID, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
+			GL.TextureParameter(ID, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
+		}
 		Disable();
 	}
 
@@ -66,11 +95,19 @@ public class Texture {
 		Height = TextureData.Height;
 
 		Enable();
-		GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, TextureData.Bytes);
-		GL.TextureParameter(ID, TextureParameterName.TextureMinFilter, (int)(TextureMinFilter)TextureFilter);
-		GL.TextureParameter(ID, TextureParameterName.TextureMagFilter, (int)(TextureMagFilter)TextureFilter);
-		GL.TextureParameter(ID, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
-		GL.TextureParameter(ID, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
+		if(Multisampled) {
+			GL.TexImage2DMultisample(TextureTargetMultisample.Texture2DMultisample, 8, PixelInternalFormat.Rgba, Width, Height, true);
+			GL.TextureParameter(ID, TextureParameterName.TextureMinFilter, (int)TextureFilter);
+			GL.TextureParameter(ID, TextureParameterName.TextureMagFilter, (int)TextureFilter);
+			GL.TextureParameter(ID, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
+			GL.TextureParameter(ID, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
+		} else {
+			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, TextureData.Bytes);
+			GL.TextureParameter(ID, TextureParameterName.TextureMinFilter, (int)(TextureMinFilter)TextureFilter);
+			GL.TextureParameter(ID, TextureParameterName.TextureMagFilter, (int)(TextureMagFilter)TextureFilter);
+			GL.TextureParameter(ID, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
+			GL.TextureParameter(ID, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
+		}
 		Disable();
 	}
 

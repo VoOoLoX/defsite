@@ -34,7 +34,7 @@ class MainScene : Scene {
 		});
 
 		var pos = Vector3.Zero;
-		var quad = Primitives.CreateQuadCentered(pos, Color.Red, 2);
+		var quad = Primitives.CreateQuad(pos, new Vector2(2), Color.Red, true);
 
 		ibo = new IndexBuffer(new int[] {
 			0, 1, 2, 2, 3, 0
@@ -66,7 +66,7 @@ class MainScene : Scene {
 
 		var pos = new Vector3(q.X, q.Y, q.Z);
 		//log.Info(pos);
-		var quad = Primitives.CreateTileCentered(pos, Color.Cyan, 200);
+		var quad = Primitives.CreateTile(pos, color: Color.Cyan, width_and_height: new Vector2(200), centered: true);
 		vbo.UpdateData(quad);
 	}
 

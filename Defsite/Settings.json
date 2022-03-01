@@ -13,7 +13,7 @@
   "IsMultiThreaded": false,
   "UpdateFrequency": 0,
   "RenderFrequency": 0,
-  "NumberOfSamples": 0,
+  "NumberOfSamples": 8,
   "Icon": "Assets/Icon.vif",
   "WindowBorder": "Resizable",
   "WindowState": "Normal",

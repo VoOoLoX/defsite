@@ -8,10 +8,10 @@ namespace Defsite.Graphics;
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
 public struct ColoredVertex : IVertex {
-	public Vector3 Position { get; set; }
+	public Vector4 Position { get; set; }
 	public Vector4 Color { get; set; }
 
-	public static int Size => Vector3.SizeInBytes + Vector4.SizeInBytes;
+	public static int Size => Vector4.SizeInBytes + Vector4.SizeInBytes;
 
 	public int SizeInBytes => Size;
 
@@ -19,10 +19,11 @@ public struct ColoredVertex : IVertex {
 		0 => Position[0],
 		1 => Position[1],
 		2 => Position[2],
-		3 => Color[0],
-		4 => Color[1],
-		5 => Color[2],
-		6 => Color[3],
+		3 => Position[3],
+		4 => Color[0],
+		5 => Color[1],
+		6 => Color[2],
+		7 => Color[3],
 		_ => throw new IndexOutOfRangeException("You tried to access this vertex at index: " + index),
 	};
 

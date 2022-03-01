@@ -3,5 +3,5 @@
 Game engine/game in the making using C# and OpenGL
 
 <p align="center">
-  <img src="https://i.imgur.com/tpsy80V.png" />
+  <img src="https://i.imgur.com/UbCnyYn.png" />
 </p>

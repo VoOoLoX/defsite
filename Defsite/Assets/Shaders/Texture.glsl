@@ -1,7 +1,7 @@
 #type vertex
 #version 450
 
-in vec3 v_position;
+in vec4 v_position;
 in vec4 v_color;
 in vec2 v_texture_coordinates;
 
@@ -13,7 +13,7 @@ uniform mat4 u_view;
 uniform mat4 u_model;
 
 void main() {
-	gl_Position = u_projection * u_view * u_model * vec4(v_position, 1.0);
+	gl_Position = u_projection * u_view * u_model * v_position;
 	f_texture_coordinates = v_texture_coordinates;
 	f_color = v_color;
 }
