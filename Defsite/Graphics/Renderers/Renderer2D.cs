@@ -13,6 +13,7 @@ public static unsafe class Renderer2D {
 	const int max_quads = 10000;
 	const int max_verticies = max_quads * 4;
 	const int max_indices = max_quads * 6;
+	const int max_texture_slots = 16;
 
 	static int quad_vertices_count = 0;
 	static int quad_indices_count = 0;
@@ -29,6 +30,11 @@ public static unsafe class Renderer2D {
 	static TexturedVertex[] quad_vertices;
 	static ColoredVertex[] line_vertices;
 
+	static List<Texture> texture_slots;
+	//static Dictionary<int, Texture> texture_slots;
+	//static Texture[] texture_slots;
+	//static int texture_slot_index = 1;
+
 	static ICamera camera_data;
 
 	static float line_width = 1.0f;
@@ -41,6 +47,10 @@ public static unsafe class Renderer2D {
 	}
 
 	public static void Init() {
+		//Init texture slots
+		texture_slots = new(16);
+		texture_slots.Add(Texture.Default);
+
 		//Quads
 		{
 			quad_vertices = new TexturedVertex[max_verticies];
@@ -52,7 +62,8 @@ public static unsafe class Renderer2D {
 			quad_buffer_layout = new BufferLayout(new List<VertexAttribute> {
 				new(texture_shader["v_position"], VertexAttributeType.Vector4),
 				new(texture_shader["v_color"], VertexAttributeType.Vector4),
-				new(texture_shader["v_texture_coordinates"], VertexAttributeType.Vector2)
+				new(texture_shader["v_texture_coordinates"], VertexAttributeType.Vector2),
+				new(texture_shader["v_texture_index"], VertexAttributeType.Float),
 			});
 
 			quad_vertex_buffer = new VertexBuffer() {
@@ -120,30 +131,43 @@ public static unsafe class Renderer2D {
 		LineWidth = 1;
 	}
 
-	public static void DrawQuad(Vector3 position, Vector2 size = default, Color color = default, bool centered = true, Matrix4 transform = default) {
+	static void NextBatch() {
+		Flush();
+		StartBatch();
+	}
+
+	public static void DrawQuad(Vector3 position, Vector2 size = default, Color color = default, Texture texture = default, bool centered = true, Matrix4 transform = default) {
 		var data = Primitives.CreateTexturedQuad(position, size, color, centered, transform);
 
-		if(quad_vertices_count >= max_verticies) {
-			Flush();
-			StartBatch();
+		if(quad_vertices_count >= max_verticies || texture_slots.Count >= 16) {
+			NextBatch();
+		}
+
+		if(texture is not null && !texture_slots.Contains(texture)) {
+			texture_slots.Add(texture);
 		}
 
 		for(var i = 0; i < data.Length; i++) {
+			data[i].TextureIndex = (texture is null) ? texture_slots.IndexOf(Texture.Default) : texture_slots.IndexOf(texture);
 			quad_vertices[quad_vertices_count++] = data[i];
 		}
 
 		quad_indices_count += 6;
 	}
 
-	public static void DrawTile(Vector3 position, Vector2 size = default, Color color = default, bool centered = true, Matrix4 transform = default) {
+	public static void DrawTile(Vector3 position, Vector2 size = default, Color color = default, Texture texture = default, bool centered = true, Matrix4 transform = default) {
 		var data = Primitives.CreateTexturedTile(position, size, color, centered, transform);
 
-		if(quad_vertices_count >= max_verticies) {
-			Flush();
-			StartBatch();
+		if(quad_vertices_count >= max_verticies || texture_slots.Count >= 16) {
+			NextBatch();
+		}
+
+		if(texture is not null && !texture_slots.Contains(texture)) {
+			texture_slots.Add(texture);
 		}
 
 		for(var i = 0; i < data.Length; i++) {
+			data[i].TextureIndex = (texture is null) ? texture_slots.IndexOf(Texture.Default) : texture_slots.IndexOf(texture);
 			quad_vertices[quad_vertices_count++] = data[i];
 		}
 
@@ -154,8 +178,7 @@ public static unsafe class Renderer2D {
 		var data = Primitives.CreateLine(start_position, end_position, color);
 
 		if(line_vertices_count >= max_verticies) {
-			Flush();
-			StartBatch();
+			NextBatch();
 		}
 
 		for(var i = 0; i < data.Length; i++) {
@@ -184,13 +207,19 @@ public static unsafe class Renderer2D {
 
 			quad_index_buffer.Enable();
 
-			//TODO(VoOoLoX): set texture slots for multiple textures
-			Texture.Default.Enable();
+			foreach(var texture in texture_slots) {
+				var slot = texture_slots.IndexOf(texture);
+				texture.BindToSlot(slot);
+			}
 
 			texture_shader.Enable();
 			texture_shader.Set("u_projection", camera_data.ProjectionMatrix);
 			texture_shader.Set("u_view", camera_data.ViewMatrix);
 			texture_shader.Set("u_model", Matrix4.Identity);
+			foreach(var texture in texture_slots) {
+				var slot = texture_slots.IndexOf(texture);
+				texture_shader.Set($"u_textures[{slot}]", slot);
+			}
 
 			GL.DrawElements(PrimitiveType.Triangles, quad_indices_count, DrawElementsType.UnsignedInt, 0);
 		}

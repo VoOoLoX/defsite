@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Common;
 
@@ -45,6 +46,10 @@ public class Texture {
 		} else {
 			GL.BindTexture(TextureTarget.Texture2D, ID);
 		}
+	}
+
+	public void BindToSlot(int slot) {
+		GL.BindTextureUnit(slot, ID);
 	}
 
 	public void Disable() {

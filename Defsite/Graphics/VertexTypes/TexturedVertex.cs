@@ -11,8 +11,9 @@ public struct TexturedVertex : IVertex {
 	public Vector4 Position { get; set; }
 	public Vector4 Color { get; set; }
 	public Vector2 TextureCoordinates { get; set; }
+	public float TextureIndex { get; set; }
 
-	public static int Size => Vector4.SizeInBytes + Vector4.SizeInBytes + Vector2.SizeInBytes;
+	public static int Size => Vector4.SizeInBytes + Vector4.SizeInBytes + Vector2.SizeInBytes + sizeof(float);
 
 	public int SizeInBytes => Size;
 
@@ -27,6 +28,7 @@ public struct TexturedVertex : IVertex {
 		7 => Color[3],
 		8 => TextureCoordinates[0],
 		9 => TextureCoordinates[1],
+		10 => TextureIndex,
 		_ => throw new IndexOutOfRangeException("You tried to access this vertex at index: " + index),
 	};
 

@@ -262,7 +262,7 @@ public class Playground : Scene {
 		for(var z = -quads_count / 2; z < quads_count / 2; z++) {
 			for(var x = -quads_count / 2; x < quads_count / 2; x++) {
 				//ground_texture.Enable();
-				Renderer2D.DrawTile(new Vector3(x, 0, z), centered: true, transform: Matrix4.CreateTranslation(0, -MathF.Pow(x * x + z * z, 0.4f), 0));
+				Renderer2D.DrawTile(new Vector3(x, 0, z), centered: true, transform: Matrix4.CreateTranslation(0, -MathF.Pow(x * x + z * z, 0.4f), 0), texture: ground_texture);
 				//ground_texture.Disable();
 			}
 		}
