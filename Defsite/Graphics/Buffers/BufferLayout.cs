@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using OpenTK.Graphics.OpenGL4;
 
-namespace Defsite.Graphics;
+namespace Defsite.Graphics.Buffers;
 
 public enum VertexAttributeType {
 	Matrix2,

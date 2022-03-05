@@ -5,7 +5,9 @@ using System.Threading;
 
 using Defsite.Core;
 using Defsite.Graphics;
+using Defsite.Graphics.Buffers;
 using Defsite.Graphics.Cameras;
+using Defsite.Graphics.Renderers;
 using Defsite.IO;
 using Defsite.IO.DataFormats;
 using Defsite.Utils;
@@ -23,15 +25,15 @@ namespace Defsite;
 public class Playground : Scene {
 	//ALContext audio_context;
 
-	FirstPersonCamera camera, camera2, active_camera;
+	FirstPersonCamera? camera, camera2, active_camera;
 
-	OrthographicCamera orthographic_camera;
+	OrthographicCamera? orthographic_camera;
 
-	FrameBuffer frame_buffer;
+	FrameBuffer? frame_buffer;
 
-	ImGuiRenderer imgui_controller;
+	ImGuiRenderer? imgui_controller;
 
-	Texture ground_texture;
+	Texture? ground_texture;
 
 	int quads_count = 20;
 	float axis_lenght = 10;
@@ -137,9 +139,7 @@ public class Playground : Scene {
 
 		Window.TextInput += (text_input_event) => imgui_controller.PressChar((char)text_input_event.Unicode);
 
-		Window.Closed += () => {
-			GLUtils.Dispose();
-		};
+		Window.Closed += () => GLUtils.Dispose();
 	}
 
 	public override void Update(FrameEventArgs frame_event) {
@@ -243,7 +243,7 @@ public class Playground : Scene {
 		}
 
 		if(use_framebuffer) {
-			frame_buffer.Enable();
+			frame_buffer.Bind();
 		}
 
 		GL.ClearColor(ClearColor);
@@ -296,11 +296,12 @@ public class Playground : Scene {
 			if(show_grid) {
 				ImGuizmo.DrawGrid(ref view_matrix, ref projection_matrix, ref identity, 200f);
 			}
+
 			ImGuizmo.DrawCubes(ref view_matrix, ref projection_matrix, ref test_cube, 1);
 			ImGuizmo.Manipulate(ref view_matrix, ref projection_matrix, transform_operation, transform_mode, ref test_cube, ref delta_test_cube, ref snap);
 		}
 
-		frame_buffer.Disable();
+		frame_buffer.Unbind();
 
 		if(use_framebuffer) {
 			GL.ClearColor(ClearColor);
@@ -360,6 +361,7 @@ public class Playground : Scene {
 			if(ImGui.IsMousePosValid()) {
 				ImGui.Text($"Mouse Position: ({Input.MousePosition.X}, {Input.MousePosition.Y})");
 			}
+
 			ImGui.Separator();
 			ImGui.Text($"Controls:");
 			ImGui.Text($"WASD - move");

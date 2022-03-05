@@ -2,7 +2,7 @@ using System;
 
 using OpenTK.Graphics.OpenGL4;
 
-namespace Defsite.Graphics;
+namespace Defsite.Graphics.Buffers;
 
 public class IndexBuffer : IDisposable {
 	public int ID { get; }
@@ -22,55 +22,55 @@ public class IndexBuffer : IDisposable {
 
 	public IndexBuffer(uint[] data) {
 		ID = GL.GenBuffer();
-		Enable();
+		Bind();
 		SetData(data);
-		Disable();
+		Unbind();
 	}
 
 	public IndexBuffer(int[] data) {
 		ID = GL.GenBuffer();
-		Enable();
+		Bind();
 		SetData(data);
-		Disable();
+		Unbind();
 	}
 
 	public void SetData(uint[] data) {
-		Enable();
+		Bind();
 
 		Count = data.Length;
 		GL.BufferData(BufferTarget.ElementArrayBuffer, data.Length * sizeof(uint), data, BufferUsageHint.DynamicDraw);
 
-		Disable();
+		Unbind();
 	}
 
 	public void SetData(int[] data) {
-		Enable();
+		Bind();
 
 		Count = data.Length;
 		GL.BufferData(BufferTarget.ElementArrayBuffer, data.Length * sizeof(int), data, BufferUsageHint.DynamicDraw);
 
-		Disable();
+		Unbind();
 	}
 
 	public void UpdateData(int size, IntPtr data, int offset = 0) {
-		Enable();
+		Bind();
 
 		GL.BufferSubData(BufferTarget.ElementArrayBuffer, (IntPtr)offset, size, data);
 
-		Disable();
+		Unbind();
 	}
 
 	void Resize(int size) {
-		Enable();
+		Bind();
 
 		GL.BufferData(BufferTarget.ElementArrayBuffer, size, IntPtr.Zero, BufferUsageHint.DynamicDraw);
 
-		Disable();
+		Unbind();
 	}
 
-	public void Enable() => GL.BindBuffer(BufferTarget.ElementArrayBuffer, ID);
+	public void Bind() => GL.BindBuffer(BufferTarget.ElementArrayBuffer, ID);
 
-	static void Disable() => GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
+	static void Unbind() => GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
 
 	public void Dispose() {
 		GL.DeleteBuffer(ID);

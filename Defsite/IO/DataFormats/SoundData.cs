@@ -14,7 +14,7 @@ public class SoundData {
 
 	public byte Compressed { get; private set; }
 
-	public byte[] Data { get; private set; }
+	public byte[] Data { get; private set; } = Array.Empty<byte>();
 
 	public ALFormat Format { get; private set; }
 

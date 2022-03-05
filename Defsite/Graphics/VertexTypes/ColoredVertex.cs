@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 using OpenTK.Mathematics;
 
-namespace Defsite.Graphics;
+namespace Defsite.Graphics.VertexTypes;
 
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]

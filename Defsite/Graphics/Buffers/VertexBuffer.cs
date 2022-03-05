@@ -1,8 +1,8 @@
 using System;
-
+using Defsite.Graphics.VertexTypes;
 using OpenTK.Graphics.OpenGL4;
 
-namespace Defsite.Graphics;
+namespace Defsite.Graphics.Buffers;
 
 public class VertexBuffer : IDisposable {
 	public int ID { get; }
@@ -21,7 +21,7 @@ public class VertexBuffer : IDisposable {
 	public VertexBuffer() => ID = GL.GenBuffer();
 
 	public void SetData<T>(T[] data) where T : IVertex {
-		Enable();
+		Bind();
 
 		switch(data) {
 			case ColoredVertex[] colored_vertices:
@@ -36,11 +36,11 @@ public class VertexBuffer : IDisposable {
 				break;
 		}
 
-		Disable();
+		Unbind();
 	}
 
 	public void SetData<T>(T[] data, int count) where T : IVertex {
-		Enable();
+		Bind();
 
 		switch(data) {
 			case ColoredVertex[] colored_vertices:
@@ -55,11 +55,11 @@ public class VertexBuffer : IDisposable {
 				break;
 		}
 
-		Disable();
+		Unbind();
 	}
 
 	public void UpdateData<T>(T[] data, int offset = 0) where T : IVertex {
-		Enable();
+		Bind();
 
 		var data_size = data.Length * data[0].SizeInBytes;
 		if(data_size < size) {
@@ -79,28 +79,28 @@ public class VertexBuffer : IDisposable {
 				break;
 		}
 
-		Disable();
+		Unbind();
 	}
 
 	public void UpdateData(int size, IntPtr data, int offset = 0) {
-		Enable();
+		Bind();
 
 		GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, size, data);
 
-		Disable();
+		Unbind();
 	}
 
 	void Resize(int size_in_bytes) {
-		Enable();
+		Bind();
 
 		GL.BufferData(BufferTarget.ArrayBuffer, size_in_bytes, IntPtr.Zero, BufferUsageHint.DynamicDraw);
 
-		Disable();
+		Unbind();
 	}
 
-	public void Enable() => GL.BindBuffer(BufferTarget.ArrayBuffer, ID);
+	public void Bind() => GL.BindBuffer(BufferTarget.ArrayBuffer, ID);
 
-	static void Disable() => GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+	static void Unbind() => GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 
 	public void Dispose() {
 		GL.DeleteBuffer(ID);

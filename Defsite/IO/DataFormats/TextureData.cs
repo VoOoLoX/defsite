@@ -68,7 +68,7 @@ public class TextureData {
 
 	public int Height { get; private set; }
 
-	public List<IPixel> Pixels { get; private set; }
+	public List<IPixel> Pixels { get; private set; } = new();
 
 	public TextureData(int width, int height, byte components = 4) {
 		Width = width;

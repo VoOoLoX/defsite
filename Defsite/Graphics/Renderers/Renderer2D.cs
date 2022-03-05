@@ -1,41 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Defsite.Graphics.Buffers;
 using Defsite.Graphics.Cameras;
+using Defsite.Graphics.VertexTypes;
 using Defsite.IO;
 
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 
-namespace Defsite.Graphics;
+namespace Defsite.Graphics.Renderers;
 
 public static unsafe class Renderer2D {
 	const int max_quads = 10000;
 	const int max_verticies = max_quads * 4;
 	const int max_indices = max_quads * 6;
-	const int max_texture_slots = 16;
+
+	static int max_texture_slots = 16;
 
 	static int quad_vertices_count = 0;
 	static int quad_indices_count = 0;
 
 	static int line_vertices_count = 0;
 
-	static VertexArray line_vertex_array, quad_vertex_array;
-	static VertexBuffer line_vertex_buffer, quad_vertex_buffer;
-	static IndexBuffer quad_index_buffer;
-	static BufferLayout line_buffer_layout, quad_buffer_layout;
+	static VertexArray? line_vertex_array, quad_vertex_array;
+	static VertexBuffer? line_vertex_buffer, quad_vertex_buffer;
+	static IndexBuffer? quad_index_buffer;
+	static BufferLayout? line_buffer_layout, quad_buffer_layout;
 
-	static Shader color_shader, texture_shader;
+	static Shader? color_shader, texture_shader;
 
-	static TexturedVertex[] quad_vertices;
-	static ColoredVertex[] line_vertices;
+	static TexturedVertex[] quad_vertices = Array.Empty<TexturedVertex>();
+	static ColoredVertex[] line_vertices = Array.Empty<ColoredVertex>();
 
-	static List<Texture> texture_slots;
-	//static Dictionary<int, Texture> texture_slots;
-	//static Texture[] texture_slots;
-	//static int texture_slot_index = 1;
+	static List<Texture> texture_slots = new();
 
-	static ICamera camera_data;
+	static ICamera? camera_data;
 
 	static float line_width = 1.0f;
 	public static float LineWidth {
@@ -48,7 +48,7 @@ public static unsafe class Renderer2D {
 
 	public static void Init() {
 		//Init texture slots
-		texture_slots = new(16);
+		texture_slots = new(max_texture_slots);
 		texture_slots.Add(Texture.Default);
 
 		//Quads
@@ -136,10 +136,10 @@ public static unsafe class Renderer2D {
 		StartBatch();
 	}
 
-	public static void DrawQuad(Vector3 position, Vector2 size = default, Color color = default, Texture texture = default, bool centered = true, Matrix4 transform = default) {
+	public static void DrawQuad(Vector3 position, Vector2 size = default, Color color = default, Texture? texture = default, bool centered = true, Matrix4 transform = default) {
 		var data = Primitives.CreateTexturedQuad(position, size, color, centered, transform);
 
-		if(quad_vertices_count >= max_verticies || texture_slots.Count >= 16) {
+		if(quad_vertices_count >= max_verticies || texture_slots.Count >= max_texture_slots) {
 			NextBatch();
 		}
 
@@ -148,7 +148,7 @@ public static unsafe class Renderer2D {
 		}
 
 		for(var i = 0; i < data.Length; i++) {
-			data[i].TextureIndex = (texture is null) ? texture_slots.IndexOf(Texture.Default) : texture_slots.IndexOf(texture);
+			data[i].TextureIndex = texture is null ? texture_slots.IndexOf(Texture.Default) : texture_slots.IndexOf(texture);
 			quad_vertices[quad_vertices_count++] = data[i];
 		}
 
@@ -158,7 +158,7 @@ public static unsafe class Renderer2D {
 	public static void DrawTile(Vector3 position, Vector2 size = default, Color color = default, Texture texture = default, bool centered = true, Matrix4 transform = default) {
 		var data = Primitives.CreateTexturedTile(position, size, color, centered, transform);
 
-		if(quad_vertices_count >= max_verticies || texture_slots.Count >= 16) {
+		if(quad_vertices_count >= max_verticies || texture_slots.Count >= max_texture_slots) {
 			NextBatch();
 		}
 
@@ -167,7 +167,7 @@ public static unsafe class Renderer2D {
 		}
 
 		for(var i = 0; i < data.Length; i++) {
-			data[i].TextureIndex = (texture is null) ? texture_slots.IndexOf(Texture.Default) : texture_slots.IndexOf(texture);
+			data[i].TextureIndex = texture is null ? texture_slots.IndexOf(Texture.Default) : texture_slots.IndexOf(texture);
 			quad_vertices[quad_vertices_count++] = data[i];
 		}
 
@@ -201,18 +201,18 @@ public static unsafe class Renderer2D {
 
 	static void Flush() {
 		if(quad_vertices_count > 0) {
-			quad_vertex_array.Enable();
+			quad_vertex_array.Bind();
 
 			quad_vertex_buffer.SetData(quad_vertices, quad_vertices_count);
 
-			quad_index_buffer.Enable();
+			quad_index_buffer.Bind();
 
 			foreach(var texture in texture_slots) {
 				var slot = texture_slots.IndexOf(texture);
 				texture.BindToSlot(slot);
 			}
 
-			texture_shader.Enable();
+			texture_shader.Bind();
 			texture_shader.Set("u_projection", camera_data.ProjectionMatrix);
 			texture_shader.Set("u_view", camera_data.ViewMatrix);
 			texture_shader.Set("u_model", Matrix4.Identity);
@@ -225,11 +225,11 @@ public static unsafe class Renderer2D {
 		}
 
 		if(line_vertices_count > 0) {
-			line_vertex_array.Enable();
+			line_vertex_array.Bind();
 
 			line_vertex_buffer.SetData(line_vertices, line_vertices_count);
 
-			color_shader.Enable();
+			color_shader.Bind();
 			color_shader.Set("u_projection", camera_data.ProjectionMatrix);
 			color_shader.Set("u_view", camera_data.ViewMatrix);
 			color_shader.Set("u_model", Matrix4.Identity);

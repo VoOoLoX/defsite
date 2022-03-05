@@ -25,9 +25,9 @@ public class Shader {
 		shader_data = new ShaderData(file_path);
 		Create(shader_data);
 	}
-	public void Disable() => GL.UseProgram(0);
+	public void Unbind() => GL.UseProgram(0);
 
-	public void Enable() => GL.UseProgram(ID);
+	public void Bind() => GL.UseProgram(ID);
 
 	public int GetAttributeLocation(string attribute) {
 		if(attribute_location_cache.ContainsKey(attribute)) {

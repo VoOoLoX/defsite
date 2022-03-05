@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using Common;
 
@@ -40,7 +39,7 @@ public class Texture {
 
 	public Texture(int width, int height, byte components = 4) => Create(new TextureData(width, height, components));
 
-	public void Enable() {
+	public void Bind() {
 		if(Multisampled) {
 			GL.BindTexture(TextureTarget.Texture2DMultisample, ID);
 		} else {
@@ -48,11 +47,9 @@ public class Texture {
 		}
 	}
 
-	public void BindToSlot(int slot) {
-		GL.BindTextureUnit(slot, ID);
-	}
+	public void BindToSlot(int slot) => GL.BindTextureUnit(slot, ID);
 
-	public void Disable() {
+	public void Unbind() {
 		if(Multisampled) {
 			GL.BindTexture(TextureTarget.Texture2DMultisample, 0);
 		} else {
@@ -71,12 +68,11 @@ public class Texture {
 			GL.CreateTextures(TextureTarget.Texture2D, 1, out id);
 		}
 
-
 		ID = id;
 		Width = TextureData.Width;
 		Height = TextureData.Height;
 
-		Enable();
+		Bind();
 		if(Multisampled) {
 			GL.TexImage2DMultisample(TextureTargetMultisample.Texture2DMultisample, 8, PixelInternalFormat.Rgba, Width, Height, false);
 			GL.TextureParameter(ID, TextureParameterName.TextureMinFilter, (int)TextureFilter);
@@ -90,7 +86,8 @@ public class Texture {
 			GL.TextureParameter(ID, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
 			GL.TextureParameter(ID, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
 		}
-		Disable();
+
+		Unbind();
 	}
 
 	public void Resize(int width, int height) {
@@ -99,7 +96,7 @@ public class Texture {
 		Width = TextureData.Width;
 		Height = TextureData.Height;
 
-		Enable();
+		Bind();
 		if(Multisampled) {
 			GL.TexImage2DMultisample(TextureTargetMultisample.Texture2DMultisample, 8, PixelInternalFormat.Rgba, Width, Height, true);
 			GL.TextureParameter(ID, TextureParameterName.TextureMinFilter, (int)TextureFilter);
@@ -113,7 +110,8 @@ public class Texture {
 			GL.TextureParameter(ID, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
 			GL.TextureParameter(ID, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
 		}
-		Disable();
+
+		Unbind();
 	}
 
 	public void Dispose() => GL.DeleteTexture(ID);

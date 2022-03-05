@@ -2,7 +2,7 @@ using System;
 
 using OpenTK.Graphics.OpenGL4;
 
-namespace Defsite.Graphics;
+namespace Defsite.Graphics.Buffers;
 
 public class VertexArray : IDisposable {
 	public int ID { get; }
@@ -10,8 +10,8 @@ public class VertexArray : IDisposable {
 	public VertexArray() => ID = GL.GenVertexArray();
 
 	public void AddVertexBuffer(VertexBuffer buffer) {
-		Enable();
-		buffer.Enable();
+		Bind();
+		buffer.Bind();
 
 		foreach(var attribute in buffer.Layout.Attributes) {
 			GL.EnableVertexAttribArray(attribute.ID);
@@ -20,12 +20,12 @@ public class VertexArray : IDisposable {
 
 		GL.EnableVertexAttribArray(0);
 
-		Disable();
+		Unbind();
 	}
 
-	public void Enable() => GL.BindVertexArray(ID);
+	public void Bind() => GL.BindVertexArray(ID);
 
-	static void Disable() => GL.BindVertexArray(0);
+	static void Unbind() => GL.BindVertexArray(0);
 
 	public void Dispose() {
 		GL.DeleteVertexArray(ID);

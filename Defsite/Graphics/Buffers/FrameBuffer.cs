@@ -1,6 +1,6 @@
 using OpenTK.Graphics.OpenGL4;
 
-namespace Defsite.Graphics;
+namespace Defsite.Graphics.Buffers;
 
 public class FrameBuffer {
 	public int ID { get; }
@@ -14,9 +14,9 @@ public class FrameBuffer {
 		GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
 	}
 
-	public void Enable() => GL.BindFramebuffer(FramebufferTarget.Framebuffer, ID);
+	public void Bind() => GL.BindFramebuffer(FramebufferTarget.Framebuffer, ID);
 
-	public void Disable() => GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+	public void Unbind() => GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
 
 	void Create(int width, int height) {
 		ColorTexture = new Texture(width, height, 3) {
@@ -38,13 +38,13 @@ public class FrameBuffer {
 	public void SetData() {
 		GL.BindFramebuffer(FramebufferTarget.Framebuffer, ID);
 
-		ColorTexture.Enable();
+		ColorTexture.Bind();
 		GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2DMultisample, ColorTexture.ID, 0);
-		ColorTexture.Disable();
+		ColorTexture.Unbind();
 
-		DepthTexture.Enable();
+		DepthTexture.Bind();
 		GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, TextureTarget.Texture2DMultisample, DepthTexture.ID, 0);
-		DepthTexture.Disable();
+		DepthTexture.Unbind();
 
 		GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
 	}

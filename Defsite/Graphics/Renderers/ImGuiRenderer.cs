@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 using Defsite.Core;
+using Defsite.Graphics.Buffers;
 using Defsite.IO;
 using Defsite.IO.DataFormats;
 
@@ -14,7 +15,8 @@ using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
-namespace Defsite.Graphics;
+namespace Defsite.Graphics.Renderers;
+
 public class ImGuiRenderer {
 	Shader shader;
 	Texture font_texture;
@@ -195,11 +197,11 @@ public class ImGuiRenderer {
 
 		var projection_matrtix = Matrix4.CreateOrthographicOffCenter(0.0f, io.DisplaySize.X, io.DisplaySize.Y, 0.0f, -1.0f, 1.0f);
 
-		shader.Enable();
+		shader.Bind();
 		shader.Set("u_projection", projection_matrtix);
 		shader.Set("u_font_texture", 0); // 0 = Texture0 (texture slot)
 
-		vertex_array.Enable();
+		vertex_array.Bind();
 
 		draw_data.ScaleClipRects(io.DisplayFramebufferScale);
 
@@ -249,7 +251,7 @@ public class ImGuiRenderer {
 				var clip = p_cmd.ClipRect;
 				GL.Scissor((int)clip.X, client_height - (int)clip.W, (int)(clip.Z - clip.X), (int)(clip.W - clip.Y));
 
-				index_buffer.Enable();
+				index_buffer.Bind();
 
 				if(io.BackendFlags.HasFlag(ImGuiBackendFlags.RendererHasVtxOffset)) {
 					GL.DrawElementsBaseVertex(PrimitiveType.Triangles, (int)p_cmd.ElemCount, DrawElementsType.UnsignedShort, (IntPtr)(idx_offset * sizeof(ushort)), vtx_offset);

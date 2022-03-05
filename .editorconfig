@@ -128,7 +128,7 @@ csharp_using_directive_placement = outside_namespace
 # New line preferences
 csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = false
 csharp_style_allow_blank_lines_between_consecutive_braces_experimental = false
-csharp_style_allow_embedded_statements_on_same_line_experimental = false:suggestion
+csharp_style_allow_embedded_statements_on_same_line_experimental = false:none
 
 #### C# Formatting Rules ####
 
@@ -242,6 +242,3 @@ dotnet_naming_style.snake_case.capitalization = all_lower
 
 # IDE0058: Expression value is never used
 dotnet_diagnostic.IDE0058.severity = none
-
-# IDE0130: Namespace does not match folder structure
-dotnet_diagnostic.IDE0130.severity = none

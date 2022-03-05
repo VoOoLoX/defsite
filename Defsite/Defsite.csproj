@@ -3,8 +3,8 @@
 	<OutputType>exe</OutputType>
 	<TargetFramework>net6.0</TargetFramework>
 	<RuntimeIdentifiers>win-x64;</RuntimeIdentifiers>
-	<AssemblyVersion>$([System.DateTime]::Now.ToString(`y\.MM\.d`))</AssemblyVersion>
-	<FileVersion>$([System.DateTime]::Now.ToString(`y\.MM\.d`))</FileVersion>
+	<AssemblyVersion>$([System.DateTime]::Now.ToString(`yyyy\.M\.d`))</AssemblyVersion>
+	<FileVersion>$([System.DateTime]::Now.ToString(`yyyy\.M\.d`))</FileVersion>
 	<ApplicationIcon>Assets/Icon.ico</ApplicationIcon>
 	<IsPackable>false</IsPackable>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -23,6 +23,7 @@
 	<TrimmerSingleWarn>false</TrimmerSingleWarn>
 	<TrimMode>copyused</TrimMode>
 	<PublishTrimmed>true</PublishTrimmed>
+	<Nullable>enable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
@@ -35,6 +36,13 @@
 	<ProjectReference Include="..\ImGui\ImGui.NET\ImGui.NET.csproj" />
 	<ProjectReference Include="..\ImGui\ImGuizmo.NET\ImGuizmo.NET.csproj" />
   </ItemGroup>
+
+  <!--
+   This Disable ImGui in production<ItemGroup Condition="'$(Configuration)'=='Debug'">
+	<ProjectReference Include="..\ImGui\ImGui.NET\ImGui.NET.csproj" />
+	<ProjectReference Include="..\ImGui\ImGuizmo.NET\ImGuizmo.NET.csproj" />
+  </ItemGroup>-->
+  
 
   <ItemGroup>
 	<PackageReference Include="Delaunator" Version="1.0.8" />
